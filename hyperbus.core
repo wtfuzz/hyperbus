@@ -1,0 +1,39 @@
+CAPI=2:
+name : ::hyperbus:1.0
+description: "Hyperbus Memory Controller"
+
+filesets:
+    rtl:
+        files:
+            - rtl/verilog/ioddr.v
+            - rtl/verilog/hyperbus.v
+        file_type: verilogSource
+
+    tb:
+        files:
+            #- tb/s27kl0642.v
+            - tb/hyperbus_tb.v
+            #- tb/ioddr_tb.v
+        file_type: verilogSource
+
+    tb_verilator:
+        files:
+            - tb/hyperbus_test.cpp
+        file_type: cppSource
+
+targets:
+    sim:
+        default_tool: verilator
+        filesets:
+            - rtl
+            - tb
+            - tb_verilator
+        verilator_options: [--trace]
+        toplevel: [hyperbus_test_top]
+    default: &base
+        filesets: [rtl]
+
+#provider:
+#    name: github
+#    user: wtfuzz
+#    repo: hyperbus
