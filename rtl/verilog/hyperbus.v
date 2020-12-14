@@ -92,7 +92,7 @@ ioddr
     .oe(rwds_oe)
 );
 
-assign hbus_rstn = 1'b1;
+assign hbus_rstn = ~rst;
 assign hbus_csn = ((state == STATE_IDLE) || (state == STATE_ERROR)) ? 1'b1 : 1'b0;
 assign busy = state == STATE_IDLE ? 1'b0 : 1'b1;
 
