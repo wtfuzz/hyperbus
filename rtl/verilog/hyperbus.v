@@ -13,17 +13,17 @@ module hyperbus
 )
 (
     // Memory clock
-    input               clk,
+    input                       clk,
     // 90 degree phase shifted clock
-    input               clk90,
-    input               rst,
+    input                       clk90,
+    input                       rst,
 
-    input   [31:0]          addr,
-    input   [(WIDTH<<1)-1:0] din,
-    output  [(WIDTH<<1)-1:0] dout,
-    output                  dready,
-    output                  dvalid,
-    output                  busy,
+    input   [31:0]              adr_i,
+    input   [(WIDTH<<1)-1:0]    dat_i,
+    output  [(WIDTH<<1)-1:0]    dat_o,
+    output                      dready,
+    output                      dvalid,
+    output                      busy,
 
     // Write request
     input                   wrq,
@@ -59,6 +59,8 @@ wire [(WIDTH<<1)-1:0]   dataw;
 wire [(WIDTH<<1)-1:0]   datar;
 wire [1:0]              rwdsr;
 wire [1:0]              rwdsw;
+
+assign dat_o = datar;
 
 // Bidirectional DDR output enable
 reg                     data_oe;
