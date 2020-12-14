@@ -25,6 +25,9 @@ module hyperbus
     output                      dvalid,
     output                      busy,
 
+    // Read from HyperRAM register space
+    input                       reg_space_i,
+
     // Write request
     input                   wrq,
 
@@ -134,7 +137,7 @@ always @(posedge clk) begin
                     ca[47] <= rrq ? 1'b1 : 1'b0;
 
                     // Address Space = 0 for memory, 1 for registers
-                    ca[46] <= 1'b0;
+                    ca[46] <= reg_space_i;
 
                     // Burst Type = 0: wrapped, 1: linear
                     ca[45] <= 1'b0;
