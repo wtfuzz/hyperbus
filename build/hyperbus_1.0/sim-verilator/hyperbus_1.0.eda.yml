@@ -1,0 +1,25 @@
+dependencies:
+  ::hyperbus:1.0: []
+files:
+- core: ::hyperbus:1.0
+  file_type: verilogSource
+  name: ../src/hyperbus_1.0/rtl/verilog/ioddr.v
+- core: ::hyperbus:1.0
+  file_type: verilogSource
+  name: ../src/hyperbus_1.0/rtl/verilog/hyperbus.v
+- core: ::hyperbus:1.0
+  file_type: verilogSource
+  name: ../src/hyperbus_1.0/tb/hyperbus_tb.v
+- core: ::hyperbus:1.0
+  file_type: cppSource
+  name: ../src/hyperbus_1.0/tb/hyperbus_test.cpp
+hooks: {}
+name: hyperbus_1.0
+parameters: {}
+tool_options:
+  verilator:
+    verilator_options:
+    - --trace
+toplevel: hyperbus_test_top
+version: 0.2.1
+vpi: []

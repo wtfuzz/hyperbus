@@ -28,10 +28,13 @@ targets:
             - rtl
             - tb
             - tb_verilator
-        verilator_options: [--trace]
         toplevel: [hyperbus_test_top]
+        tools:
+            verilator:
+                verilator_options : [--trace]
     default: &base
         filesets: [rtl]
+
 
 #provider:
 #    name: github
