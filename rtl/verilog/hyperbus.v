@@ -139,9 +139,9 @@ always @(posedge clk) begin
                     // Burst Type = 0: wrapped, 1: linear
                     ca[45] <= 1'b0;
 
-                    ca[44:16] <= addr[31:3];
+                    ca[44:16] <= adr_i[31:3];
                     ca[15:3] <= 13'd0;
-                    ca[2:0] <= addr[2:0];
+                    ca[2:0] <= adr_i[2:0];
 
                     // Prime the write register 
                     //dataw <= ca[47:32];
