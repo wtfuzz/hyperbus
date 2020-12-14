@@ -122,6 +122,8 @@ always @(posedge clk) begin
     if(rst) begin
         state <= STATE_IDLE;
         timeout_error <= 1'b0;
+        clk_oe <= 1'b0;
+        count <= {COUNTER_WIDTH{1'b0}};
     end else begin
         case(state)
             STATE_IDLE: begin
@@ -177,12 +179,13 @@ always @(posedge clk) begin
 
                     if(rwdsr == 2'b11) begin
                         $display("2x latency");
-                        count <= (TACC_COUNT*2) - 1;
+                        count <= (TACC_COUNT<<1) - 1;
                     end else begin
                         $display("1x latency");
                         count <= TACC_COUNT - 1;
                     end
 
+                    data_oe <= 1'b0;
                     state <= STATE_LATENCY;
                 end else begin
                     // Shift CA register
