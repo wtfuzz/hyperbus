@@ -34,6 +34,7 @@ hyperbus #(
 
     .dready     (),
     .dvalid     (),
+    .error_o    (),
 
     .addr       (addr),
     .din        (datar),

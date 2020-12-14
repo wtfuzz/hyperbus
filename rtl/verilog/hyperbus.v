@@ -35,7 +35,9 @@ module hyperbus
     output                  hbus_rstn,
     output                  hbus_csn,
     inout   [WIDTH-1:0]     hbus_dq,
-    inout                   hbus_rwds
+    inout                   hbus_rwds,
+
+    output                  error_o
 );
 
 localparam COUNTER_WIDTH = $clog2(TACC_COUNT*2);
@@ -103,6 +105,8 @@ assign hbus_clk = clk_oe ? clk90 : 1'b0;
 reg [47:0] ca;
 
 reg timeout_error;
+
+assign error_o = state == STATE_ERROR ? 1'b1 : 1'b0;
 
 // Clock counter
 reg [COUNTER_WIDTH-1:0] count;
