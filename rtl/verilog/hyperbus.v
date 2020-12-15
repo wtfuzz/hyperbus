@@ -192,7 +192,7 @@ always @(posedge clk or posedge rst) begin
                     state <= STATE_COMMAND;
 
                     // Enable the output clock
-                    clk_oe <= 1'b1;
+                    clk_oe <= 1'b0;
 
                 end else begin
                     clk_oe <= 1'b0;
@@ -201,6 +201,7 @@ always @(posedge clk or posedge rst) begin
             end
             STATE_COMMAND: begin
                 $display("Send command");
+                clk_oe <= 1'b1;
                 data_oe <= 1'b1;
 
                 if(count == 4'd0) begin
