@@ -71,6 +71,7 @@ reg                     data_oe = 1'b1;
 reg                     rwds_oe;
 
 reg                     clk_oe;
+reg                     clk_oe90;
 
 /**
  * Bidirectional DDR IO.
@@ -107,7 +108,7 @@ assign hbus_csn = ((state == STATE_IDLE) || (state == STATE_ERROR)) ? 1'b1 : 1'b
 assign busy = state == STATE_IDLE ? 1'b0 : 1'b1;
 
 // Clock gate
-assign hbus_clk = clk_oe ? ~clk90 : 1'b0;
+assign hbus_clk = clk_oe90 ? clk90 : 1'b0;
 
 // Command/Address register
 reg [47:0] ca;
@@ -120,6 +121,11 @@ assign error_o = state == STATE_ERROR ? 1'b1 : 1'b0;
 reg [COUNTER_WIDTH-1:0] count;
 
 assign dataw = ca[47:32];
+
+// Cross clocks
+always @(posedge clk90) begin
+    clk_oe90 <= clk_oe;
+end
 
 always @(posedge clk) begin
     if(rst) begin
@@ -158,10 +164,15 @@ always @(posedge clk) begin
                     // RWDS input
                     rwds_oe <= 1'b0;
 
-                    // Transition to command state
-                    state <= STATE_START;
 
-                    clk_oe <= 1'b0;
+                    // 3 cycles to write 48 bits
+                    count <= 4'd3;
+
+                    // Transition to command state
+                    state <= STATE_COMMAND;
+
+                    // Enable the output clock
+                    clk_oe <= 1'b1;
 
                 end else begin
                     clk_oe <= 1'b0;
@@ -169,7 +180,6 @@ always @(posedge clk) begin
                 end
             end
             STATE_START: begin
-                // 3 cycles to write 48 bits
                 count <= 4'd3;
                 clk_oe <= 1'b1;
                 state <= STATE_COMMAND;

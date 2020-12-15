@@ -34,11 +34,11 @@ void Vhyperbus_test_top::_settle__TOP__2(Vhyperbus_test_top__Syms* __restrict vl
     // Body
     vlTOPp->hbus_rstn = (1U & (~ (IData)(vlTOPp->rst)));
     vlTOPp->dataw = vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__ddr_data__DOT__genblk1__DOT__d;
+    vlTOPp->hbus_clk = ((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__clk_oe90) 
+                        & (IData)(vlTOPp->clk90));
     vlTOPp->hbus_csn = ((1U == (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)) 
                         | (0x40U == (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)));
     vlTOPp->busy = (1U != (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state));
-    vlTOPp->hbus_clk = ((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__clk_oe) 
-                        & (~ (IData)(vlTOPp->clk90)));
     vlTOPp->hbus_rwds = ((((((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__rwds_oe) 
                              & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__ddr_rwds__DOT__genblk1__DOT__q)) 
                             & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__rwds_oe)) 
@@ -47,8 +47,8 @@ void Vhyperbus_test_top::_settle__TOP__2(Vhyperbus_test_top__Syms* __restrict vl
                          & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__rwds_oe));
 }
 
-void Vhyperbus_test_top::_initial__TOP__9(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_initial__TOP__9\n"); );
+void Vhyperbus_test_top::_initial__TOP__10(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_initial__TOP__10\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__data_oe = 1U;
@@ -59,9 +59,10 @@ void Vhyperbus_test_top::_eval_initial(Vhyperbus_test_top__Syms* __restrict vlSy
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     vlTOPp->__Vclklast__TOP__clk = vlTOPp->clk;
+    vlTOPp->__Vclklast__TOP__clk90 = vlTOPp->clk90;
     vlTOPp->__Vclklast__TOP____VinpClk__TOP__hbus_rwds 
         = vlTOPp->__VinpClk__TOP__hbus_rwds;
-    vlTOPp->_initial__TOP__9(vlSymsp);
+    vlTOPp->_initial__TOP__10(vlSymsp);
     vlTOPp->__Vm_traceActivity[1U] = 1U;
     vlTOPp->__Vm_traceActivity[0U] = 1U;
 }
@@ -78,7 +79,7 @@ void Vhyperbus_test_top::_eval_settle(Vhyperbus_test_top__Syms* __restrict vlSym
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     vlTOPp->_settle__TOP__2(vlSymsp);
-    vlTOPp->_settle__TOP__13(vlSymsp);
+    vlTOPp->_settle__TOP__16(vlSymsp);
 }
 
 void Vhyperbus_test_top::_ctor_var_reset() {
@@ -105,6 +106,7 @@ void Vhyperbus_test_top::_ctor_var_reset() {
     hyperbus_test_top__DOT__hbus0__DOT__data_oe = VL_RAND_RESET_I(1);
     hyperbus_test_top__DOT__hbus0__DOT__rwds_oe = VL_RAND_RESET_I(1);
     hyperbus_test_top__DOT__hbus0__DOT__clk_oe = VL_RAND_RESET_I(1);
+    hyperbus_test_top__DOT__hbus0__DOT__clk_oe90 = VL_RAND_RESET_I(1);
     hyperbus_test_top__DOT__hbus0__DOT__ca = VL_RAND_RESET_Q(48);
     hyperbus_test_top__DOT__hbus0__DOT__timeout_error = VL_RAND_RESET_I(1);
     hyperbus_test_top__DOT__hbus0__DOT__count = VL_RAND_RESET_I(4);

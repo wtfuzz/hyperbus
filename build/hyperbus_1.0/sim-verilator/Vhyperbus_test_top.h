@@ -25,8 +25,8 @@ VL_MODULE(Vhyperbus_test_top) {
     // The application code writes and reads these signals to
     // propagate new values into/out from the Verilated model.
     VL_IN8(clk,0,0);
-    VL_INOUT8(hbus_rwds,0,0);
     VL_IN8(clk90,0,0);
+    VL_INOUT8(hbus_rwds,0,0);
     VL_IN8(rst,0,0);
     VL_OUT8(hbus_clk,0,0);
     VL_OUT8(hbus_csn,0,0);
@@ -48,6 +48,7 @@ VL_MODULE(Vhyperbus_test_top) {
     CData/*0:0*/ hyperbus_test_top__DOT__hbus0__DOT__data_oe;
     CData/*0:0*/ hyperbus_test_top__DOT__hbus0__DOT__rwds_oe;
     CData/*0:0*/ hyperbus_test_top__DOT__hbus0__DOT__clk_oe;
+    CData/*0:0*/ hyperbus_test_top__DOT__hbus0__DOT__clk_oe90;
     CData/*0:0*/ hyperbus_test_top__DOT__hbus0__DOT__timeout_error;
     CData/*3:0*/ hyperbus_test_top__DOT__hbus0__DOT__count;
     CData/*7:0*/ hyperbus_test_top__DOT__hbus0__DOT__ddr_data__DOT__genblk1__DOT__q;
@@ -63,6 +64,7 @@ VL_MODULE(Vhyperbus_test_top) {
     CData/*0:0*/ __Vdly__hyperbus_test_top__DOT__hbus0__DOT__rwds_oe;
     CData/*0:0*/ __VinpClk__TOP__hbus_rwds;
     CData/*0:0*/ __Vclklast__TOP__clk;
+    CData/*0:0*/ __Vclklast__TOP__clk90;
     CData/*0:0*/ __Vclklast__TOP____VinpClk__TOP__hbus_rwds;
     CData/*0:0*/ __Vchglast__TOP__hbus_rwds;
     CData/*0:0*/ __Vm_traceActivity[2];
@@ -103,7 +105,7 @@ VL_MODULE(Vhyperbus_test_top) {
     static QData _change_request_1(Vhyperbus_test_top__Syms* __restrict vlSymsp);
   public:
     static void _combo__TOP__1(Vhyperbus_test_top__Syms* __restrict vlSymsp);
-    static void _combo__TOP__17(Vhyperbus_test_top__Syms* __restrict vlSymsp);
+    static void _combo__TOP__12(Vhyperbus_test_top__Syms* __restrict vlSymsp);
   private:
     void _ctor_var_reset() VL_ATTR_COLD;
   public:
@@ -115,17 +117,18 @@ VL_MODULE(Vhyperbus_test_top) {
   public:
     static void _eval_initial(Vhyperbus_test_top__Syms* __restrict vlSymsp) VL_ATTR_COLD;
     static void _eval_settle(Vhyperbus_test_top__Syms* __restrict vlSymsp) VL_ATTR_COLD;
-    static void _initial__TOP__9(Vhyperbus_test_top__Syms* __restrict vlSymsp) VL_ATTR_COLD;
-    static void _sequent__TOP__11(Vhyperbus_test_top__Syms* __restrict vlSymsp);
-    static void _sequent__TOP__12(Vhyperbus_test_top__Syms* __restrict vlSymsp);
+    static void _initial__TOP__10(Vhyperbus_test_top__Syms* __restrict vlSymsp) VL_ATTR_COLD;
     static void _sequent__TOP__14(Vhyperbus_test_top__Syms* __restrict vlSymsp);
     static void _sequent__TOP__15(Vhyperbus_test_top__Syms* __restrict vlSymsp);
+    static void _sequent__TOP__17(Vhyperbus_test_top__Syms* __restrict vlSymsp);
     static void _sequent__TOP__18(Vhyperbus_test_top__Syms* __restrict vlSymsp);
-    static void _sequent__TOP__19(Vhyperbus_test_top__Syms* __restrict vlSymsp);
     static void _sequent__TOP__20(Vhyperbus_test_top__Syms* __restrict vlSymsp);
+    static void _sequent__TOP__21(Vhyperbus_test_top__Syms* __restrict vlSymsp);
+    static void _sequent__TOP__22(Vhyperbus_test_top__Syms* __restrict vlSymsp);
     static void _sequent__TOP__4(Vhyperbus_test_top__Syms* __restrict vlSymsp);
-    static void _sequent__TOP__7(Vhyperbus_test_top__Syms* __restrict vlSymsp);
-    static void _settle__TOP__13(Vhyperbus_test_top__Syms* __restrict vlSymsp);
+    static void _sequent__TOP__5(Vhyperbus_test_top__Syms* __restrict vlSymsp);
+    static void _sequent__TOP__8(Vhyperbus_test_top__Syms* __restrict vlSymsp);
+    static void _settle__TOP__16(Vhyperbus_test_top__Syms* __restrict vlSymsp);
     static void _settle__TOP__2(Vhyperbus_test_top__Syms* __restrict vlSymsp) VL_ATTR_COLD;
   private:
     static void traceChgSub0(void* userp, VerilatedVcd* tracep);

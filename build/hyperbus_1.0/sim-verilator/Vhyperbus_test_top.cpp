@@ -94,8 +94,16 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__4(Vhyperbus_test_top__Syms
     }
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__7(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__7\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__5(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__5\n"); );
+    Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
+    // Body
+    vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__clk_oe90 
+        = vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__clk_oe;
+}
+
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__8(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__8\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     if (vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__rwds_oe) {
@@ -110,8 +118,16 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__7(Vhyperbus_test_top__Syms
     }
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__11(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__11\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_combo__TOP__12(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_combo__TOP__12\n"); );
+    Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
+    // Body
+    vlTOPp->hbus_clk = ((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__clk_oe90) 
+                        & (IData)(vlTOPp->clk90));
+}
+
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__14(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__14\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     if ((1U & (~ (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__data_oe)))) {
@@ -121,8 +137,8 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__11(Vhyperbus_test_top__Sym
     }
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__12(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__12\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__15(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__15\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     if ((1U & (~ (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__data_oe)))) {
@@ -132,8 +148,8 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__12(Vhyperbus_test_top__Sym
     }
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_settle__TOP__13(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_settle__TOP__13\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_settle__TOP__16(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_settle__TOP__16\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     vlTOPp->hbus_dq = ((((((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__data_oe)
@@ -148,15 +164,15 @@ VL_INLINE_OPT void Vhyperbus_test_top::_settle__TOP__13(Vhyperbus_test_top__Syms
                            ? 0xffU : 0U));
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__14(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__14\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__17(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__17\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     vlTOPp->dataw = vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__ddr_data__DOT__genblk1__DOT__d;
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__15(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__15\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__18(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__18\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     if (vlTOPp->rst) {
@@ -354,8 +370,9 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__15(Vhyperbus_test_top__Sym
                                                & vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__ca);
                                         vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__data_oe = 1U;
                                         vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__rwds_oe = 0U;
-                                        vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
-                                        vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__clk_oe = 0U;
+                                        vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 3U;
+                                        vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 4U;
+                                        vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__clk_oe = 1U;
                                         vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__ca 
                                             = (0xdfffffffffffULL 
                                                & vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__ca);
@@ -400,16 +417,8 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__15(Vhyperbus_test_top__Sym
     vlTOPp->busy = (1U != (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state));
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_combo__TOP__17(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_combo__TOP__17\n"); );
-    Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
-    // Body
-    vlTOPp->hbus_clk = ((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__clk_oe) 
-                        & (~ (IData)(vlTOPp->clk90)));
-}
-
-VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__18(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__18\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__20(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__20\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     if ((1U & (~ (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__rwds_oe)))) {
@@ -421,8 +430,8 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__18(Vhyperbus_test_top__Sym
         = vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__rwds_oe;
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__19(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__19\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__21(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__21\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     if ((1U & (~ (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__rwds_oe)))) {
@@ -432,8 +441,8 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__19(Vhyperbus_test_top__Sym
     }
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__20(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__20\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__22(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__22\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     vlTOPp->hbus_rwds = ((((((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__rwds_oe) 
@@ -452,40 +461,44 @@ void Vhyperbus_test_top::_eval(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
     if (((IData)(vlTOPp->clk) & (~ (IData)(vlTOPp->__Vclklast__TOP__clk)))) {
         vlTOPp->_sequent__TOP__4(vlSymsp);
     }
-    if (((~ (IData)(vlTOPp->clk)) & (IData)(vlTOPp->__Vclklast__TOP__clk))) {
-        vlTOPp->_sequent__TOP__7(vlSymsp);
+    if (((IData)(vlTOPp->clk90) & (~ (IData)(vlTOPp->__Vclklast__TOP__clk90)))) {
+        vlTOPp->_sequent__TOP__5(vlSymsp);
     }
+    if (((~ (IData)(vlTOPp->clk)) & (IData)(vlTOPp->__Vclklast__TOP__clk))) {
+        vlTOPp->_sequent__TOP__8(vlSymsp);
+    }
+    vlTOPp->_combo__TOP__12(vlSymsp);
     if (((IData)(vlTOPp->__VinpClk__TOP__hbus_rwds) 
          & (~ (IData)(vlTOPp->__Vclklast__TOP____VinpClk__TOP__hbus_rwds)))) {
-        vlTOPp->_sequent__TOP__11(vlSymsp);
+        vlTOPp->_sequent__TOP__14(vlSymsp);
     }
     if (((~ (IData)(vlTOPp->__VinpClk__TOP__hbus_rwds)) 
          & (IData)(vlTOPp->__Vclklast__TOP____VinpClk__TOP__hbus_rwds))) {
-        vlTOPp->_sequent__TOP__12(vlSymsp);
+        vlTOPp->_sequent__TOP__15(vlSymsp);
     }
     if (((IData)(vlTOPp->__VinpClk__TOP__hbus_rwds) 
          ^ (IData)(vlTOPp->__Vclklast__TOP____VinpClk__TOP__hbus_rwds))) {
-        vlTOPp->_sequent__TOP__14(vlSymsp);
+        vlTOPp->_sequent__TOP__17(vlSymsp);
     }
     if (((IData)(vlTOPp->clk) & (~ (IData)(vlTOPp->__Vclklast__TOP__clk)))) {
-        vlTOPp->_sequent__TOP__15(vlSymsp);
+        vlTOPp->_sequent__TOP__18(vlSymsp);
         vlTOPp->__Vm_traceActivity[1U] = 1U;
     }
     if (((IData)(vlTOPp->clk) ^ (IData)(vlTOPp->__Vclklast__TOP__clk))) {
-        vlTOPp->_settle__TOP__13(vlSymsp);
+        vlTOPp->_settle__TOP__16(vlSymsp);
     }
-    vlTOPp->_combo__TOP__17(vlSymsp);
     if (((IData)(vlTOPp->clk) & (~ (IData)(vlTOPp->__Vclklast__TOP__clk)))) {
-        vlTOPp->_sequent__TOP__18(vlSymsp);
+        vlTOPp->_sequent__TOP__20(vlSymsp);
     }
     if (((~ (IData)(vlTOPp->clk)) & (IData)(vlTOPp->__Vclklast__TOP__clk))) {
-        vlTOPp->_sequent__TOP__19(vlSymsp);
+        vlTOPp->_sequent__TOP__21(vlSymsp);
     }
     if (((IData)(vlTOPp->clk) ^ (IData)(vlTOPp->__Vclklast__TOP__clk))) {
-        vlTOPp->_sequent__TOP__20(vlSymsp);
+        vlTOPp->_sequent__TOP__22(vlSymsp);
     }
     // Final
     vlTOPp->__Vclklast__TOP__clk = vlTOPp->clk;
+    vlTOPp->__Vclklast__TOP__clk90 = vlTOPp->clk90;
     vlTOPp->__Vclklast__TOP____VinpClk__TOP__hbus_rwds 
         = vlTOPp->__VinpClk__TOP__hbus_rwds;
     vlTOPp->__VinpClk__TOP__hbus_rwds = vlTOPp->hbus_rwds;

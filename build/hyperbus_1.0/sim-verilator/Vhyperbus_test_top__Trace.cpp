@@ -51,8 +51,9 @@ void Vhyperbus_test_top::traceChgSub0(void* userp, VerilatedVcd* tracep) {
         tracep->chgSData(oldp+23,(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__ddr_data__DOT__genblk1__DOT__d),16);
         tracep->chgCData(oldp+24,(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__ddr_rwds__DOT__genblk1__DOT__d),2);
         tracep->chgBit(oldp+25,(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__rwds_oe));
-        tracep->chgCData(oldp+26,(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__ddr_data__DOT__genblk1__DOT__q),8);
-        tracep->chgBit(oldp+27,(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__ddr_rwds__DOT__genblk1__DOT__q));
+        tracep->chgBit(oldp+26,(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__clk_oe90));
+        tracep->chgCData(oldp+27,(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__ddr_data__DOT__genblk1__DOT__q),8);
+        tracep->chgBit(oldp+28,(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__ddr_rwds__DOT__genblk1__DOT__q));
     }
 }
 
