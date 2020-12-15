@@ -79,6 +79,9 @@ reg                     clk_oe90;
  * Bidirectional DDR IO.
  * The in and out ports provide 2*WIDTH on one edge of the clock
  */
+
+// Output data is clocked from the 200MHz clock
+// Input data is clocked using the RWDS strobe from the slave
 ioddr
 #(
     .TARGET(TARGET),
@@ -125,7 +128,9 @@ reg [COUNTER_WIDTH-1:0] count;
 
 assign dataw = ca[47:32];
 
-// Cross clocks
+// Cross clocks. This prevents the 90 degree clock from rising early for a half cycle.
+// The first rising edge of clk90 is half way through the high period of the input clock,
+// after the output data has been driven on DQ.
 always @(posedge clk90) begin
     clk_oe90 <= clk_oe;
 end
@@ -139,6 +144,7 @@ always @(posedge clk) begin
             STATE_RESET: begin
                 count <= count - 1;
                 clk_oe <= 1'b0;
+                rwds_oe <= 1'b0;
                 if(count == {COUNTER_WIDTH{1'b0}}) begin
                     state <= STATE_IDLE;
                 end
@@ -193,9 +199,6 @@ always @(posedge clk) begin
 
                 if(count == 4'd0) begin
                     $display("Command sent");
-                    //state <= rrq ? STATE_READ : STATE_WRITE;
-                    //data_oe <= rrq ? 1'b0 : 1'b1;
-                    //rwds_oe <= 1'b0;
 
                     if(rwdsr == 2'b11) begin
                         $display("2x latency");
