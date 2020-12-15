@@ -143,6 +143,7 @@ always @(posedge clk or posedge rst) begin
     if(rst) begin
         clk_oe <= 1'b0;
         rwds_oe <= 1'b0;
+        data_oe <= 1'b0;
         state <= STATE_RESET;
         count <= RESET_COUNT;
     end else begin
@@ -151,6 +152,7 @@ always @(posedge clk or posedge rst) begin
                 count <= count - 1;
                 clk_oe <= 1'b0;
                 rwds_oe <= 1'b0;
+                data_oe <= 1'b0;
                 if(count == {COUNTER_WIDTH{1'b0}}) begin
                     state <= STATE_IDLE;
                 end
