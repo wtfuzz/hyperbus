@@ -45,14 +45,15 @@ module hyperbus
 
 localparam COUNTER_WIDTH = $clog2(TACC_COUNT*2);
 
-`define NSTATES 6
+`define NSTATES 7
 
-localparam STATE_IDLE =     `NSTATES'b000001;
-localparam STATE_COMMAND =  `NSTATES'b000010;
-localparam STATE_LATENCY =  `NSTATES'b000100;
-localparam STATE_READ =     `NSTATES'b001000;
-localparam STATE_WRITE =    `NSTATES'b010000;
-localparam STATE_ERROR =    `NSTATES'b100000;
+localparam STATE_IDLE =     `NSTATES'b0000001;
+localparam STATE_START =    `NSTATES'b0000010;
+localparam STATE_COMMAND =  `NSTATES'b0000100;
+localparam STATE_LATENCY =  `NSTATES'b0001000;
+localparam STATE_READ =     `NSTATES'b0010000;
+localparam STATE_WRITE =    `NSTATES'b0100000;
+localparam STATE_ERROR =    `NSTATES'b1000000;
 
 reg [`NSTATES-1:0] state;
 
@@ -66,7 +67,7 @@ wire [1:0]              rwdsw;
 assign dat_o = datar;
 
 // Bidirectional DDR output enable
-reg                     data_oe;
+reg                     data_oe = 1'b1;
 reg                     rwds_oe;
 
 reg                     clk_oe;
@@ -80,9 +81,10 @@ ioddr
     .TARGET(TARGET),
     .WIDTH(WIDTH)
 ) ddr_data (
-    .clk(clk),
-    .dataw(dataw),
-    .datar(datar),
+    .inclk(hbus_rwds),
+    .outclk(clk),
+    .dat_i(dataw),
+    .dat_o(datar),
     .dq(hbus_dq),
     .oe(data_oe)
 );
@@ -92,9 +94,10 @@ ioddr
     .TARGET(TARGET),
     .WIDTH(1)
 ) ddr_rwds (
-    .clk(clk),
-    .dataw(rwdsw),
-    .datar(rwdsr),
+    .inclk(clk),
+    .outclk(clk),
+    .dat_i(rwdsw),
+    .dat_o(rwdsr),
     .dq(hbus_rwds),
     .oe(rwds_oe)
 );
@@ -104,7 +107,7 @@ assign hbus_csn = ((state == STATE_IDLE) || (state == STATE_ERROR)) ? 1'b1 : 1'b
 assign busy = state == STATE_IDLE ? 1'b0 : 1'b1;
 
 // Clock gate
-assign hbus_clk = clk_oe ? clk90 : 1'b0;
+assign hbus_clk = clk_oe ? ~clk90 : 1'b0;
 
 // Command/Address register
 reg [47:0] ca;
@@ -130,8 +133,6 @@ always @(posedge clk) begin
                 $display("Idle");
 
                 if(rrq | wrq) begin
-                    // Transition to command state
-                    state <= STATE_COMMAND;
 
                     // Load the command/address register
 
@@ -157,18 +158,24 @@ always @(posedge clk) begin
                     // RWDS input
                     rwds_oe <= 1'b0;
 
-                    // 3 cycles to write 48 bits
-                    count <= 4'd3;
+                    // Transition to command state
+                    state <= STATE_START;
 
-                    clk_oe <= 1'b1;
+                    clk_oe <= 1'b0;
+
                 end else begin
                     clk_oe <= 1'b0;
                     state <= STATE_IDLE;
                 end
             end
+            STATE_START: begin
+                // 3 cycles to write 48 bits
+                count <= 4'd3;
+                clk_oe <= 1'b1;
+                state <= STATE_COMMAND;
+            end
             STATE_COMMAND: begin
                 $display("Send command");
-                //dataw <= ca[47:32];
                 data_oe <= 1'b1;
 
                 if(count == 4'd0) begin

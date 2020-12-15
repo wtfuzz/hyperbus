@@ -94,17 +94,18 @@ void Vhyperbus_test_top::traceInitSub0(void* userp, VerilatedVcd* tracep) {
         tracep->declBit(c+17,"hyperbus_test_top hbus0 hbus_rwds", false,-1);
         tracep->declBit(c+1,"hyperbus_test_top hbus0 error_o", false,-1);
         tracep->declBus(c+35,"hyperbus_test_top hbus0 COUNTER_WIDTH", false,-1, 31,0);
-        tracep->declBus(c+36,"hyperbus_test_top hbus0 STATE_IDLE", false,-1, 5,0);
-        tracep->declBus(c+37,"hyperbus_test_top hbus0 STATE_COMMAND", false,-1, 5,0);
-        tracep->declBus(c+38,"hyperbus_test_top hbus0 STATE_LATENCY", false,-1, 5,0);
-        tracep->declBus(c+39,"hyperbus_test_top hbus0 STATE_READ", false,-1, 5,0);
-        tracep->declBus(c+40,"hyperbus_test_top hbus0 STATE_WRITE", false,-1, 5,0);
-        tracep->declBus(c+41,"hyperbus_test_top hbus0 STATE_ERROR", false,-1, 5,0);
-        tracep->declBus(c+2,"hyperbus_test_top hbus0 state", false,-1, 5,0);
+        tracep->declBus(c+36,"hyperbus_test_top hbus0 STATE_IDLE", false,-1, 6,0);
+        tracep->declBus(c+37,"hyperbus_test_top hbus0 STATE_START", false,-1, 6,0);
+        tracep->declBus(c+38,"hyperbus_test_top hbus0 STATE_COMMAND", false,-1, 6,0);
+        tracep->declBus(c+39,"hyperbus_test_top hbus0 STATE_LATENCY", false,-1, 6,0);
+        tracep->declBus(c+40,"hyperbus_test_top hbus0 STATE_READ", false,-1, 6,0);
+        tracep->declBus(c+41,"hyperbus_test_top hbus0 STATE_WRITE", false,-1, 6,0);
+        tracep->declBus(c+42,"hyperbus_test_top hbus0 STATE_ERROR", false,-1, 6,0);
+        tracep->declBus(c+2,"hyperbus_test_top hbus0 state", false,-1, 6,0);
         tracep->declBus(c+3,"hyperbus_test_top hbus0 dataw", false,-1, 15,0);
         tracep->declBus(c+24,"hyperbus_test_top hbus0 datar", false,-1, 15,0);
         tracep->declBus(c+25,"hyperbus_test_top hbus0 rwdsr", false,-1, 1,0);
-        tracep->declBus(c+42,"hyperbus_test_top hbus0 rwdsw", false,-1, 1,0);
+        tracep->declBus(c+43,"hyperbus_test_top hbus0 rwdsw", false,-1, 1,0);
         tracep->declBit(c+4,"hyperbus_test_top hbus0 data_oe", false,-1);
         tracep->declBit(c+26,"hyperbus_test_top hbus0 rwds_oe", false,-1);
         tracep->declBit(c+5,"hyperbus_test_top hbus0 clk_oe", false,-1);
@@ -113,19 +114,21 @@ void Vhyperbus_test_top::traceInitSub0(void* userp, VerilatedVcd* tracep) {
         tracep->declBus(c+9,"hyperbus_test_top hbus0 count", false,-1, 3,0);
         tracep->declBus(c+29,"hyperbus_test_top hbus0 ddr_data TARGET", false,-1, 23,0);
         tracep->declBus(c+30,"hyperbus_test_top hbus0 ddr_data WIDTH", false,-1, 31,0);
-        tracep->declBit(c+10,"hyperbus_test_top hbus0 ddr_data clk", false,-1);
+        tracep->declBit(c+17,"hyperbus_test_top hbus0 ddr_data inclk", false,-1);
+        tracep->declBit(c+10,"hyperbus_test_top hbus0 ddr_data outclk", false,-1);
         tracep->declBit(c+4,"hyperbus_test_top hbus0 ddr_data oe", false,-1);
-        tracep->declBus(c+3,"hyperbus_test_top hbus0 ddr_data dataw", false,-1, 15,0);
-        tracep->declBus(c+24,"hyperbus_test_top hbus0 ddr_data datar", false,-1, 15,0);
+        tracep->declBus(c+3,"hyperbus_test_top hbus0 ddr_data dat_i", false,-1, 15,0);
+        tracep->declBus(c+24,"hyperbus_test_top hbus0 ddr_data dat_o", false,-1, 15,0);
         tracep->declBus(c+16,"hyperbus_test_top hbus0 ddr_data dq", false,-1, 7,0);
         tracep->declBus(c+24,"hyperbus_test_top hbus0 ddr_data genblk1 d", false,-1, 15,0);
         tracep->declBus(c+27,"hyperbus_test_top hbus0 ddr_data genblk1 q", false,-1, 7,0);
         tracep->declBus(c+29,"hyperbus_test_top hbus0 ddr_rwds TARGET", false,-1, 23,0);
-        tracep->declBus(c+43,"hyperbus_test_top hbus0 ddr_rwds WIDTH", false,-1, 31,0);
-        tracep->declBit(c+10,"hyperbus_test_top hbus0 ddr_rwds clk", false,-1);
+        tracep->declBus(c+44,"hyperbus_test_top hbus0 ddr_rwds WIDTH", false,-1, 31,0);
+        tracep->declBit(c+10,"hyperbus_test_top hbus0 ddr_rwds inclk", false,-1);
+        tracep->declBit(c+10,"hyperbus_test_top hbus0 ddr_rwds outclk", false,-1);
         tracep->declBit(c+26,"hyperbus_test_top hbus0 ddr_rwds oe", false,-1);
-        tracep->declBus(c+42,"hyperbus_test_top hbus0 ddr_rwds dataw", false,-1, 1,0);
-        tracep->declBus(c+25,"hyperbus_test_top hbus0 ddr_rwds datar", false,-1, 1,0);
+        tracep->declBus(c+43,"hyperbus_test_top hbus0 ddr_rwds dat_i", false,-1, 1,0);
+        tracep->declBus(c+25,"hyperbus_test_top hbus0 ddr_rwds dat_o", false,-1, 1,0);
         tracep->declBus(c+17,"hyperbus_test_top hbus0 ddr_rwds dq", false,-1, 0,0);
         tracep->declBus(c+25,"hyperbus_test_top hbus0 ddr_rwds genblk1 d", false,-1, 1,0);
         tracep->declBus(c+28,"hyperbus_test_top hbus0 ddr_rwds genblk1 q", false,-1, 0,0);
@@ -157,8 +160,8 @@ void Vhyperbus_test_top::traceFullSub0(void* userp, VerilatedVcd* tracep) {
     if (false && oldp) {}  // Prevent unused
     // Body
     {
-        tracep->fullBit(oldp+1,((0x20U == (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state))));
-        tracep->fullCData(oldp+2,(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state),6);
+        tracep->fullBit(oldp+1,((0x40U == (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state))));
+        tracep->fullCData(oldp+2,(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state),7);
         tracep->fullSData(oldp+3,((0xffffU & (IData)(
                                                      (vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__ca 
                                                       >> 0x20U)))),16);
@@ -193,13 +196,14 @@ void Vhyperbus_test_top::traceFullSub0(void* userp, VerilatedVcd* tracep) {
         tracep->fullBit(oldp+33,(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__dvalid));
         tracep->fullBit(oldp+34,(0U));
         tracep->fullIData(oldp+35,(4U),32);
-        tracep->fullCData(oldp+36,(1U),6);
-        tracep->fullCData(oldp+37,(2U),6);
-        tracep->fullCData(oldp+38,(4U),6);
-        tracep->fullCData(oldp+39,(8U),6);
-        tracep->fullCData(oldp+40,(0x10U),6);
-        tracep->fullCData(oldp+41,(0x20U),6);
-        tracep->fullCData(oldp+42,(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__rwdsw),2);
-        tracep->fullIData(oldp+43,(1U),32);
+        tracep->fullCData(oldp+36,(1U),7);
+        tracep->fullCData(oldp+37,(2U),7);
+        tracep->fullCData(oldp+38,(4U),7);
+        tracep->fullCData(oldp+39,(8U),7);
+        tracep->fullCData(oldp+40,(0x10U),7);
+        tracep->fullCData(oldp+41,(0x20U),7);
+        tracep->fullCData(oldp+42,(0x40U),7);
+        tracep->fullCData(oldp+43,(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__rwdsw),2);
+        tracep->fullIData(oldp+44,(1U),32);
     }
 }

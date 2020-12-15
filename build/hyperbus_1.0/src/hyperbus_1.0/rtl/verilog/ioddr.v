@@ -4,10 +4,11 @@ module ioddr
     parameter WIDTH = 8
 )
 (
-    input                       clk,
+    input                       inclk,
+    input                       outclk,
     input                       oe,
-    input   [(WIDTH<<1)-1:0]    dataw,
-    output  [(WIDTH<<1)-1:0]    datar,
+    input   [(WIDTH<<1)-1:0]    dat_i,
+    output  [(WIDTH<<1)-1:0]    dat_o,
     inout   [WIDTH-1:0]         dq
 );
 
@@ -23,8 +24,8 @@ if(TARGET == "ALTERA") begin : altera_ioddr_gen
         .POWER_UP_HIGH("OFF"),
         .OE_REG("UNUSED")
     ) ddr0 (
-        .inclock(clk),
-        .outclock(clk),
+        .inclock(inclk),
+        .outclock(outclk),
         .oe(oe),
         .outclocken(1'b1),
         .aset(1'b0),
@@ -44,22 +45,32 @@ end else begin
 
     // Tristate
     assign dq = oe ? q : {WIDTH{1'bz}};
-    assign datar = d;
+    assign dat_o = d;
 
-    always @(posedge clk) begin
-        q <= dataw[WIDTH-1:0];
-        if(oe) begin
-        end else begin
+    // Reads on input clock
+    always @(posedge inclk) begin
+        if(!oe) begin
             d[(WIDTH<<1)-1:WIDTH] <= dq;
         end
     end
 
-    always @(negedge clk) begin
-        if(oe) begin
-            q <= dataw[(WIDTH<<1)-1 : WIDTH];
-        end else begin
+    always @(negedge inclk) begin
+        if(!oe) begin
             d[WIDTH-1:0] <= dq;
         end
+    end
+
+    // Writes on output clock
+    always @(posedge outclk) begin
+        if(oe) begin
+            q <= dat_i[WIDTH-1:0];
+        end 
+    end
+
+    always @(negedge outclk) begin
+        if(oe) begin
+            q <= dat_i[(WIDTH<<1)-1 : WIDTH];
+        end 
     end
     /* verilator lint_on MULTIDRIVEN */
 end
@@ -67,3 +78,4 @@ end
 endgenerate
 
 endmodule
+

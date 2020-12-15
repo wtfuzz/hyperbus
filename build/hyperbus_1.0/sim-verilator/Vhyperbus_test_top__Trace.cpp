@@ -23,8 +23,8 @@ void Vhyperbus_test_top::traceChgSub0(void* userp, VerilatedVcd* tracep) {
     // Body
     {
         if (VL_UNLIKELY(vlTOPp->__Vm_traceActivity[1U])) {
-            tracep->chgBit(oldp+0,((0x20U == (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state))));
-            tracep->chgCData(oldp+1,(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state),6);
+            tracep->chgBit(oldp+0,((0x40U == (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state))));
+            tracep->chgCData(oldp+1,(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state),7);
             tracep->chgSData(oldp+2,((0xffffU & (IData)(
                                                         (vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__ca 
                                                          >> 0x20U)))),16);
