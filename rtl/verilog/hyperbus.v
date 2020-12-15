@@ -110,7 +110,7 @@ ioddr
 
 assign hbus_rstn = (state == STATE_RESET) ? 1'b0 : 1'b1;
 assign hbus_csn = (
-    (state == STATE_IDLE) || (state == STATE_ERROR) || (state == STATE_RESET) || (state == 0)) ? 1'b1 : 1'b0;
+    (state == STATE_IDLE) || (state == STATE_ERROR) || (state == STATE_RESET) || (state == {`NSTATES{1'b0}})) ? 1'b1 : 1'b0;
 assign busy = state == STATE_IDLE ? 1'b0 : 1'b1;
 
 // Clock gate
@@ -141,6 +141,8 @@ end
 
 always @(posedge clk or posedge rst) begin
     if(rst) begin
+        clk_oe <= 1'b0;
+        rwds_oe <= 1'b0;
         state <= STATE_RESET;
         count <= RESET_COUNT;
     end else begin
