@@ -6,6 +6,7 @@ filesets:
     rtl:
         files:
             - rtl/verilog/ioddr.v
+            - rtl/verilog/iddr.v
             - rtl/verilog/hyperbus.v
         file_type: verilogSource
 

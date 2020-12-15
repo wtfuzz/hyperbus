@@ -13,17 +13,20 @@ module hyperbus
 )
 (
     // Memory clock
-    input               clk,
+    input                       clk,
     // 90 degree phase shifted clock
-    input               clk90,
-    input               rst,
+    input                       clk90,
+    input                       rst,
 
-    input   [31:0]          addr,
-    input   [(WIDTH<<1)-1:0] din,
-    output  [(WIDTH<<1)-1:0] dout,
-    output                  dready,
-    output                  dvalid,
-    output                  busy,
+    input   [31:0]              adr_i,
+    input   [(WIDTH<<1)-1:0]    dat_i,
+    output  [(WIDTH<<1)-1:0]    dat_o,
+    output                      dready,
+    output                      dvalid,
+    output                      busy,
+
+    // Read from HyperRAM register space
+    input                       reg_space_i,
 
     // Write request
     input                   wrq,
@@ -35,7 +38,9 @@ module hyperbus
     output                  hbus_rstn,
     output                  hbus_csn,
     inout   [WIDTH-1:0]     hbus_dq,
-    inout                   hbus_rwds
+    inout                   hbus_rwds,
+
+    output                  error_o
 );
 
 localparam COUNTER_WIDTH = $clog2(TACC_COUNT*2);
@@ -57,6 +62,8 @@ wire [(WIDTH<<1)-1:0]   dataw;
 wire [(WIDTH<<1)-1:0]   datar;
 wire [1:0]              rwdsr;
 wire [1:0]              rwdsw;
+
+assign dat_o = datar;
 
 // Bidirectional DDR output enable
 reg                     data_oe;
@@ -92,7 +99,7 @@ ioddr
     .oe(rwds_oe)
 );
 
-assign hbus_rstn = 1'b1;
+assign hbus_rstn = ~rst;
 assign hbus_csn = ((state == STATE_IDLE) || (state == STATE_ERROR)) ? 1'b1 : 1'b0;
 assign busy = state == STATE_IDLE ? 1'b0 : 1'b1;
 
@@ -104,6 +111,8 @@ reg [47:0] ca;
 
 reg timeout_error;
 
+assign error_o = state == STATE_ERROR ? 1'b1 : 1'b0;
+
 // Clock counter
 reg [COUNTER_WIDTH-1:0] count;
 
@@ -113,6 +122,8 @@ always @(posedge clk) begin
     if(rst) begin
         state <= STATE_IDLE;
         timeout_error <= 1'b0;
+        clk_oe <= 1'b0;
+        count <= {COUNTER_WIDTH{1'b0}};
     end else begin
         case(state)
             STATE_IDLE: begin
@@ -128,14 +139,14 @@ always @(posedge clk) begin
                     ca[47] <= rrq ? 1'b1 : 1'b0;
 
                     // Address Space = 0 for memory, 1 for registers
-                    ca[46] <= 1'b0;
+                    ca[46] <= reg_space_i;
 
                     // Burst Type = 0: wrapped, 1: linear
                     ca[45] <= 1'b0;
 
-                    ca[44:16] <= addr[31:3];
+                    ca[44:16] <= adr_i[31:3];
                     ca[15:3] <= 13'd0;
-                    ca[2:0] <= addr[2:0];
+                    ca[2:0] <= adr_i[2:0];
 
                     // Prime the write register 
                     //dataw <= ca[47:32];
@@ -168,12 +179,13 @@ always @(posedge clk) begin
 
                     if(rwdsr == 2'b11) begin
                         $display("2x latency");
-                        count <= (TACC_COUNT*2) - 1;
+                        count <= (TACC_COUNT<<1) - 1;
                     end else begin
                         $display("1x latency");
                         count <= TACC_COUNT - 1;
                     end
 
+                    data_oe <= 1'b0;
                     state <= STATE_LATENCY;
                 end else begin
                     // Shift CA register

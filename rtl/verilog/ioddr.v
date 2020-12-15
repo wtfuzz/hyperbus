@@ -4,10 +4,11 @@ module ioddr
     parameter WIDTH = 8
 )
 (
-    input                       clk,
+    input                       inclk,
+    input                       outclk,
     input                       oe,
-    input   [(WIDTH<<1)-1:0]    dataw,
-    output  [(WIDTH<<1)-1:0]    datar,
+    input   [(WIDTH<<1)-1:0]    dat_i,
+    output  [(WIDTH<<1)-1:0]    dat_o,
     inout   [WIDTH-1:0]         dq
 );
 
@@ -23,8 +24,8 @@ if(TARGET == "ALTERA") begin : altera_ioddr_gen
         .POWER_UP_HIGH("OFF"),
         .OE_REG("UNUSED")
     ) ddr0 (
-        .inclock(clk),
-        .outclock(clk),
+        .inclock(inclk),
+        .outclock(outclk),
         .oe(oe),
         .outclocken(1'b1),
         .aset(1'b0),
@@ -67,3 +68,4 @@ end
 endgenerate
 
 endmodule
+

@@ -6,6 +6,9 @@ files:
   name: ../src/hyperbus_1.0/rtl/verilog/ioddr.v
 - core: ::hyperbus:1.0
   file_type: verilogSource
+  name: ../src/hyperbus_1.0/rtl/verilog/iddr.v
+- core: ::hyperbus:1.0
+  file_type: verilogSource
   name: ../src/hyperbus_1.0/rtl/verilog/hyperbus.v
 - core: ::hyperbus:1.0
   file_type: verilogSource

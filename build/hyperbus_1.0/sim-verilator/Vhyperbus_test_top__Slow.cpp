@@ -28,17 +28,12 @@ Vhyperbus_test_top::~Vhyperbus_test_top() {
     VL_DO_CLEAR(delete __VlSymsp, __VlSymsp = nullptr);
 }
 
-void Vhyperbus_test_top::_initial__TOP__1(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_initial__TOP__1\n"); );
+void Vhyperbus_test_top::_settle__TOP__2(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_settle__TOP__2\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
-    vlTOPp->hbus_rstn = 1U;
-}
-
-void Vhyperbus_test_top::_settle__TOP__5(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_settle__TOP__5\n"); );
-    Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
-    // Body
+    vlTOPp->hbus_rstn = (1U & (~ (IData)(vlTOPp->rst)));
+    vlTOPp->dataw = vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__ddr_data__DOT__genblk1__DOT__d;
     vlTOPp->hbus_csn = ((1U == (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)) 
                         | (0x20U == (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)));
     vlTOPp->busy = (1U != (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state));
@@ -66,7 +61,6 @@ void Vhyperbus_test_top::_eval_initial(Vhyperbus_test_top__Syms* __restrict vlSy
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_eval_initial\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
-    vlTOPp->_initial__TOP__1(vlSymsp);
     vlTOPp->__Vclklast__TOP__clk = vlTOPp->clk;
 }
 
@@ -81,7 +75,7 @@ void Vhyperbus_test_top::_eval_settle(Vhyperbus_test_top__Syms* __restrict vlSym
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_eval_settle\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
-    vlTOPp->_settle__TOP__5(vlSymsp);
+    vlTOPp->_settle__TOP__2(vlSymsp);
 }
 
 void Vhyperbus_test_top::_ctor_var_reset() {

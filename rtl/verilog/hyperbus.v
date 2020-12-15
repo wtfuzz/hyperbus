@@ -80,9 +80,10 @@ ioddr
     .TARGET(TARGET),
     .WIDTH(WIDTH)
 ) ddr_data (
-    .clk(clk),
-    .dataw(dataw),
-    .datar(datar),
+    .inclk(hbus_rwds),
+    .outclk(clk),
+    .dat_i(dataw),
+    .dat_o(datar),
     .dq(hbus_dq),
     .oe(data_oe)
 );
@@ -92,9 +93,10 @@ ioddr
     .TARGET(TARGET),
     .WIDTH(1)
 ) ddr_rwds (
-    .clk(clk),
-    .dataw(rwdsw),
-    .datar(rwdsr),
+    .inclk(clk),
+    .outclk(clk),
+    .dat_i(rwdsw),
+    .dat_o(rwdsr),
     .dq(hbus_rwds),
     .oe(rwds_oe)
 );

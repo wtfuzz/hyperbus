@@ -36,9 +36,10 @@ hyperbus #(
     .dvalid     (),
     .error_o    (),
 
-    .addr       (addr),
-    .din        (datar),
-    .dout       (dataw),
+    .reg_space_i (1'b0),
+    .adr_i       (addr),
+    .dat_i       (datar),
+    .dat_o       (dataw),
     .busy       (busy),
     .wrq        (wrq),
     .rrq        (rrq)
