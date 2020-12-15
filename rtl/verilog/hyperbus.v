@@ -131,11 +131,15 @@ assign dataw = ca[47:32];
 // Cross clocks. This prevents the 90 degree clock from rising early for a half cycle.
 // The first rising edge of clk90 is half way through the high period of the input clock,
 // after the output data has been driven on DQ.
-always @(posedge clk90) begin
-    clk_oe90 <= clk_oe;
+always @(posedge clk90 or posedge rst) begin
+    if(rst) begin
+        clk_oe90 <= 1'b0;
+    end else begin
+        clk_oe90 <= clk_oe;
+    end
 end
 
-always @(posedge clk) begin
+always @(posedge clk or posedge rst) begin
     if(rst) begin
         state <= STATE_RESET;
         count <= RESET_COUNT;
