@@ -3,13 +3,15 @@
  *
  * Input Clock = 200MHz
  * tACC = 35ns or 7 clocks
+ * tVCS = 150us (reset initialization time)
  */
 
 module hyperbus
 #(
     parameter TARGET = "ALTERA",
     parameter WIDTH = 8,
-    parameter TACC_COUNT = 7
+    parameter TACC_COUNT = 7,
+    parameter RESET_COUNT = 2
 )
 (
     // Memory clock
@@ -48,7 +50,7 @@ localparam COUNTER_WIDTH = $clog2(TACC_COUNT*2);
 `define NSTATES 7
 
 localparam STATE_IDLE =     `NSTATES'b0000001;
-localparam STATE_START =    `NSTATES'b0000010;
+localparam STATE_RESET =    `NSTATES'b0000010;
 localparam STATE_COMMAND =  `NSTATES'b0000100;
 localparam STATE_LATENCY =  `NSTATES'b0001000;
 localparam STATE_READ =     `NSTATES'b0010000;
@@ -103,8 +105,9 @@ ioddr
     .oe(rwds_oe)
 );
 
-assign hbus_rstn = ~rst;
-assign hbus_csn = ((state == STATE_IDLE) || (state == STATE_ERROR)) ? 1'b1 : 1'b0;
+assign hbus_rstn = (state == STATE_RESET) ? 1'b0 : 1'b1;
+assign hbus_csn = (
+    (state == STATE_IDLE) || (state == STATE_ERROR) || (state == STATE_RESET) || (state == 0)) ? 1'b1 : 1'b0;
 assign busy = state == STATE_IDLE ? 1'b0 : 1'b1;
 
 // Clock gate
@@ -129,12 +132,17 @@ end
 
 always @(posedge clk) begin
     if(rst) begin
-        state <= STATE_IDLE;
-        timeout_error <= 1'b0;
-        clk_oe <= 1'b0;
-        count <= {COUNTER_WIDTH{1'b0}};
+        state <= STATE_RESET;
+        count <= RESET_COUNT;
     end else begin
         case(state)
+            STATE_RESET: begin
+                count <= count - 1;
+                clk_oe <= 1'b0;
+                if(count == {COUNTER_WIDTH{1'b0}}) begin
+                    state <= STATE_IDLE;
+                end
+            end
             STATE_IDLE: begin
                 $display("Idle");
 
@@ -178,11 +186,6 @@ always @(posedge clk) begin
                     clk_oe <= 1'b0;
                     state <= STATE_IDLE;
                 end
-            end
-            STATE_START: begin
-                count <= 4'd3;
-                clk_oe <= 1'b1;
-                state <= STATE_COMMAND;
             end
             STATE_COMMAND: begin
                 $display("Send command");
@@ -257,7 +260,8 @@ always @(posedge clk) begin
 
             default: begin
                 $display("UNHANDLED STATE");
-                state <= STATE_IDLE;
+                count <= RESET_COUNT;
+                state <= STATE_RESET;
             end
         endcase
     end

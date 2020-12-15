@@ -66,15 +66,8 @@ void Vhyperbus_test_top::_eval_initial_loop(Vhyperbus_test_top__Syms* __restrict
     } while (VL_UNLIKELY(__Vchange));
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_combo__TOP__1(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_combo__TOP__1\n"); );
-    Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
-    // Body
-    vlTOPp->hbus_rstn = (1U & (~ (IData)(vlTOPp->rst)));
-}
-
-VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__4(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__4\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__2(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__2\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count 
@@ -94,16 +87,16 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__4(Vhyperbus_test_top__Syms
     }
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__5(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__5\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__3(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__3\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__clk_oe90 
         = vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__clk_oe;
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__8(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__8\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__6(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__6\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     if (vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__rwds_oe) {
@@ -118,16 +111,16 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__8(Vhyperbus_test_top__Syms
     }
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_combo__TOP__12(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_combo__TOP__12\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_combo__TOP__11(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_combo__TOP__11\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     vlTOPp->hbus_clk = ((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__clk_oe90) 
                         & (IData)(vlTOPp->clk90));
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__14(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__14\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__13(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__13\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     if ((1U & (~ (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__data_oe)))) {
@@ -137,8 +130,8 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__14(Vhyperbus_test_top__Sym
     }
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__15(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__15\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__14(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__14\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     if ((1U & (~ (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__data_oe)))) {
@@ -148,63 +141,51 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__15(Vhyperbus_test_top__Sym
     }
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_settle__TOP__16(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_settle__TOP__16\n"); );
-    Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
-    // Body
-    vlTOPp->hbus_dq = ((((((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__data_oe)
-                            ? (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__ddr_data__DOT__genblk1__DOT__q)
-                            : 0U) & ((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__data_oe)
-                                      ? 0xffU : 0U)) 
-                         & ((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__data_oe)
-                             ? 0xffU : 0U)) & ((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__data_oe)
-                                                ? 0xffU
-                                                : 0U)) 
-                       & ((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__data_oe)
-                           ? 0xffU : 0U));
-}
-
-VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__17(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__17\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__15(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__15\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     vlTOPp->dataw = vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__ddr_data__DOT__genblk1__DOT__d;
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__18(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__18\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__16(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__16\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     if (vlTOPp->rst) {
-        vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
-        vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__timeout_error = 0U;
-        vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__clk_oe = 0U;
-        vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 0U;
+        vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
+        vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
     } else {
         if ((0x40U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state))) {
             if (VL_UNLIKELY((0x20U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)))) {
                 VL_WRITEF("UNHANDLED STATE\n");
-                vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
             } else {
                 if (VL_UNLIKELY((0x10U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)))) {
                     VL_WRITEF("UNHANDLED STATE\n");
-                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                 } else {
                     if (VL_UNLIKELY((8U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)))) {
                         VL_WRITEF("UNHANDLED STATE\n");
-                        vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                        vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                        vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                     } else {
                         if (VL_UNLIKELY((4U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)))) {
                             VL_WRITEF("UNHANDLED STATE\n");
-                            vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                            vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                            vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                         } else {
                             if (VL_UNLIKELY((2U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)))) {
                                 VL_WRITEF("UNHANDLED STATE\n");
-                                vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                                vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                                vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                             } else {
                                 if ((1U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state))) {
                                     VL_WRITEF("UNHANDLED STATE\n");
-                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                                 } else {
                                     VL_WRITEF("Error state\n");
                                     vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 0x40U;
@@ -218,23 +199,28 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__18(Vhyperbus_test_top__Sym
             if ((0x20U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state))) {
                 if (VL_UNLIKELY((0x10U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)))) {
                     VL_WRITEF("UNHANDLED STATE\n");
-                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                 } else {
                     if (VL_UNLIKELY((8U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)))) {
                         VL_WRITEF("UNHANDLED STATE\n");
-                        vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                        vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                        vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                     } else {
                         if (VL_UNLIKELY((4U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)))) {
                             VL_WRITEF("UNHANDLED STATE\n");
-                            vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                            vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                            vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                         } else {
                             if (VL_UNLIKELY((2U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)))) {
                                 VL_WRITEF("UNHANDLED STATE\n");
-                                vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                                vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                                vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                             } else {
                                 if ((1U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state))) {
                                     VL_WRITEF("UNHANDLED STATE\n");
-                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                                 } else {
                                     VL_WRITEF("Write state\n");
                                     vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__data_oe = 1U;
@@ -247,19 +233,23 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__18(Vhyperbus_test_top__Sym
                 if ((0x10U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state))) {
                     if (VL_UNLIKELY((8U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)))) {
                         VL_WRITEF("UNHANDLED STATE\n");
-                        vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                        vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                        vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                     } else {
                         if (VL_UNLIKELY((4U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)))) {
                             VL_WRITEF("UNHANDLED STATE\n");
-                            vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                            vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                            vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                         } else {
                             if (VL_UNLIKELY((2U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)))) {
                                 VL_WRITEF("UNHANDLED STATE\n");
-                                vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                                vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                                vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                             } else {
                                 if ((1U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state))) {
                                     VL_WRITEF("UNHANDLED STATE\n");
-                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                                 } else {
                                     VL_WRITEF("Read state\n");
                                     vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count 
@@ -282,15 +272,18 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__18(Vhyperbus_test_top__Sym
                     if ((8U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state))) {
                         if (VL_UNLIKELY((4U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)))) {
                             VL_WRITEF("UNHANDLED STATE\n");
-                            vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                            vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                            vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                         } else {
                             if (VL_UNLIKELY((2U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)))) {
                                 VL_WRITEF("UNHANDLED STATE\n");
-                                vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                                vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                                vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                             } else {
                                 if ((1U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state))) {
                                     VL_WRITEF("UNHANDLED STATE\n");
-                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                                 } else {
                                     VL_WRITEF("Latency state\n");
                                     vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__rwds_oe = 0U;
@@ -311,11 +304,13 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__18(Vhyperbus_test_top__Sym
                         if ((4U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state))) {
                             if (VL_UNLIKELY((2U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)))) {
                                 VL_WRITEF("UNHANDLED STATE\n");
-                                vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                                vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                                vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                             } else {
                                 if ((1U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state))) {
                                     VL_WRITEF("UNHANDLED STATE\n");
-                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                                 } else {
                                     VL_WRITEF("Send command\n");
                                     vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__data_oe = 1U;
@@ -349,11 +344,16 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__18(Vhyperbus_test_top__Sym
                                 if (VL_UNLIKELY((1U 
                                                  & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)))) {
                                     VL_WRITEF("UNHANDLED STATE\n");
-                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                                 } else {
-                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 3U;
-                                    vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__clk_oe = 1U;
-                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 4U;
+                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count 
+                                        = (0xfU & ((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__count) 
+                                                   - (IData)(1U)));
+                                    vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__clk_oe = 0U;
+                                    if ((0U == (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__count))) {
+                                        vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                                    }
                                 }
                             } else {
                                 if ((1U & (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state))) {
@@ -399,7 +399,8 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__18(Vhyperbus_test_top__Sym
                                     }
                                 } else {
                                     VL_WRITEF("UNHANDLED STATE\n");
-                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 1U;
+                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count = 2U;
+                                    vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state = 2U;
                                 }
                             }
                         }
@@ -412,13 +413,32 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__18(Vhyperbus_test_top__Sym
         = vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__count;
     vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state 
         = vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__state;
-    vlTOPp->hbus_csn = ((1U == (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)) 
-                        | (0x40U == (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)));
+    vlTOPp->hbus_rstn = (2U != (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state));
+    vlTOPp->hbus_csn = ((((1U == (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)) 
+                          | (0x40U == (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state))) 
+                         | (2U == (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state))) 
+                        | (0U == (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state)));
     vlTOPp->busy = (1U != (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__state));
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__20(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__20\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__17(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__17\n"); );
+    Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
+    // Body
+    vlTOPp->hbus_dq = ((((((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__data_oe)
+                            ? (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__ddr_data__DOT__genblk1__DOT__q)
+                            : 0U) & ((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__data_oe)
+                                      ? 0xffU : 0U)) 
+                         & ((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__data_oe)
+                             ? 0xffU : 0U)) & ((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__data_oe)
+                                                ? 0xffU
+                                                : 0U)) 
+                       & ((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__data_oe)
+                           ? 0xffU : 0U));
+}
+
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__18(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__18\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     if ((1U & (~ (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__rwds_oe)))) {
@@ -430,8 +450,8 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__20(Vhyperbus_test_top__Sym
         = vlTOPp->__Vdly__hyperbus_test_top__DOT__hbus0__DOT__rwds_oe;
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__21(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__21\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__19(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__19\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     if ((1U & (~ (IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__rwds_oe)))) {
@@ -441,8 +461,8 @@ VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__21(Vhyperbus_test_top__Sym
     }
 }
 
-VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__22(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__22\n"); );
+VL_INLINE_OPT void Vhyperbus_test_top::_sequent__TOP__20(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_sequent__TOP__20\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     vlTOPp->hbus_rwds = ((((((IData)(vlTOPp->hyperbus_test_top__DOT__hbus0__DOT__rwds_oe) 
@@ -457,44 +477,43 @@ void Vhyperbus_test_top::_eval(Vhyperbus_test_top__Syms* __restrict vlSymsp) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vhyperbus_test_top::_eval\n"); );
     Vhyperbus_test_top* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
-    vlTOPp->_combo__TOP__1(vlSymsp);
     if (((IData)(vlTOPp->clk) & (~ (IData)(vlTOPp->__Vclklast__TOP__clk)))) {
-        vlTOPp->_sequent__TOP__4(vlSymsp);
+        vlTOPp->_sequent__TOP__2(vlSymsp);
     }
     if (((IData)(vlTOPp->clk90) & (~ (IData)(vlTOPp->__Vclklast__TOP__clk90)))) {
-        vlTOPp->_sequent__TOP__5(vlSymsp);
+        vlTOPp->_sequent__TOP__3(vlSymsp);
     }
     if (((~ (IData)(vlTOPp->clk)) & (IData)(vlTOPp->__Vclklast__TOP__clk))) {
-        vlTOPp->_sequent__TOP__8(vlSymsp);
+        vlTOPp->_sequent__TOP__6(vlSymsp);
     }
-    vlTOPp->_combo__TOP__12(vlSymsp);
+    vlTOPp->_combo__TOP__11(vlSymsp);
     if (((IData)(vlTOPp->__VinpClk__TOP__hbus_rwds) 
          & (~ (IData)(vlTOPp->__Vclklast__TOP____VinpClk__TOP__hbus_rwds)))) {
-        vlTOPp->_sequent__TOP__14(vlSymsp);
+        vlTOPp->_sequent__TOP__13(vlSymsp);
     }
     if (((~ (IData)(vlTOPp->__VinpClk__TOP__hbus_rwds)) 
          & (IData)(vlTOPp->__Vclklast__TOP____VinpClk__TOP__hbus_rwds))) {
-        vlTOPp->_sequent__TOP__15(vlSymsp);
+        vlTOPp->_sequent__TOP__14(vlSymsp);
     }
     if (((IData)(vlTOPp->__VinpClk__TOP__hbus_rwds) 
          ^ (IData)(vlTOPp->__Vclklast__TOP____VinpClk__TOP__hbus_rwds))) {
+        vlTOPp->_sequent__TOP__15(vlSymsp);
+    }
+    if (((IData)(vlTOPp->clk) & (~ (IData)(vlTOPp->__Vclklast__TOP__clk)))) {
+        vlTOPp->_sequent__TOP__16(vlSymsp);
+        vlTOPp->__Vm_traceActivity[1U] = 1U;
+    }
+    if (((IData)(vlTOPp->clk) ^ (IData)(vlTOPp->__Vclklast__TOP__clk))) {
         vlTOPp->_sequent__TOP__17(vlSymsp);
     }
     if (((IData)(vlTOPp->clk) & (~ (IData)(vlTOPp->__Vclklast__TOP__clk)))) {
         vlTOPp->_sequent__TOP__18(vlSymsp);
-        vlTOPp->__Vm_traceActivity[1U] = 1U;
-    }
-    if (((IData)(vlTOPp->clk) ^ (IData)(vlTOPp->__Vclklast__TOP__clk))) {
-        vlTOPp->_settle__TOP__16(vlSymsp);
-    }
-    if (((IData)(vlTOPp->clk) & (~ (IData)(vlTOPp->__Vclklast__TOP__clk)))) {
-        vlTOPp->_sequent__TOP__20(vlSymsp);
     }
     if (((~ (IData)(vlTOPp->clk)) & (IData)(vlTOPp->__Vclklast__TOP__clk))) {
-        vlTOPp->_sequent__TOP__21(vlSymsp);
+        vlTOPp->_sequent__TOP__19(vlSymsp);
     }
     if (((IData)(vlTOPp->clk) ^ (IData)(vlTOPp->__Vclklast__TOP__clk))) {
-        vlTOPp->_sequent__TOP__22(vlSymsp);
+        vlTOPp->_sequent__TOP__20(vlSymsp);
     }
     // Final
     vlTOPp->__Vclklast__TOP__clk = vlTOPp->clk;
