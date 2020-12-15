@@ -181,7 +181,7 @@ always @(posedge clk or posedge rst) begin
                     //dataw <= ca[47:32];
 
                     // Enable DQ output
-                    data_oe <= 1'b1;
+                    //data_oe <= 1'b1;
 
                     // RWDS input
                     rwds_oe <= 1'b0;
