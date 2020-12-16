@@ -12,7 +12,7 @@ module hyperbus
 #(
     parameter TARGET = "ALTERA",
     parameter WIDTH = 8,
-    parameter TACC_COUNT = 7,
+    parameter TACC_COUNT = 6,
     parameter RESET_COUNT = 2
 )
 (
