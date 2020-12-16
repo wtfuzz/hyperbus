@@ -203,11 +203,11 @@ always @(posedge clk or posedge rst) begin
                     ca[15:3] <= 13'd0;
                     ca[2:0] <= adr_i[2:0];
 
-                    // Prime the write register 
-                    //dataw <= ca[47:32];
-
                     // Enable DQ output
-                    //data_oe <= 1'b1;
+                    data_oe <= 1'b1;
+                    
+                    // Enable the output clock
+                    //clk_oe <= 1'b1;
 
                     // RWDS input
                     rwds_oe <= 1'b0;
@@ -217,9 +217,6 @@ always @(posedge clk or posedge rst) begin
 
                     // Transition to command state
                     state <= STATE_COMMAND;
-
-                    // Enable the output clock
-                    //clk_oe <= 1'b1;
 
                 end else begin
                     clk_oe <= 1'b0;
