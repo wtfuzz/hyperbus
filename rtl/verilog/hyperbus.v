@@ -267,8 +267,8 @@ always @(posedge clk or posedge rst) begin
                         count <= {COUNTER_WIDTH{1'b1}};
                         state <= STATE_READ;
                     end else if(wrq) begin
-                        count <= 1;
-                        rwdsw <= 2'b0;
+                        count <= 4;
+                        rwdsw <= 2'b00;
                         rwds_oe <= 1'b1;
                         state <= STATE_WRITE;
                     end else begin
@@ -300,6 +300,7 @@ always @(posedge clk or posedge rst) begin
             STATE_WRITE: begin
                 $display("Write state");
                 data_oe <= 1'b1;
+                rwds_oe <= 1'b1;
 
                 count <= count - 1;
                 if(count == {COUNTER_WIDTH{1'b0}}) begin
