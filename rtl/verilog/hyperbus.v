@@ -1,5 +1,5 @@
 /**
- * HyperBus Controller
+ * HyperBus Primary Controller
  *
  * Input Clock = 200MHz
  * tACC = 35ns or 7 clocks
@@ -81,13 +81,13 @@ reg                     clk_oe90;
  */
 
 // Output data is clocked from the 200MHz clock
-// Input data is clocked using the RWDS strobe from the slave
+// Input data is clocked using the 200MHz clock, and valid on RWDS strobes
 ioddr
 #(
     .TARGET(TARGET),
     .WIDTH(WIDTH)
 ) ddr_data (
-    .inclk(hbus_rwds),
+    .inclk(clk),
     .outclk(clk),
     .dat_i(dataw),
     .dat_o(datar),
@@ -261,7 +261,7 @@ always @(posedge clk or posedge rst) begin
 
                 if(rwdsr != 2'b00) begin
                     // Minimum cycles to remain idle with CSn high
-                    count <= 4'd3;
+                    count <= 4'd2;
                     state <= STATE_IDLE;
                 end
             end
