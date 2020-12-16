@@ -291,7 +291,7 @@ always @(posedge clk or posedge rst) begin
 
                 if(rwdsr != 2'b00) begin
                     // Minimum cycles to remain idle with CSn high
-                    count <= 4'd2;
+                    count <= 4'd1;
                     state <= STATE_IDLE;
                 end
             end
@@ -304,7 +304,7 @@ always @(posedge clk or posedge rst) begin
                 count <= count - 1;
                 if(count == {COUNTER_WIDTH{1'b0}}) begin
                     data_oe <= 1'b0;
-                    count <= 4'd2;
+                    count <= 4'd1;
                     state <= STATE_IDLE;
                 end
             end
