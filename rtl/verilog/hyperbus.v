@@ -204,7 +204,7 @@ always @(posedge clk or posedge rst) begin
                     ca[2:0] <= adr_i[2:0];
 
                     // Enable DQ output
-                    data_oe <= 1'b1;
+                    //data_oe <= 1'b1;
                     
                     // Enable the output clock
                     //clk_oe <= 1'b1;
