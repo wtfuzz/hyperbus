@@ -134,7 +134,7 @@ assign error_o = state == STATE_ERROR ? 1'b1 : 1'b0;
 // Clock counter
 reg [COUNTER_WIDTH-1:0] count;
 
-assign dataw = ca[47:32];
+assign dataw = (state == STATE_WRITE) ? dat_i : ca[47:32];
 
 
 // Cross clocks. This prevents the 90 degree clock from rising early for a half cycle.
@@ -262,10 +262,17 @@ always @(posedge clk or posedge rst) begin
                 count <= count - 1;
 
                 if(count == {COUNTER_WIDTH{1'b0}}) begin
-                    state <= rrq ? STATE_READ : STATE_WRITE;
+                    if(rrq) begin
+                        // Set a timeout counter
+                        count <= {COUNTER_WIDTH{1'b1}};
+                        state <= STATE_READ;
+                    end else if(wrq) begin
+                        count <= 1;
+                        state <= STATE_WRITE;
+                    end else begin
+                        state <= STATE_IDLE;
+                    end
 
-                    // Set a timeout counter
-                    count <= {COUNTER_WIDTH{1'b1}};
                 end
             end
 
@@ -291,6 +298,13 @@ always @(posedge clk or posedge rst) begin
             STATE_WRITE: begin
                 $display("Write state");
                 data_oe <= 1'b1;
+
+                count <= count - 1;
+                if(count == {COUNTER_WIDTH{1'b0}}) begin
+                    data_oe <= 1'b0;
+                    count <= 4'd2;
+                    state <= STATE_IDLE;
+                end
             end
 
             STATE_ERROR: begin
