@@ -160,7 +160,11 @@ always @(posedge clk or posedge rst) begin
             STATE_IDLE: begin
                 $display("Idle");
 
-                if(rrq | wrq) begin
+                if(count != {COUNTER_WIDTH{1'b0}}) begin
+                    count <= count - 1;
+                end
+
+                if((count == {COUNTER_WIDTH{1'b0}}) && (rrq | wrq)) begin
 
                     // Load the command/address register
 
@@ -186,7 +190,6 @@ always @(posedge clk or posedge rst) begin
                     // RWDS input
                     rwds_oe <= 1'b0;
 
-
                     // 3 cycles to write 48 bits
                     count <= 4'd3;
 
@@ -194,10 +197,11 @@ always @(posedge clk or posedge rst) begin
                     state <= STATE_COMMAND;
 
                     // Enable the output clock
-                    clk_oe <= 1'b0;
+                    //clk_oe <= 1'b1;
 
                 end else begin
                     clk_oe <= 1'b0;
+
                     state <= STATE_IDLE;
                 end
             end
@@ -256,6 +260,8 @@ always @(posedge clk or posedge rst) begin
                 end
 
                 if(rwdsr != 2'b00) begin
+                    // Minimum cycles to remain idle with CSn high
+                    count <= 4'd3;
                     state <= STATE_IDLE;
                 end
             end
