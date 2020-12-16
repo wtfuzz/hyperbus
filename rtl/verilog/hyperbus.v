@@ -69,7 +69,7 @@ reg [`NSTATES-1:0] state;
 wire [(WIDTH<<1)-1:0]   dataw;
 wire [(WIDTH<<1)-1:0]   datar;
 wire [1:0]              rwdsr;
-wire [1:0]              rwdsw;
+reg [1:0]               rwdsw;
 
 reg [(WIDTH<<1)-1:0]    read_reg;
 
@@ -268,6 +268,8 @@ always @(posedge clk or posedge rst) begin
                         state <= STATE_READ;
                     end else if(wrq) begin
                         count <= 1;
+                        rwdsw <= 2'b0;
+                        rwds_oe <= 1'b1;
                         state <= STATE_WRITE;
                     end else begin
                         state <= STATE_IDLE;
