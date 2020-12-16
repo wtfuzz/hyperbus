@@ -71,7 +71,9 @@ wire [(WIDTH<<1)-1:0]   datar;
 wire [1:0]              rwdsr;
 wire [1:0]              rwdsw;
 
-assign dat_o = datar;
+reg [(WIDTH<<1)-1:0]    read_reg;
+
+assign dat_o = read_reg;
 assign dbg_rwds = rwdsr;
 
 // Bidirectional DDR output enable
@@ -147,22 +149,17 @@ always @(posedge clk90 or posedge rst) begin
 end
 
 /** Read strobe logic */
-/*
-always @(posedge hbus_rwds) begin
+always @(posedge clk) begin
     if(state == STATE_READ) begin
-        // Shift the received data into the receive register,
-        // based on the 2 strobe bits from both edges of the RWDS signal
-
-        case(rwdsr)
-            2'b01: read_reg <= read_reg << WIDTH;
-            2'b10: read_reg <= read_reg << WIDTH;
-            2'b11: read_reg <= read_reg << (WIDTH<<1);
-        endcase
-
-        read_reg <= read_reg << (rwdsr == 2'b01) ? 1 : (rwdsr == )
+        // The RWDS DDR output will contain the
+        // bit pattern 2'b01 on valid read strobes.
+        // The RAM chip may hold RWDS low, and we will
+        // ignore the DQ signals until the next strobe
+        if(rwdsr == 2'b01) begin
+            read_reg <= datar;
+        end
     end
 end
-*/
 
 always @(posedge clk or posedge rst) begin
     if(rst) begin
