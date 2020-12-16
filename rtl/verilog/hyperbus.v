@@ -1,6 +1,8 @@
 /**
  * HyperBus Primary Controller
  *
+ * Copyright (C) 2020 Matt Thompson <mthompson@hexwave.com>
+ *
  * Input Clock = 200MHz
  * tACC = 35ns or 7 clocks
  * tVCS = 150us (reset initialization time)
@@ -42,7 +44,10 @@ module hyperbus
     inout   [WIDTH-1:0]     hbus_dq,
     inout                   hbus_rwds,
 
-    output                  error_o
+    output                  error_o,
+
+    // Debug outputs
+    output [1:0]            dbg_rwds
 );
 
 localparam COUNTER_WIDTH = $clog2(TACC_COUNT*2);
@@ -67,6 +72,7 @@ wire [1:0]              rwdsr;
 wire [1:0]              rwdsw;
 
 assign dat_o = datar;
+assign dbg_rwds = rwdsr;
 
 // Bidirectional DDR output enable
 reg                     data_oe = 1'b1;
@@ -128,6 +134,7 @@ reg [COUNTER_WIDTH-1:0] count;
 
 assign dataw = ca[47:32];
 
+
 // Cross clocks. This prevents the 90 degree clock from rising early for a half cycle.
 // The first rising edge of clk90 is half way through the high period of the input clock,
 // after the output data has been driven on DQ.
@@ -138,6 +145,24 @@ always @(posedge clk90 or posedge rst) begin
         clk_oe90 <= clk_oe;
     end
 end
+
+/** Read strobe logic */
+/*
+always @(posedge hbus_rwds) begin
+    if(state == STATE_READ) begin
+        // Shift the received data into the receive register,
+        // based on the 2 strobe bits from both edges of the RWDS signal
+
+        case(rwdsr)
+            2'b01: read_reg <= read_reg << WIDTH;
+            2'b10: read_reg <= read_reg << WIDTH;
+            2'b11: read_reg <= read_reg << (WIDTH<<1);
+        endcase
+
+        read_reg <= read_reg << (rwdsr == 2'b01) ? 1 : (rwdsr == )
+    end
+end
+*/
 
 always @(posedge clk or posedge rst) begin
     if(rst) begin
