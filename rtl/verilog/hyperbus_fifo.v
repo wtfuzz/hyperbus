@@ -180,6 +180,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                         state <= STATE_WRITE;
                     end else begin
                         hbus_rrq <= 1'b1;
+                        rx_wdata <= {FIFO_DATA_WIDTH{1'b0}};
                         state <= STATE_READ;
                     end
                 end
