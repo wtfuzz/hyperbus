@@ -16,14 +16,18 @@ filesets:
 
     tb:
         files:
-            #- tb/s27kl0642.v
             - tb/hyperbus_tb.v
-            #- tb/ioddr_tb.v
+            - tb/hyperbus_fifo_tb.v
         file_type: verilogSource
 
     tb_verilator:
         files:
             - tb/hyperbus_test.cpp
+        file_type: cppSource
+
+    tb_verilator_fifo:
+        files:
+            - tb/hyperbus_fifo_test.cpp
         file_type: cppSource
 
 targets:
@@ -37,6 +41,16 @@ targets:
         tools:
             verilator:
                 verilator_options : [--trace]
+    sim_fifo:
+        default_tool: verilator
+        filesets:
+            - rtl
+            - tb
+            - tb_verilator_fifo
+        toplevel: [hyperbus_fifo_test_top]
+        tools:
+            verilator:
+                verilator_options : [--trace, -Wno-WIDTH]
     default: &base
         filesets: [rtl]
 

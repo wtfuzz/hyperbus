@@ -60,20 +60,26 @@ reg [32:0] cmd_wdata;
 wire [32:0] cmd_rdata;
 reg cmd_rinc;
 reg cmd_winc;
+wire cmd_wfull;
+wire cmd_rempty;
 
 reg [31:0] tx_wdata;
 wire [31:0] tx_rdata;
 reg tx_rinc;
 reg tx_winc;
+wire tx_wfull;
+wire tx_rempty;
 
 reg [31:0] rx_wdata;
 wire [31:0] rx_rdata;
 reg rx_rinc;
 reg rx_winc;
+wire rx_wfull;
+wire rx_rempty;
 
 reg [FIFO_DATA_WIDTH-1:0] tx_shift;
 
-assign hbus_dat_o = tx_shift[HBUS_DATA_WIDTH-1:0];
+assign hbus_dat_o = tx_shift[FIFO_DATA_WIDTH-1:FIFO_DATA_WIDTH-HBUS_DATA_WIDTH];
 assign rx_dat_o = rx_rdata;
 
 /** Command FIFO carries R/W bit and address */
@@ -139,7 +145,6 @@ async_fifo
 
 /** Hyperbus clock domain state machine */
 always @(posedge hbus_clk or posedge hbus_rst) begin
-
     if(hbus_rst) begin
         hbus_rrq <= 1'b0;
         hbus_wrq <= 1'b0; 
@@ -154,6 +159,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
 
         case(state)
             STATE_IDLE: begin
+                $display("FIFO Idle");
                 // Check if there is an available command in the Command FIFO
 
                 hbus_wrq <= 1'b0;
@@ -173,7 +179,6 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                         state <= STATE_WRITE;
                     end else begin
                         hbus_rrq <= 1'b1;
-                        rx_wdata <= hbus_dat_i;
                         state <= STATE_READ;
                     end
                 end
@@ -192,7 +197,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                         count <= count - 1;
 
                         // Shift the valid data into the RX shift register
-                        rx_wdata <= (rx_wdata << HBUS_DATA_WIDTH) | hbus_dat_i;
+                        rx_wdata <= (rx_wdata << HBUS_DATA_WIDTH) | {{FIFO_DATA_WIDTH - HBUS_DATA_WIDTH{1'b0}}, hbus_dat_i};
                     end else begin
                         state <= STATE_READ;
                     end
@@ -215,6 +220,8 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                     end      
                 end
             end
+
+            default: state <= STATE_IDLE;
         endcase
     end
 end
@@ -227,11 +234,11 @@ always @(posedge clk or posedge rst) begin
     end else begin
         cmd_winc <= 1'b0;
         tx_winc <= 1'b0;
-        if(rrq) begin
+        if(rrq & ~cmd_wfull) begin
             // Write a read request to the command FIFO
             cmd_winc <= 1'b1;
             cmd_wdata <= {CMD_READ, adr_i};
-        end else if(wrq) begin
+        end else if(wrq & ~cmd_wfull) begin
             // Write a write request to the command FIFO
             cmd_winc <= 1'b1;
             cmd_wdata <= {CMD_WRITE, adr_i};
