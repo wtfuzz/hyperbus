@@ -7,6 +7,7 @@ module hyperbus_wishbone
 )
 (
     input                           hbus_clk,
+    input                           hbus_rst,
     output [HBUS_ADDR_WIDTH-1:0]    hbus_adr_o,
     input  [HBUS_DATA_WIDTH-1:0]    hbus_dat_i,
     output [HBUS_DATA_WIDTH-1:0]    hbus_dat_o,
@@ -42,9 +43,34 @@ localparam STATE_WAIT =     `NSTATES'b0001000;
 
 reg [`NSTATES-1:0] state;
 
-assign hbus_rrq = (state == STATE_READ) ? 1'b1 : 1'b0;
-assign hbus_wrq = (state == STATE_WRITE) ? 1'b1 : 1'b0;
+reg rrq;
+reg wrq;
 
+hyperbus_fifo fifo_inst (
+  .hbus_clk(hbus_clk),
+  .hbus_rst(hbus_rst),
+  .hbus_adr_o(hbus_adr_o),
+  .hbus_dat_i(hbus_dat_i),
+  .hbus_dat_o(hbus_dat_o),
+  .hbus_rrq(hbus_rrq),
+  .hbus_wrq(hbus_wrq),
+  .hbus_ready(hbus_ready),
+  .hbus_valid(hbus_valid),
+  .hbus_busy(hbus_busy),
+
+  .clk(wb_clk),
+  .rst(wb_rst),
+
+  .rrq(rrq),
+  .wrq(wrq),
+
+  .adr_i(wb_adr_i),
+  .tx_dat_i(wb_dat_i),
+  .rx_dat_o(wb_dat_o),
+
+  .tx_ready(),
+  .rx_valid()
+);
 
 always @(posedge wb_clk) begin
   if(wb_rst) begin
@@ -55,22 +81,19 @@ always @(posedge wb_clk) begin
         state <= STATE_IDLE;
 
         if (wb_cyc_i & wb_stb_i && wb_we_i) begin
+          hbus_addr_o <= wb_adr_i;
           state <= STATE_WRITE;
         end else if (wb_cyc_i & wb_stb_i && !wb_we_i) begin
+          hbus_addr_o <= wb_adr_i;
           state <= STATE_READ;
         end
+      end
+
+      STATE_READ: begin
 
       end
     endcase
   end
-end
-
-/* Wishbone Writes */
-always @(posedge wb_clk) begin
-end
-
-/* Wishbone Reads */
-always @(posedge wb_clk) begin
 end
 
 always @(posedge wb_clk) begin

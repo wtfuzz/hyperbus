@@ -8,8 +8,11 @@ filesets:
             - rtl/verilog/ioddr.v
             - rtl/verilog/iddr.v
             - rtl/verilog/hyperbus.v
+            - rtl/verilog/hyperbus_fifo.v
             - rtl/verilog/hyperbus_wishbone.v
         file_type: verilogSource
+        depend:
+            - async_fifo
 
     tb:
         files:
