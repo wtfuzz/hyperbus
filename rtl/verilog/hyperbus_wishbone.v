@@ -22,6 +22,7 @@ module hyperbus_wishbone
     input [WB_ADDR_WIDTH-1:0]       wb_adr_i,
     input [WB_DATA_WIDTH-1:0]       wb_dat_i,
     input                           wb_we_i,
+    input [3:0]                     wb_sel_i,
     input                           wb_cyc_i,
     input                           wb_stb_i,
     input         [2:0]             wb_cti_i,
