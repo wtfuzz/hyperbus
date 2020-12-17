@@ -69,6 +69,9 @@ localparam STATE_ERROR =    `NSTATES'b1000000;
 
 reg [`NSTATES-1:0] state;
 
+assign ready = (state == STATE_WRITE) ? 1'b1 : 1'b0;
+assign valid = (state == STATE_READ) ? 1'b1 : 1'b0;
+
 // Double width input, output, and rwds signals
 // at half the DDR clock rate.
 wire [(WIDTH<<1)-1:0]   dataw;
