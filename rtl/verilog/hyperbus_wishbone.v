@@ -90,10 +90,10 @@ always @(posedge wb_clk) begin
       STATE_IDLE: begin
         state <= STATE_IDLE;
 
-        if (wb_cyc_i & wb_stb_i && wb_we_i) begin
+        if (~wb_ack_o & wb_cyc_i & wb_stb_i & wb_we_i) begin
           wrq <= 1'b1;
           state <= STATE_WRITE;
-        end else if (wb_cyc_i & wb_stb_i && !wb_we_i) begin
+        end else if (~wb_ack_o & wb_cyc_i & wb_stb_i & ~wb_we_i) begin
           rrq <= 1'b1;
           state <= STATE_READ;
         end
