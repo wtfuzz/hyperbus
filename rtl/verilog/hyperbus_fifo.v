@@ -74,6 +74,7 @@ reg rx_winc;
 reg [FIFO_DATA_WIDTH-1:0] tx_shift;
 
 assign hbus_dat_o = tx_shift[HBUS_DATA_WIDTH-1:0];
+assign rx_dat_o = rx_rdata;
 
 /** Command FIFO carries R/W bit and address */
 async_fifo
@@ -241,7 +242,6 @@ always @(posedge clk) begin
     end
 
     if(~rx_rempty) begin
-        rx_dat_o <= rx_rdata;
         rx_valid <= 1'b1;
         rx_rinc <= 1'b1;
     end
