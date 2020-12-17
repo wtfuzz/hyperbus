@@ -195,7 +195,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                     //if(hbus_valid && rx_rempty) begin
                     if(hbus_valid) begin
                         if(count == 1) begin
-                            hbus_rrq <= 1'b0;
+                            //hbus_rrq <= 1'b0;
                             //rx_winc <= 1'b1;
                             //state <= STATE_IDLE;
                         end
