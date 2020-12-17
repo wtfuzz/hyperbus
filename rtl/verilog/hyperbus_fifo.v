@@ -156,6 +156,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
 
         cmd_rinc <= 1'b0;
         tx_rinc <= 1'b0;
+        rx_winc <= 1'b0;
 
         case(state)
             STATE_IDLE: begin
@@ -207,12 +208,15 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
             STATE_WRITE: begin
                 if(count == 0) begin
                     tx_rinc <= 1'b1;
+                    hbus_wrq <= 1'b0;
                     state <= STATE_IDLE;
                 end else begin
                     if(hbus_ready && ~tx_rempty) begin
+                        /*
                         if(count == 1) begin
                             hbus_wrq <= 1'b0;
                         end
+                        */
                         count <= count - 1;
 
                         // Shift the TX register

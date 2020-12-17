@@ -44,33 +44,25 @@ end else begin
     reg [WIDTH-1:0] q;
 
     // Tristate
-    assign dq = oe ? q : {WIDTH{1'bz}};
+    assign dq = oe ? q : {WIDTH{1'b1}};
     assign dat_o = d;
 
     // Reads on input clock
     always @(posedge inclk) begin
-        if(!oe) begin
-            d[(WIDTH<<1)-1:WIDTH] <= dq;
-        end
+        d[(WIDTH<<1)-1:WIDTH] <= dq;
     end
 
     always @(negedge inclk) begin
-        if(!oe) begin
-            d[WIDTH-1:0] <= dq;
-        end
+        d[WIDTH-1:0] <= dq;
     end
 
     // Writes on output clock
     always @(posedge outclk) begin
-        if(oe) begin
-            q <= dat_i[WIDTH-1:0];
-        end 
+        q <= dat_i[WIDTH-1:0];
     end
 
     always @(negedge outclk) begin
-        if(oe) begin
-            q <= dat_i[(WIDTH<<1)-1 : WIDTH];
-        end 
+        q <= dat_i[(WIDTH<<1)-1 : WIDTH];
     end
     /* verilator lint_on MULTIDRIVEN */
 end

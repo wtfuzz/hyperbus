@@ -217,7 +217,7 @@ always @(posedge clk or posedge rst) begin
                     ca[2:0] <= adr_i[2:0];
 
                     // Enable DQ output
-                    //data_oe <= 1'b1;
+                    // data_oe <= 1'b1;
                     
                     // Enable the output clock
                     //clk_oe <= 1'b1;
@@ -280,6 +280,7 @@ always @(posedge clk or posedge rst) begin
                         count <= 1;
                         rwdsw <= 2'b00;
                         rwds_oe <= 1'b1;
+                        data_oe <= 1'b1;
                         state <= STATE_WRITE;
                     end else begin
                         state <= STATE_IDLE;
