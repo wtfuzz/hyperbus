@@ -83,11 +83,11 @@ always @(posedge wb_clk) begin
   end else begin
 
     wb_ack_o <= 1'b0;
+    rrq <= 1'b0;
+    wrq <= 1'b0;
 
     case(state)
       STATE_IDLE: begin
-        rrq <= 1'b0;
-        wrq <= 1'b0;
         state <= STATE_IDLE;
 
         if (wb_cyc_i & wb_stb_i && wb_we_i) begin
