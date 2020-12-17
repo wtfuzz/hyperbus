@@ -139,14 +139,19 @@ async_fifo
 
 /** Hyperbus clock domain state machine */
 always @(posedge hbus_clk or posedge hbus_rst) begin
-    cmd_rinc <= 1'b0;
-    tx_rinc <= 1'b0;
 
     if(hbus_rst) begin
         hbus_rrq <= 1'b0;
         hbus_wrq <= 1'b0; 
+        cmd_rinc <= 1'b0;
+        tx_rinc <= 1'b0;
+        
         state <= STATE_IDLE;
     end else begin
+        
+        cmd_rinc <= 1'b0;
+        tx_rinc <= 1'b0;
+
         case(state)
             STATE_IDLE: begin
                 // Check if there is an available command in the Command FIFO
