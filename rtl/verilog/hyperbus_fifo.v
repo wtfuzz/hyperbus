@@ -173,6 +173,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                         state <= STATE_WRITE;
                     end else begin
                         hbus_rrq <= 1'b1;
+                        rx_wdata <= hbus_dat_i;
                         state <= STATE_READ;
                     end
                 end
