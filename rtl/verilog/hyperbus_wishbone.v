@@ -2,6 +2,7 @@ module hyperbus_wishbone
 #(
     parameter WB_DATA_WIDTH = 32,
     parameter WB_ADDR_WIDTH = 32,
+    parameter HBUS_ADDR_WIDTH = 32,
     parameter HBUS_DATA_WIDTH = 16
 )
 (
