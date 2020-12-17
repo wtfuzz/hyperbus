@@ -80,7 +80,7 @@ assign rx_dat_o = rx_rdata;
 async_fifo
 #(
   .DSIZE(HBUS_ADDR_WIDTH + 1),
-  .ASIZE(1)
+  .ASIZE(2)
 ) cmd_fifo (
   .wclk(clk),
   .wrst_n(~rst),
@@ -100,7 +100,7 @@ async_fifo
 async_fifo
 #(
   .DSIZE(32),
-  .ASIZE(1)
+  .ASIZE(2)
 ) tx_fifo (
   .wclk(clk),
   .wrst_n(~rst),
@@ -120,7 +120,7 @@ async_fifo
 async_fifo
 #(
   .DSIZE(32),
-  .ASIZE(1)
+  .ASIZE(2)
 ) rx_fifo (
   .wclk(hbus_clk),
   .wrst_n(~hbus_rst),
@@ -148,7 +148,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
         
         state <= STATE_IDLE;
     end else begin
-        
+
         cmd_rinc <= 1'b0;
         tx_rinc <= 1'b0;
 

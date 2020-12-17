@@ -1,0 +1,2 @@
+build:
+  trigger: fpga/riscv-soc
