@@ -169,6 +169,8 @@ always @(posedge clk) begin
             valid <= 1'b1;
             read_reg <= datar;
         end
+    end else begin
+        valid <= 1'b0;
     end
 end
 
