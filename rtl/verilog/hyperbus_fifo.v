@@ -239,7 +239,6 @@ always @(posedge clk) begin
 
     if(tx_rempty) begin
         tx_ready <= 1'b1;
-        tx_winc <= 1'b1;
     end
 
     if(~rx_rempty) begin
