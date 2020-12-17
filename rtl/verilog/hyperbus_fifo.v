@@ -15,7 +15,7 @@ module hyperbus_fifo
     input                               hbus_rst,
     output reg [HBUS_ADDR_WIDTH-1:0]    hbus_adr_o,
     input  [HBUS_DATA_WIDTH-1:0]        hbus_dat_i,
-    output [HBUS_DATA_WIDTH-1:0]        hbus_dat_o,
+    output reg [HBUS_DATA_WIDTH-1:0]    hbus_dat_o,
     output reg                          hbus_rrq,
     output reg                          hbus_wrq,
     input                               hbus_ready,
@@ -62,7 +62,7 @@ reg cmd_rinc;
 reg cmd_winc;
 
 reg [31:0] tx_wdata;
-wire [31:0] tx_rdata;
+reg [31:0] tx_rdata;
 reg tx_rinc;
 reg tx_winc;
 
@@ -195,6 +195,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                         count <= count - 1;
 
                         // Shift the TX register
+                        hbus_dat_o <= tx_rdata;
                         tx_rdata <= (tx_rdata >> HBUS_DATA_WIDTH);
                     end      
                 end
