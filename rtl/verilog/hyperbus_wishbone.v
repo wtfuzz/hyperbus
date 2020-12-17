@@ -46,6 +46,9 @@ reg [`NSTATES-1:0] state;
 reg rrq;
 reg wrq;
 
+wire tx_ready;
+wire rx_valid;
+
 hyperbus_fifo fifo_inst (
   .hbus_clk(hbus_clk),
   .hbus_rst(hbus_rst),
@@ -68,34 +71,52 @@ hyperbus_fifo fifo_inst (
   .tx_dat_i(wb_dat_i),
   .rx_dat_o(wb_dat_o),
 
-  .tx_ready(),
-  .rx_valid()
+  .tx_ready(tx_ready),
+  .rx_valid(rx_valid)
 );
 
 always @(posedge wb_clk) begin
   if(wb_rst) begin
+    rrq <= 1'b0;
+    wrq <= 1'b0;
     state <= STATE_IDLE;
   end else begin
+
+    wb_ack_o <= 1'b0;
+
     case(state)
       STATE_IDLE: begin
+        rrq <= 1'b0;
+        wrq <= 1'b0;
         state <= STATE_IDLE;
 
         if (wb_cyc_i & wb_stb_i && wb_we_i) begin
-          hbus_addr_o <= wb_adr_i;
+          wrq <= 1'b1;
           state <= STATE_WRITE;
         end else if (wb_cyc_i & wb_stb_i && !wb_we_i) begin
-          hbus_addr_o <= wb_adr_i;
+          rrq <= 1'b1;
           state <= STATE_READ;
         end
       end
 
       STATE_READ: begin
+        if(rx_valid) begin
+          state <= STATE_IDLE;
+          wb_ack_o <= 1'b1;
+        end
+      end
 
+      STATE_WRITE: begin
+        if(tx_ready) begin
+          state <= STATE_IDLE;
+          wb_ack_o <= 1'b1;
+        end
       end
     endcase
   end
 end
 
+/*
 always @(posedge wb_clk) begin
   if (wb_rst)
     wb_ack_o <= 0;
@@ -104,6 +125,7 @@ always @(posedge wb_clk) begin
   else
     wb_ack_o <= 0;
 end
+*/
 
 assign wb_err_o = 0;
 assign wb_rty_o = 0;
