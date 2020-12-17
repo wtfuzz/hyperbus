@@ -191,6 +191,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                     // Write to the RX FIFO 
                     rx_winc <= 1'b1;
                     state <= STATE_IDLE;
+                    hbus_rrq <= 1'b0;
                 end else begin
                     //if(hbus_valid && rx_rempty) begin
                     if(hbus_valid) begin
