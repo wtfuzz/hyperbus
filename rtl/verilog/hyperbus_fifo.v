@@ -233,7 +233,6 @@ end
 /** Data FIFO control */
 always @(posedge clk) begin
     tx_ready <= 1'b0;
-    tx_winc <= 1'b0;
     rx_valid <= 1'b0;
     rx_rinc <= 1'b0;
 
@@ -242,6 +241,7 @@ always @(posedge clk) begin
     end
 
     if(~rx_rempty) begin
+        rx_dat_o <= rx_rdata;
         rx_valid <= 1'b1;
         rx_rinc <= 1'b1;
     end
