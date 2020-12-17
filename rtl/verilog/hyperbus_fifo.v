@@ -140,7 +140,6 @@ async_fifo
 always @(posedge hbus_clk or posedge hbus_rst) begin
     cmd_rinc <= 1'b0;
     tx_rinc <= 1'b0;
-    rx_rinc <= 1'b0;
 
     if(hbus_rst) begin
         hbus_rrq <= 1'b0;
