@@ -52,6 +52,13 @@ always @(posedge wb_clk) begin
     case(state)
       STATE_IDLE: begin
         state <= STATE_IDLE;
+
+        if (wb_cyc_i & wb_stb_i && wb_we_i) begin
+          state <= STATE_WRITE;
+        end else if (wb_cyc_i & wb_stb_i && !wb_we_i) begin
+          state <= STATE_READ;
+        end
+
       end
     endcase
   end
@@ -59,16 +66,10 @@ end
 
 /* Wishbone Writes */
 always @(posedge wb_clk) begin
-  if ((state == STATE_IDLE) && wb_cyc_i & wb_stb_i && wb_we_i) begin
-    state <= STATE_WRITE;
-  end
 end
 
 /* Wishbone Reads */
 always @(posedge wb_clk) begin
-  if ((state == STATE_IDLE) && wb_cyc_i & wb_stb_i & !wb_we_i) begin
-    state <= STATE_READ;
-  end
 end
 
 always @(posedge wb_clk) begin
