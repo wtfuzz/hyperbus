@@ -12,7 +12,7 @@ module hyperbus
 #(
     parameter TARGET = "ALTERA",
     parameter WIDTH = 8,
-    parameter TACC_COUNT = 5,
+    parameter TACC_COUNT = 6,
     parameter RESET_COUNT = 2
 )
 (
@@ -242,10 +242,10 @@ always @(posedge clk or posedge rst) begin
 
                     if(rwdsr == 2'b11) begin
                         $display("2x latency");
-                        wrq ? 16 : count <= (TACC_COUNT<<1) - 1;
+                        count <= (TACC_COUNT<<1) - 1;
                     end else begin
                         $display("1x latency");
-                        wrq ? 8 : count <= TACC_COUNT - 1;
+                        count <= TACC_COUNT - 1;
                     end
 
                     data_oe <= 1'b0;
