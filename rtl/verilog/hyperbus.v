@@ -30,7 +30,7 @@ module hyperbus
     output                      ready,
 
     // Output word is valid on dat_o
-    output                      valid,
+    output reg                  valid,
 
     output                      busy,
 
@@ -70,7 +70,7 @@ localparam STATE_ERROR =    `NSTATES'b1000000;
 reg [`NSTATES-1:0] state;
 
 assign ready = (state == STATE_WRITE) ? 1'b1 : 1'b0;
-assign valid = (state == STATE_READ) ? 1'b1 : 1'b0;
+//assign valid = (state == STATE_READ) ? 1'b1 : 1'b0;
 
 // Double width input, output, and rwds signals
 // at half the DDR clock rate.
@@ -163,7 +163,10 @@ always @(posedge clk) begin
         // bit pattern 2'b01 on valid read strobes.
         // The RAM chip may hold RWDS low, and we will
         // ignore the DQ signals until the next strobe
+
+        valid <= 1'b0;
         if(rwdsr == 2'b01) begin
+            valid <= 1'b1;
             read_reg <= datar;
         end
     end
