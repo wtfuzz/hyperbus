@@ -1,0 +1,7 @@
+{"signal": [
+  {"name": "clk",   "wave": "P.....|..."},
+  {"name": "wrq",   "wave": "01....|.0."},
+  {"name": "rdy",   "wave": "0.1..0|1.0"},
+  {"name": "adr_i", "wave": "x3....|..x", "data": ["0xcaf3f00d"]},
+  {"name": "dat_i", "wave": "x.345x|6xx", "data": ["abad", "1dea", "dead", "beef"]},
+]} 

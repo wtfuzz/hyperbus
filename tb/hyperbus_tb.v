@@ -32,8 +32,8 @@ hyperbus #(
     .hbus_dq    (hbus_dq),
     .hbus_rwds  (hbus_rwds),
 
-    .dready     (),
-    .dvalid     (),
+    .ready     (),
+    .valid     (),
     .error_o    (),
 
     .reg_space_i (1'b0),
@@ -42,7 +42,9 @@ hyperbus #(
     .dat_o       (dataw),
     .busy       (busy),
     .wrq        (wrq),
-    .rrq        (rrq)
+    .rrq        (rrq),
+
+    .dbg_rwds   ()
 );
 
 endmodule

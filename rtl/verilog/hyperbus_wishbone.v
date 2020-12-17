@@ -6,10 +6,13 @@ module hyperbus_wishbone
 )
 (
     input                           hbus_clk,
-    input [HBUS_DATA_WIDTH-1:0]     hbus_dat_i,
+    output [HBUS_ADDR_WIDTH-1:0]    hbus_adr_o,
+    input  [HBUS_DATA_WIDTH-1:0]    hbus_dat_i,
     output [HBUS_DATA_WIDTH-1:0]    hbus_dat_o,
     output                          hbus_rrq,
     output                          hbus_wrq,
+    input                           hbus_ready,
+    input                           hbus_valid,
     input                           hbus_busy,
 
     /* Wishbone Interface */
@@ -28,29 +31,42 @@ module hyperbus_wishbone
     output                          wb_rty_o
 );
 
+`define NSTATES 7
+
+localparam STATE_IDLE =     `NSTATES'b0000001;
+localparam STATE_WRITE =    `NSTATES'b0000010;
+localparam STATE_READ =     `NSTATES'b0000100;
+localparam STATE_WAIT =     `NSTATES'b0001000;
+
+reg [`NSTATES-1:0] state;
+
+assign hbus_rrq = (state == STATE_READ) ? 1'b1 : 1'b0;
+assign hbus_wrq = (state == STATE_WRITE) ? 1'b1 : 1'b0;
+
+
 always @(posedge wb_clk) begin
-    
+  if(wb_rst) begin
+    state <= STATE_IDLE;
+  end else begin
+    case(state)
+      STATE_IDLE: begin
+        state <= STATE_IDLE;
+      end
+    endcase
+  end
 end
 
 /* Wishbone Writes */
 always @(posedge wb_clk) begin
-  if (wb_rst) begin
-    datar <= INITIAL_DATAR;
-    dir <= INITIAL_DIR;
-    ddr <= INITIAL_DDR;
-    imr <= {WIDTH{1'b0}};
-    ifr <= {WIDTH{1'b0}}; 
-    ier <= {WIDTH{1'b0}}; 
-  end
-
-  else if (wb_cyc_i & wb_stb_i && wb_we_i) begin
-
+  if ((state == STATE_IDLE) && wb_cyc_i & wb_stb_i && wb_we_i) begin
+    state <= STATE_WRITE;
   end
 end
 
 /* Wishbone Reads */
 always @(posedge wb_clk) begin
-  if (wb_cyc_i & wb_stb_i & !wb_we_i) begin
+  if ((state == STATE_IDLE) && wb_cyc_i & wb_stb_i & !wb_we_i) begin
+    state <= STATE_READ;
   end
 end
 

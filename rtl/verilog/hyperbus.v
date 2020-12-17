@@ -25,29 +25,34 @@ module hyperbus
     input   [31:0]              adr_i,
     input   [(WIDTH<<1)-1:0]    dat_i,
     output  [(WIDTH<<1)-1:0]    dat_o,
-    output                      dready,
-    output                      dvalid,
+
+    // Ready to accept a new input word on dat_i
+    output                      ready,
+
+    // Output word is valid on dat_o
+    output                      valid,
+
     output                      busy,
 
     // Read from HyperRAM register space
     input                       reg_space_i,
 
-    // Write request
-    input                   wrq,
+    // Write request. Hold high until transaction complete.
+    input                       wrq,
 
-    // Read request
-    input                   rrq,
+    // Read request. Hold high until transaction complete.
+    input                       rrq,
 
-    output                  hbus_clk,
-    output                  hbus_rstn,
-    output                  hbus_csn,
-    inout   [WIDTH-1:0]     hbus_dq,
-    inout                   hbus_rwds,
+    output                      hbus_clk,
+    output                      hbus_rstn,
+    output                      hbus_csn,
+    inout   [WIDTH-1:0]         hbus_dq,
+    inout                       hbus_rwds,
 
-    output                  error_o,
+    output                      error_o,
 
     // Debug outputs
-    output [1:0]            dbg_rwds
+    output [1:0]                dbg_rwds
 );
 
 localparam COUNTER_WIDTH = $clog2(TACC_COUNT*2);
@@ -77,15 +82,15 @@ assign dat_o = read_reg;
 assign dbg_rwds = rwdsr;
 
 // Bidirectional DDR output enable
-reg                     data_oe = 1'b1;
-reg                     rwds_oe;
+reg data_oe;
+reg rwds_oe;
 
-reg                     clk_oe;
-reg                     clk_oe90;
+reg clk_oe;
+reg clk_oe90;
 
 /**
  * Bidirectional DDR IO.
- * The in and out ports provide 2*WIDTH on one edge of the clock
+ * Provides 2*WIDTH signal on each rising edge of the clock
  */
 
 // Output data is clocked from the 200MHz clock
