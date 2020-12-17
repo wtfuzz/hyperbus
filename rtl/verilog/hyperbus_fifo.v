@@ -164,7 +164,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                     hbus_adr_o <= cmd_rdata[31:0];
 
                     // TODO: support streaming read/writes for DMA, burst transfers
-                    count <= CYCLES;
+                    count <= CYCLES - 1;
 
                     // Check the R/W bit
                     if(cmd_rdata[32] == CMD_WRITE) begin
