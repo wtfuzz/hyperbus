@@ -56,17 +56,17 @@ reg [NSTATES-1:0] state;
 reg [7:0] count;
 
 /** FIFO Signals */
-wire [32:0] cmd_wdata;
+reg [32:0] cmd_wdata;
 wire [32:0] cmd_rdata;
 reg cmd_rinc;
 reg cmd_winc;
 
-wire [31:0] tx_wdata;
+reg [31:0] tx_wdata;
 wire [31:0] tx_rdata;
 reg tx_rinc;
 reg tx_winc;
 
-wire [31:0] rx_wdata;
+reg [31:0] rx_wdata;
 wire [31:0] rx_rdata;
 reg rx_rinc;
 reg rx_winc;
@@ -233,7 +233,7 @@ always @(posedge clk) begin
     tx_rinc <= 1'b0;
     rx_valid <= 1'b0;
     rx_rinc <= 1'b0;
-    
+
     if(tx_rempty) begin
         tx_ready <= 1'b1;
         tx_rinc <= 1'b1;
