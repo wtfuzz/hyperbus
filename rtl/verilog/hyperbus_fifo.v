@@ -15,7 +15,7 @@ module hyperbus_fifo
     input                               hbus_rst,
     output reg [HBUS_ADDR_WIDTH-1:0]    hbus_adr_o,
     input  [HBUS_DATA_WIDTH-1:0]        hbus_dat_i,
-    output reg [HBUS_DATA_WIDTH-1:0]    hbus_dat_o,
+    output [HBUS_DATA_WIDTH-1:0]        hbus_dat_o,
     output reg                          hbus_rrq,
     output reg                          hbus_wrq,
     input                               hbus_ready,
@@ -62,7 +62,7 @@ reg cmd_rinc;
 reg cmd_winc;
 
 reg [31:0] tx_wdata;
-reg [31:0] tx_rdata;
+wire [31:0] tx_rdata;
 reg tx_rinc;
 reg tx_winc;
 
@@ -70,6 +70,10 @@ reg [31:0] rx_wdata;
 wire [31:0] rx_rdata;
 reg rx_rinc;
 reg rx_winc;
+
+reg [FIFO_DATA_WIDTH-1:0] tx_shift;
+
+assign hbus_dat_o = tx_shift[HBUS_DATA_WIDTH-1:0];
 
 /** Command FIFO carries R/W bit and address */
 async_fifo
@@ -159,9 +163,8 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
 
                     // Check the R/W bit
                     if(cmd_rdata[32] == CMD_WRITE) begin
-                        // On a write command, read from the TX FIFO
-                        tx_rinc <= 1'b1;
                         hbus_wrq <= 1'b1;
+                        tx_shift <= tx_rdata;
                         state <= STATE_WRITE;
                     end else begin
                         hbus_rrq <= 1'b1;
@@ -176,7 +179,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                     rx_winc <= 1'b1;
                     state <= STATE_IDLE;
                 end else begin
-                    if(hbus_valid) begin
+                    if(hbus_valid && rx_rempty) begin
                         count <= count - 1;
 
                         // Shift the valid data into the RX shift register
@@ -189,14 +192,14 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
 
             STATE_WRITE: begin
                 if(count == 0) begin
+                    tx_rinc <= 1'b1;
                     state <= STATE_IDLE;
                 end else begin
-                    if(hbus_ready) begin
+                    if(hbus_ready && ~tx_rempty) begin
                         count <= count - 1;
 
                         // Shift the TX register
-                        hbus_dat_o <= tx_rdata;
-                        tx_rdata <= (tx_rdata >> HBUS_DATA_WIDTH);
+                        tx_shift <= tx_shift << HBUS_DATA_WIDTH;
                     end      
                 end
             end
