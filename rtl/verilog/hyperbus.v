@@ -287,8 +287,13 @@ always @(posedge clk or posedge rst) begin
                 data_oe <= 1'b0;
                 rwds_oe <= 1'b0;
 
-                count <= count - 1;
+                if(!rrq) begin
+                    count <= 4'd1;
+                    state <= STATE_IDLE;
+                end
 
+                /*
+                count <= count - 1;
                 if(count == {COUNTER_WIDTH{1'b0}}) begin
                     timeout_error <= 1'b1;
                     state <= STATE_ERROR;
@@ -299,6 +304,7 @@ always @(posedge clk or posedge rst) begin
                     count <= 4'd1;
                     state <= STATE_IDLE;
                 end
+                */
             end
 
             STATE_WRITE: begin
@@ -306,12 +312,21 @@ always @(posedge clk or posedge rst) begin
                 data_oe <= 1'b1;
                 rwds_oe <= 1'b1;
 
+                if(!wrq) begin
+                    data_oe <= 1'b0;
+                    rwds_oe <= 1'b0;
+                    count <= 4'd1;
+                    state <= STATE_IDLE;
+                end
+
+                /*
                 count <= count - 1;
                 if(count == {COUNTER_WIDTH{1'b0}}) begin
                     data_oe <= 1'b0;
                     count <= 4'd1;
                     state <= STATE_IDLE;
                 end
+                */
             end
 
             STATE_ERROR: begin
