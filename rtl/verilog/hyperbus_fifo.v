@@ -195,11 +195,13 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                     if(hbus_valid) begin
                         if(count == 1) begin
                             hbus_rrq <= 1'b0;
+                            rx_winc <= 1'b1;
+                            state <= STATE_IDLE;
                         end
                         count <= count - 1;
 
                         // Shift the valid data into the RX shift register
-                        rx_wdata <= (rx_wdata << HBUS_DATA_WIDTH) | {{FIFO_DATA_WIDTH - HBUS_DATA_WIDTH{1'b0}}, hbus_dat_i};
+                        rx_wdata <= (rx_wdata << HBUS_DATA_WIDTH) | {{HBUS_DATA_WIDTH{1'b0}}, hbus_dat_i};
                     end else begin
                         state <= STATE_READ;
                     end
