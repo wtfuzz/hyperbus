@@ -310,14 +310,16 @@ always @(posedge clk) begin
     rx_rinc <= 1'b0;
     ack_rinc <= 1'b0;
 
-    if(~ack_rempty) begin
-        tx_ready <= 1'b1;
-        ack_rinc <= 1'b1;
-    end
+    if(busy) begin
+        if(~ack_rempty) begin
+            tx_ready <= 1'b1;
+            ack_rinc <= 1'b1;
+        end
 
-    if(~rx_rempty) begin
-        rx_valid <= 1'b1;
-        rx_rinc <= 1'b1;
+        if(~rx_rempty) begin
+            rx_valid <= 1'b1;
+            rx_rinc <= 1'b1;
+        end
     end
 end
 
