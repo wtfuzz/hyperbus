@@ -166,7 +166,7 @@ always @(posedge clk) begin
         // ignore the DQ signals until the next strobe
 
         valid <= 1'b0;
-        if(rwdsr == 2'b01) begin
+        if(rwdsr == 2'b10) begin
             valid <= 1'b1;
             read_reg <= datar;
         end
