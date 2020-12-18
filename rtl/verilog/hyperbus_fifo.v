@@ -151,6 +151,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
         hbus_wrq <= 1'b0; 
         cmd_rinc <= 1'b0;
         tx_rinc <= 1'b0;
+        rx_winc <= 1'b0;
         
         state <= STATE_IDLE;
     end else begin
