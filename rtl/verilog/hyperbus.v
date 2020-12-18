@@ -161,7 +161,7 @@ end
 always @(posedge clk) begin
     valid <= 1'b0;
 
-    if(state == STATE_READ) begin
+    if((state == STATE_READ) && rrq) begin
         // The RWDS DDR output will contain the
         // bit pattern 2'b01 on valid read strobes.
         // The RAM chip may hold RWDS low, and we will

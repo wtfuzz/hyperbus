@@ -104,7 +104,7 @@ async_fifo
   .awfull(),
 
   .rclk(hbus_clk),
-  .rrst_n(~rst),
+  .rrst_n(~hbus_rst),
   .rinc(cmd_rinc),
   .rdata(cmd_rdata),
   .rempty(cmd_rempty),
@@ -124,7 +124,7 @@ async_fifo
   .awfull(),
 
   .rclk(hbus_clk),
-  .rrst_n(~rst),
+  .rrst_n(~hbus_rst),
   .rinc(tx_rinc),
   .rdata(tx_rdata),
   .rempty(tx_rempty),
@@ -137,7 +137,7 @@ async_fifo
   .ASIZE(2)
 ) rx_fifo (
   .wclk(hbus_clk),
-  .wrst_n(~rst),
+  .wrst_n(~hbus_rst),
   .winc(rx_winc),
   .wdata(rx_wdata),
   .wfull(rx_wfull),
@@ -158,7 +158,7 @@ async_fifo
   .ASIZE(2)
 ) ack_fifo (
   .wclk(hbus_clk),
-  .wrst_n(~rst),
+  .wrst_n(~hbus_rst),
   .winc(ack_winc),
   .wdata(ack_wdata),
   .wfull(ack_wfull),
