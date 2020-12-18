@@ -196,6 +196,9 @@ always @(posedge clk or posedge rst) begin
             STATE_IDLE: begin
                 $display("Idle");
 
+                rwds_oe <= 1'b0;
+                data_oe <= 1'b0;
+
                 if(count != {COUNTER_WIDTH{1'b0}}) begin
                     count <= count - 1;
                 end
@@ -216,9 +219,6 @@ always @(posedge clk or posedge rst) begin
                     ca[44:16] <= adr_i[ADDR_LENGTH-1:3];
                     ca[15:3] <= 13'd0;
                     ca[2:0] <= adr_i[2:0];
-
-                    // RWDS input
-                    rwds_oe <= 1'b0;
 
                     // 3 cycles to write 48 bits
                     count <= 4'd3;
