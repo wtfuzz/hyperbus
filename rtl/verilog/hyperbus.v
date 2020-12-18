@@ -13,7 +13,8 @@ module hyperbus
     parameter TARGET = "ALTERA",
     parameter WIDTH = 8,
     parameter TACC_COUNT = 5,
-    parameter RESET_COUNT = 2
+    parameter RESET_COUNT = 2,
+    parameter ADDR_LENGTH = 32
 )
 (
     // Memory clock
@@ -22,7 +23,7 @@ module hyperbus
     input                       clk90,
     input                       rst,
 
-    input   [31:0]              adr_i,
+    input   [ADDR_LENGTH-1:0]   adr_i,
     input   [(WIDTH<<1)-1:0]    dat_i,
     output  [(WIDTH<<1)-1:0]    dat_o,
 
@@ -42,6 +43,8 @@ module hyperbus
 
     // Read request. Hold high until transaction complete.
     input                       rrq,
+
+    input   []
 
     output                      hbus_clk,
     output                      hbus_rstn,
@@ -165,7 +168,7 @@ always @(posedge clk) begin
         // ignore the DQ signals until the next strobe
 
         valid <= 1'b0;
-        if(rwdsr == 2'b01) begin
+        if(rwdsr == 2'b10) begin
             valid <= 1'b1;
             read_reg <= datar;
         end
@@ -212,7 +215,7 @@ always @(posedge clk or posedge rst) begin
                     // Burst Type = 0: wrapped, 1: linear
                     ca[45] <= 1'b0;
 
-                    ca[44:16] <= adr_i[31:3];
+                    ca[44:16] <= adr_i[ADDR_LENGTH-1:3];
                     ca[15:3] <= 13'd0;
                     ca[2:0] <= adr_i[2:0];
 
@@ -269,15 +272,15 @@ always @(posedge clk or posedge rst) begin
                 $display("Latency state");
 
                 rwds_oe <= 1'b0;
+                data_oe <= 1'b0;
                 count <= count - 1;
 
                 if(count == {COUNTER_WIDTH{1'b0}}) begin
                     if(rrq) begin
                         // Set a timeout counter
-                        count <= {COUNTER_WIDTH{1'b1}};
+                        //count <= {COUNTER_WIDTH{1'b1}};
                         state <= STATE_READ;
                     end else if(wrq) begin
-                        count <= 1;
                         rwdsw <= 2'b00;
                         rwds_oe <= 1'b1;
                         data_oe <= 1'b1;
@@ -297,20 +300,6 @@ always @(posedge clk or posedge rst) begin
                     count <= 4'd1;
                     state <= STATE_IDLE;
                 end
-
-                /*
-                count <= count - 1;
-                if(count == {COUNTER_WIDTH{1'b0}}) begin
-                    timeout_error <= 1'b1;
-                    state <= STATE_ERROR;
-                end
-
-                if(rwdsr != 2'b00) begin
-                    // Minimum cycles to remain idle with CSn high
-                    count <= 4'd1;
-                    state <= STATE_IDLE;
-                end
-                */
             end
 
             STATE_WRITE: begin
@@ -324,15 +313,6 @@ always @(posedge clk or posedge rst) begin
                     count <= 4'd1;
                     state <= STATE_IDLE;
                 end
-
-                /*
-                count <= count - 1;
-                if(count == {COUNTER_WIDTH{1'b0}}) begin
-                    data_oe <= 1'b0;
-                    count <= 4'd1;
-                    state <= STATE_IDLE;
-                end
-                */
             end
 
             STATE_ERROR: begin

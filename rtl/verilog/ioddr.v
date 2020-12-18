@@ -29,10 +29,10 @@ if(TARGET == "ALTERA") begin : altera_ioddr_gen
         .oe(oe),
         .outclocken(1'b1),
         .aset(1'b0),
-        .datain_h(dat_i[(WIDTH<<1)-1 : (WIDTH)]),
-        .datain_l(dat_i[WIDTH-1:0]),
-        .dataout_h(dat_o[(WIDTH<<1)-1 : (WIDTH)]),
-        .dataout_l(dat_o[WIDTH-1:0]),
+        .datain_h(dat_i[WIDTH-1:0]),
+        .datain_l(dat_i[(WIDTH<<1)-1 : (WIDTH)]),
+        .dataout_h(dat_o[WIDTH-1:0]),
+        .dataout_l(dat_o[(WIDTH<<1)-1 : (WIDTH)]),
         .padio(dq)
     );
 
@@ -49,11 +49,11 @@ end else begin
 
     // Reads on input clock
     always @(posedge inclk) begin
-        d[(WIDTH<<1)-1:WIDTH] <= dq;
+        d[WIDTH-1:0] <= dq;
     end
 
     always @(negedge inclk) begin
-        d[WIDTH-1:0] <= dq;
+        d[(WIDTH<<1)-1:WIDTH] <= dq;
     end
 
     // Writes on output clock
