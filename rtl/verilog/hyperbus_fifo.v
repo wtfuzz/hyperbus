@@ -78,6 +78,13 @@ reg rx_winc;
 wire rx_wfull;
 wire rx_rempty;
 
+reg ack_wdata;
+wire ack_rdata;
+reg ack_rinc;
+reg ack_winc;
+wire ack_wfull;
+wire ack_rempty;
+
 reg [FIFO_DATA_WIDTH-1:0] tx_shift;
 
 assign hbus_dat_o = tx_shift[FIFO_DATA_WIDTH-1:FIFO_DATA_WIDTH-HBUS_DATA_WIDTH];
@@ -144,6 +151,27 @@ async_fifo
   .arempty()
 );
 
+// TX ACK fifo
+async_fifo
+#(
+  .DSIZE(1),
+  .ASIZE(2)
+) ack_fifo (
+  .wclk(hbus_clk),
+  .wrst_n(~rst),
+  .winc(ack_winc),
+  .wdata(ack_wdata),
+  .wfull(ack_wfull),
+  .awfull(),
+
+  .rclk(clk),
+  .rrst_n(~rst),
+  .rinc(ack_rinc),
+  .rdata(ack_rdata),
+  .rempty(ack_rempty),
+  .arempty()
+);
+
 /** Hyperbus clock domain state machine */
 always @(posedge hbus_clk or posedge hbus_rst) begin
     if(hbus_rst) begin
@@ -159,6 +187,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
         cmd_rinc <= 1'b0;
         tx_rinc <= 1'b0;
         rx_winc <= 1'b0;
+        ack_winc <= 1'b0;
 
         case(state)
             STATE_IDLE: begin
@@ -212,8 +241,9 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                 if(count == 0) begin
                     tx_rinc <= 1'b1;
 
-                    // Write an ack to the RX FIFO, to sync to the user clock
-                    rx_winc <= 1'b1;
+                    // Write an ack to the ACK FIFO, to sync to the user clock
+                    ack_wdata <= 1'b1;
+                    ack_winc <= 1'b1;
 
                     hbus_wrq <= 1'b0;
                     cmd_rinc <= 1'b1;
@@ -265,10 +295,15 @@ always @(posedge clk) begin
     tx_ready <= 1'b0;
     rx_valid <= 1'b0;
     rx_rinc <= 1'b0;
+    ack_rinc <= 1'b0;
+
+    if(~ack_rempty) begin
+        tx_ready <= 1'b1;
+        ack_rinc <= 1'b1;
+    end
 
     if(~rx_rempty) begin
         rx_valid <= 1'b1;
-        tx_ready <= 1'b1;
         rx_rinc <= 1'b1;
     end
 end
