@@ -49,6 +49,8 @@ localparam STATE_WRITE =    3'b100;
 localparam CMD_READ =       1'b1;
 localparam CMD_WRITE =      1'b0;
 
+localparam FIFO_ASIZE = 8;
+
 // Number of hbus transfers per FIFO transfer
 localparam CYCLES = (FIFO_DATA_WIDTH / HBUS_DATA_WIDTH);
 
@@ -94,7 +96,7 @@ assign rx_dat_o = rx_rdata;
 async_fifo
 #(
   .DSIZE(HBUS_ADDR_WIDTH + 1),
-  .ASIZE(2)
+  .ASIZE(FIFO_ASIZE)
 ) cmd_fifo (
   .wclk(clk),
   .wrst_n(~rst),
@@ -113,8 +115,8 @@ async_fifo
 
 async_fifo
 #(
-  .DSIZE(32),
-  .ASIZE(2)
+  .DSIZE(FIFO_DATA_WIDTH),
+  .ASIZE(FIFO_ASIZE)
 ) tx_fifo (
   .wclk(clk),
   .wrst_n(~rst),
@@ -133,8 +135,8 @@ async_fifo
 
 async_fifo
 #(
-  .DSIZE(32),
-  .ASIZE(2)
+  .DSIZE(FIFO_DATA_WIDTH),
+  .ASIZE(FIFO_ASIZE)
 ) rx_fifo (
   .wclk(hbus_clk),
   .wrst_n(~hbus_rst),
@@ -155,7 +157,7 @@ async_fifo
 async_fifo
 #(
   .DSIZE(1),
-  .ASIZE(2)
+  .ASIZE(FIFO_ASIZE)
 ) ack_fifo (
   .wclk(hbus_clk),
   .wrst_n(~hbus_rst),
