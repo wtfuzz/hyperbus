@@ -295,6 +295,10 @@ always @(posedge clk or posedge rst) begin
                 busy <= 1'b1;
                 tx_wdata <= tx_dat_i;
             end
+        end else begin
+            if(~ack_rempty & ~rx_rempty) begin
+                busy <= 1'b0;
+            end
         end
     end
 end
