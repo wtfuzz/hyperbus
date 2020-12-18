@@ -197,9 +197,9 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                 end else begin
                     //if(hbus_valid && rx_rempty) begin
                     if(hbus_valid) begin
-                        //if(count == 1) begin
-                        hbus_rrq <= 1'b0;
-                        //end
+                        if(count == 1) begin
+                            hbus_rrq <= 1'b0;
+                        end
                         count <= count - 1;
 
                         // Shift the valid data into the RX shift register
