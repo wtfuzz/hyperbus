@@ -130,7 +130,7 @@ async_fifo
   .ASIZE(2)
 ) rx_fifo (
   .wclk(hbus_clk),
-  .wrst_n(~hbus_rst),
+  .wrst_n(~rst),
   .winc(rx_winc),
   .wdata(rx_wdata),
   .wfull(rx_wfull),
