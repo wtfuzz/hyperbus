@@ -269,10 +269,18 @@ always @(posedge clk or posedge rst) begin
                 count <= count - 1;
 
                 if(count == {COUNTER_WIDTH{1'b0}}) begin
-                    rwdsw <= 2'b00;
-                    rwds_oe <= 1'b1;
-                    data_oe <= 1'b1;
-                    state <= rrq ? STATE_READ : STATE_WRITE;
+                    if(wrq) begin
+                        rwdsw <= 2'b00;
+                        rwds_oe <= 1'b1;
+                        data_oe <= 1'b1;
+                        state <= STATE_WRITE;
+                    end else if(rrq) begin
+                        rwds_oe <= 1'b0;
+                        data_oe <= 1'b0;
+                        state <= STATE_READ;
+                    end else begin
+                        state <= STATE_IDLE;
+                    end
                 end
             end
 
