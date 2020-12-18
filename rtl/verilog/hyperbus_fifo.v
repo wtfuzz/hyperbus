@@ -97,7 +97,7 @@ async_fifo
   .awfull(),
 
   .rclk(hbus_clk),
-  .rrst_n(~hbus_rst),
+  .rrst_n(~rst),
   .rinc(cmd_rinc),
   .rdata(cmd_rdata),
   .rempty(cmd_rempty),
@@ -117,7 +117,7 @@ async_fifo
   .awfull(),
 
   .rclk(hbus_clk),
-  .rrst_n(~hbus_rst),
+  .rrst_n(~rst),
   .rinc(tx_rinc),
   .rdata(tx_rdata),
   .rempty(tx_rempty),
