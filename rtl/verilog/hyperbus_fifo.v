@@ -313,13 +313,11 @@ always @(posedge clk or posedge rst) begin
     if(~ack_rempty) begin
         tx_ready <= 1'b1;
         ack_rinc <= 1'b1;
-        busy <= 1'b0;
     end
 
     if(~rx_rempty) begin
         rx_valid <= 1'b1;
         rx_rinc <= 1'b1;
-        busy <= 1'b0;
     end
 end
 
