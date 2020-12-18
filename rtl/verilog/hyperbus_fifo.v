@@ -215,11 +215,9 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                     state <= STATE_IDLE;
                 end else begin
                     if(hbus_ready && ~tx_rempty) begin
-                        /*
                         if(count == 1) begin
                             hbus_wrq <= 1'b0;
                         end
-                        */
                         count <= count - 1;
 
                         // Shift the TX register
