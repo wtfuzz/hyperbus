@@ -240,18 +240,20 @@ always @(posedge clk or posedge rst) begin
     end else begin
         cmd_winc <= 1'b0;
         tx_winc <= 1'b0;
-        if(rrq & (state == STATE_IDLE)) begin
-            // Write a read request to the command FIFO
-            cmd_winc <= 1'b1;
-            cmd_wdata <= {CMD_READ, adr_i};
-        end else if(wrq & (state == STATE_IDLE)) begin
-            // Write a write request to the command FIFO
-            cmd_winc <= 1'b1;
-            cmd_wdata <= {CMD_WRITE, adr_i};
+        if(cmd_rempty) begin
+            if(rrq & (state == STATE_IDLE)) begin
+                // Write a read request to the command FIFO
+                cmd_winc <= 1'b1;
+                cmd_wdata <= {CMD_READ, adr_i};
+            end else if(wrq & (state == STATE_IDLE)) begin
+                // Write a write request to the command FIFO
+                cmd_winc <= 1'b1;
+                cmd_wdata <= {CMD_WRITE, adr_i};
 
-            // Write the data to be written into the TX FIFO
-            tx_winc <= 1'b1;
-            tx_wdata <= tx_dat_i;
+                // Write the data to be written into the TX FIFO
+                tx_winc <= 1'b1;
+                tx_wdata <= tx_dat_i;
+            end
         end
     end
 end
@@ -266,7 +268,7 @@ always @(posedge clk) begin
         tx_ready <= 1'b1;
     end
 
-    if(~rx_rempty && (state == STATE_IDLE)) begin
+    if(~rx_rempty) begin
         rx_valid <= 1'b1;
         rx_rinc <= 1'b1;
     end
