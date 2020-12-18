@@ -296,7 +296,7 @@ always @(posedge clk or posedge rst) begin
                 tx_wdata <= tx_dat_i;
             end
         end else begin
-            if(~ack_rempty & ~rx_rempty) begin
+            if(~ack_rempty | ~rx_rempty) begin
                 busy <= 1'b0;
             end
         end
@@ -304,7 +304,7 @@ always @(posedge clk or posedge rst) begin
 end
 
 /** Data FIFO control */
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     tx_ready <= 1'b0;
     rx_valid <= 1'b0;
     rx_rinc <= 1'b0;
