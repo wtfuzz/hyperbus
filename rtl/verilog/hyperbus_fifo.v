@@ -266,7 +266,7 @@ always @(posedge clk) begin
         tx_ready <= 1'b1;
     end
 
-    if(~rx_rempty) begin
+    if(~rx_rempty && (state == STATE_IDLE)) begin
         rx_valid <= 1'b1;
         rx_rinc <= 1'b1;
     end
