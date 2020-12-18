@@ -62,6 +62,7 @@ reg cmd_rinc;
 reg cmd_winc;
 wire cmd_wfull;
 wire cmd_rempty;
+wire cmd_arempty;
 
 reg [31:0] tx_wdata;
 wire [31:0] tx_rdata;
@@ -100,7 +101,7 @@ async_fifo
   .rinc(cmd_rinc),
   .rdata(cmd_rdata),
   .rempty(cmd_rempty),
-  .arempty()
+  .arempty(cmd_arempty)
 );
 
 async_fifo
@@ -239,11 +240,11 @@ always @(posedge clk or posedge rst) begin
     end else begin
         cmd_winc <= 1'b0;
         tx_winc <= 1'b0;
-        if(rrq & ~cmd_wfull) begin
+        if(rrq & cmd_arempty) begin
             // Write a read request to the command FIFO
             cmd_winc <= 1'b1;
             cmd_wdata <= {CMD_READ, adr_i};
-        end else if(wrq & ~cmd_wfull) begin
+        end else if(wrq & cmd_arempty) begin
             // Write a write request to the command FIFO
             cmd_winc <= 1'b1;
             cmd_wdata <= {CMD_WRITE, adr_i};
