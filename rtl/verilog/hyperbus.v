@@ -250,9 +250,7 @@ always @(posedge clk or posedge rst) begin
 
                     data_oe <= 1'b0;
 
-                    // If we're handling a read request, transition directly
-                    // to STATE_READ and wait for strobes
-                    state <= rrq ? STATE_READ : STATE_LATENCY;
+                    state <= STATE_LATENCY;
                 end else begin
                     // Shift CA register
                     ca <= ca << 16;
@@ -274,7 +272,7 @@ always @(posedge clk or posedge rst) begin
                     rwdsw <= 2'b00;
                     rwds_oe <= 1'b1;
                     data_oe <= 1'b1;
-                    state <= STATE_WRITE;
+                    state <= rrq ? STATE_READ : STATE_WRITE;
                 end
             end
 
