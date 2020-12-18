@@ -211,6 +211,10 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
             STATE_WRITE: begin
                 if(count == 0) begin
                     tx_rinc <= 1'b1;
+
+                    // Write an ack to the RX FIFO, to sync to the user clock
+                    rx_winc <= 1'b1;
+
                     hbus_wrq <= 1'b0;
                     cmd_rinc <= 1'b1;
                     state <= STATE_IDLE;
@@ -240,20 +244,18 @@ always @(posedge clk or posedge rst) begin
     end else begin
         cmd_winc <= 1'b0;
         tx_winc <= 1'b0;
-        if(cmd_rempty) begin
-            if(rrq) begin
-                // Write a read request to the command FIFO
-                cmd_winc <= 1'b1;
-                cmd_wdata <= {CMD_READ, adr_i};
-            end else if(wrq) begin
-                // Write a write request to the command FIFO
-                cmd_winc <= 1'b1;
-                cmd_wdata <= {CMD_WRITE, adr_i};
+        if(rrq) begin
+            // Write a read request to the command FIFO
+            cmd_winc <= 1'b1;
+            cmd_wdata <= {CMD_READ, adr_i};
+        end else if(wrq) begin
+            // Write a write request to the command FIFO
+            cmd_winc <= 1'b1;
+            cmd_wdata <= {CMD_WRITE, adr_i};
 
-                // Write the data to be written into the TX FIFO
-                tx_winc <= 1'b1;
-                tx_wdata <= tx_dat_i;
-            end
+            // Write the data to be written into the TX FIFO
+            tx_winc <= 1'b1;
+            tx_wdata <= tx_dat_i;
         end
     end
 end
@@ -264,12 +266,9 @@ always @(posedge clk) begin
     rx_valid <= 1'b0;
     rx_rinc <= 1'b0;
 
-    if(tx_rempty) begin
-        tx_ready <= 1'b1;
-    end
-
     if(~rx_rempty) begin
         rx_valid <= 1'b1;
+        tx_ready <= 1'b1;
         rx_rinc <= 1'b1;
     end
 end

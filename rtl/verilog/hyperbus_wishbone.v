@@ -112,6 +112,8 @@ always @(posedge wb_clk) begin
           wb_ack_o <= 1'b1;
         end
       end
+
+      default: state <= STATE_IDLE;
     endcase
   end
 end
