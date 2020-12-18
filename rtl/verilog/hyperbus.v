@@ -159,13 +159,14 @@ end
 
 /** Read strobe logic */
 always @(posedge clk) begin
+    valid <= 1'b0;
+    
     if(state == STATE_READ) begin
         // The RWDS DDR output will contain the
         // bit pattern 2'b01 on valid read strobes.
         // The RAM chip may hold RWDS low, and we will
         // ignore the DQ signals until the next strobe
 
-        valid <= 1'b0;
         if(rwdsr == 2'b10) begin
             valid <= 1'b1;
             read_reg <= datar;

@@ -168,7 +168,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                 hbus_wrq <= 1'b0;
                 hbus_rrq <= 1'b0;
 
-                if(!cmd_rempty) begin
+                if(~cmd_rempty) begin
                     hbus_adr_o <= cmd_rdata[31:0];
 
                     // TODO: support streaming read/writes for DMA, burst transfers
@@ -204,8 +204,6 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
 
                         // Shift the valid data into the RX shift register
                         rx_wdata <= (rx_wdata << HBUS_DATA_WIDTH) | {{HBUS_DATA_WIDTH{1'b0}}, hbus_dat_i};
-                    end else begin
-                        state <= STATE_READ;
                     end
                 end
             end
