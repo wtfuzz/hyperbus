@@ -255,7 +255,12 @@ always @(posedge clk or posedge rst) begin
                     end
 
                     data_oe <= 1'b0;
-                    state <= STATE_LATENCY;
+
+                    if(rrq) begin
+                        state <= STATE_READ;
+                    end else begin
+                        state <= STATE_LATENCY;
+                    end
                 end else begin
                     // Shift CA register
                     ca <= ca << 16;
