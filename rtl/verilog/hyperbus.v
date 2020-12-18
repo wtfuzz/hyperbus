@@ -217,12 +217,6 @@ always @(posedge clk or posedge rst) begin
                     ca[15:3] <= 13'd0;
                     ca[2:0] <= adr_i[2:0];
 
-                    // Enable DQ output
-                    // data_oe <= 1'b1;
-                    
-                    // Enable the output clock
-                    //clk_oe <= 1'b1;
-
                     // RWDS input
                     rwds_oe <= 1'b0;
 
@@ -256,11 +250,9 @@ always @(posedge clk or posedge rst) begin
 
                     data_oe <= 1'b0;
 
-                    if(rrq) begin
-                        state <= STATE_READ;
-                    end else begin
-                        state <= STATE_LATENCY;
-                    end
+                    // If we're handling a read request, transition directly
+                    // to STATE_READ and wait for strobes
+                    state <= rrq ? STATE_READ : STATE_LATENCY;
                 end else begin
                     // Shift CA register
                     ca <= ca << 16;
@@ -279,18 +271,10 @@ always @(posedge clk or posedge rst) begin
                 count <= count - 1;
 
                 if(count == {COUNTER_WIDTH{1'b0}}) begin
-                    if(rrq) begin
-                        // Set a timeout counter
-                        //count <= {COUNTER_WIDTH{1'b1}};
-                        state <= STATE_READ;
-                    end else if(wrq) begin
-                        rwdsw <= 2'b00;
-                        rwds_oe <= 1'b1;
-                        data_oe <= 1'b1;
-                        state <= STATE_WRITE;
-                    end else begin
-                        state <= STATE_IDLE;
-                    end
+                    rwdsw <= 2'b00;
+                    rwds_oe <= 1'b1;
+                    data_oe <= 1'b1;
+                    state <= STATE_WRITE;
                 end
             end
 
