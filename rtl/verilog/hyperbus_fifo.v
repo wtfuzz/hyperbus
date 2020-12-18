@@ -169,7 +169,6 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                 hbus_rrq <= 1'b0;
 
                 if(!cmd_rempty) begin
-                    cmd_rinc <= 1'b1;
                     hbus_adr_o <= cmd_rdata[31:0];
 
                     // TODO: support streaming read/writes for DMA, burst transfers
@@ -192,8 +191,9 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                 if(count == 0) begin
                     // Write to the RX FIFO 
                     rx_winc <= 1'b1;
-                    state <= STATE_IDLE;
                     hbus_rrq <= 1'b0;
+                    cmd_rinc <= 1'b1;
+                    state <= STATE_IDLE;
                 end else begin
                     //if(hbus_valid && rx_rempty) begin
                     if(hbus_valid) begin
@@ -214,6 +214,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                 if(count == 0) begin
                     tx_rinc <= 1'b1;
                     hbus_wrq <= 1'b0;
+                    cmd_rinc <= 1'b1;
                     state <= STATE_IDLE;
                 end else begin
                     if(hbus_ready && ~tx_rempty) begin
