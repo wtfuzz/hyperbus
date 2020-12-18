@@ -241,11 +241,11 @@ always @(posedge clk or posedge rst) begin
         cmd_winc <= 1'b0;
         tx_winc <= 1'b0;
         if(cmd_rempty) begin
-            if(rrq & (state == STATE_IDLE)) begin
+            if(rrq) begin
                 // Write a read request to the command FIFO
                 cmd_winc <= 1'b1;
                 cmd_wdata <= {CMD_READ, adr_i};
-            end else if(wrq & (state == STATE_IDLE)) begin
+            end else if(wrq) begin
                 // Write a write request to the command FIFO
                 cmd_winc <= 1'b1;
                 cmd_wdata <= {CMD_WRITE, adr_i};

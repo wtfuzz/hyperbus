@@ -211,7 +211,7 @@ always @(posedge clk or posedge rst) begin
                     ca[46] <= reg_space_i;
 
                     // Burst Type = 0: wrapped, 1: linear
-                    ca[45] <= 1'b0;
+                    ca[45] <= 1'b1;
 
                     ca[44:16] <= adr_i[ADDR_LENGTH-1:3];
                     ca[15:3] <= 13'd0;
