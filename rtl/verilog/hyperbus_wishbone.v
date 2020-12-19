@@ -63,7 +63,7 @@ hyperbus_fifo fifo_inst (
   .hbus_valid(hbus_valid),
 
   .clk(wb_clk),
-  .rst(hbus_rst),
+  .rst(wb_rst),
 
   .rrq(rrq),
   .wrq(wrq),
