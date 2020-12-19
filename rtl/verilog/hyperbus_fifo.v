@@ -34,7 +34,7 @@ module hyperbus_fifo
     /** TX FIFO interface */
     input [FIFO_DATA_WIDTH-1:0]         tx_dat_i,
     input [(FIFO_DATA_WIDTH/8)-1:0]     tx_mask_i,
-    output reg                          tx_ready,
+    output reg                          tx_done,
 
     /** RX FIFO interface */
     output reg [FIFO_DATA_WIDTH-1:0]    rx_dat_o,
@@ -287,7 +287,7 @@ always @(posedge clk or posedge rst) begin
 
         cmd_winc <= 1'b0;
         tx_winc <= 1'b0;
-        tx_ready <= 1'b0;
+        tx_done <= 1'b0;
         rx_valid <= 1'b0;
         rx_rinc <= 1'b0;
         ack_rinc <= 1'b0;
@@ -298,13 +298,13 @@ always @(posedge clk or posedge rst) begin
                 if(rrq) begin
                     // Write a read request to the command FIFO
                     cmd_winc <= 1'b1;
-                    cmd_wdata <= {CMD_READ, adr_i};
+                    cmd_wdata <= {CMD_READ, adr_i[31:0]};
 
                     user_state <= STATE_READ;
                 end else if(wrq) begin
                     // Write a write request to the command FIFO
                     cmd_winc <= 1'b1;
-                    cmd_wdata <= {CMD_WRITE, adr_i};
+                    cmd_wdata <= {CMD_WRITE, adr_i[31:0]};
 
                     // Write the data to be written into the TX FIFO
                     tx_winc <= 1'b1;
@@ -324,11 +324,11 @@ always @(posedge clk or posedge rst) begin
             end
 
             STATE_WRITE: begin
-                if(~ack_rempty) begin
-                    tx_ready <= 1'b1;
+                //if(~ack_rempty) begin
+                    tx_done <= 1'b1;
                     ack_rinc <= 1'b1;
                     user_state <= STATE_IDLE;
-                end          
+                //end          
             end
 
             default: user_state <= STATE_IDLE;

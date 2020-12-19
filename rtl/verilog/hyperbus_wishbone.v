@@ -47,7 +47,7 @@ reg [NSTATES-1:0] state;
 reg rrq;
 reg wrq;
 
-wire tx_ready;
+wire tx_done;
 wire rx_valid;
 
 hyperbus_fifo fifo_inst (
@@ -73,7 +73,7 @@ hyperbus_fifo fifo_inst (
   .tx_mask_i(~wb_sel_i),
   .rx_dat_o(wb_dat_o),
 
-  .tx_ready(tx_ready),
+  .tx_done(tx_done),
   .rx_valid(rx_valid)
 );
 
@@ -109,7 +109,7 @@ always @(posedge wb_clk) begin
       end
 
       STATE_WRITE: begin
-        if(tx_ready) begin
+        if(tx_done) begin
           state <= STATE_IDLE;
           wb_ack_o <= 1'b1;
         end
