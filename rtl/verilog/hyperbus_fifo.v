@@ -158,7 +158,7 @@ async_fifo
   .arempty()
 );
 
-/** TX ACK FIFO indicates when TX is complete */
+/** ACK FIFO indicates when TX is complete */
 async_fifo
 #(
   .DSIZE(1),
@@ -278,7 +278,7 @@ end
 
 reg [NSTATES-1:0] user_state;
 
-/** User clock domain */
+/** User clock domain state machine */
 always @(posedge clk or posedge rst) begin
     if(rst) begin
         cmd_winc <= 1'b0;

@@ -274,7 +274,7 @@ always @(posedge clk or posedge rst) begin
                 rwds_oe <= 1'b0;
 
                 if(!rrq) begin
-                    count <= 4'd2;
+                    count <= 4'd3;
                     state <= STATE_IDLE;
                 end
             end
@@ -286,7 +286,7 @@ always @(posedge clk or posedge rst) begin
                 if(!wrq) begin
                     data_oe <= 1'b0;
                     rwds_oe <= 1'b0;
-                    count <= 4'd2;
+                    count <= 4'd3;
                     state <= STATE_IDLE;
                 end
             end
