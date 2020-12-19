@@ -34,6 +34,7 @@ module hyperbus_fifo
 
     /** TX FIFO interface */
     input [FIFO_DATA_WIDTH-1:0]         tx_dat_i,
+    input [(FIFO_DATA_WIDTH/8)-1:0]     tx_mask_i,
     output reg                          tx_ready,
 
     /** RX FIFO interface */
@@ -50,6 +51,7 @@ localparam CMD_READ =       1'b1;
 localparam CMD_WRITE =      1'b0;
 
 localparam FIFO_ASIZE = 2;
+localparam MASK_BITS = (FIFO_DATA_WIDTH / 8);
 
 // Number of hbus transfers per FIFO transfer
 localparam CYCLES = (FIFO_DATA_WIDTH / HBUS_DATA_WIDTH);
@@ -113,9 +115,10 @@ async_fifo
   .arempty(cmd_arempty)
 );
 
+/** TX FIFO carries TX data and mask */
 async_fifo
 #(
-  .DSIZE(FIFO_DATA_WIDTH),
+  .DSIZE(FIFO_DATA_WIDTH + MASK_BITS),
   .ASIZE(FIFO_ASIZE)
 ) tx_fifo (
   .wclk(clk),
@@ -207,9 +210,10 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                     count <= CYCLES;
 
                     // Check the R/W bit
-                    if(cmd_rdata[32] == CMD_WRITE) begin
+                    if(cmd_rdata[FIFO_DATA_WIDTH] == CMD_WRITE) begin
                         hbus_wrq <= 1'b1;
-                        tx_shift <= tx_rdata;
+                        //tx_mask <= tx_rdata[]
+                        tx_shift <= tx_rdata[FIFO_DATA_WIDTH-1:0];
                         state <= STATE_WRITE;
                     end else begin
                         hbus_rrq <= 1'b1;
@@ -250,7 +254,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                     hbus_wrq <= 1'b0;
                     state <= STATE_IDLE;
                 end else begin
-                    if(hbus_ready && ~tx_rempty) begin
+                    if(hbus_ready) begin
                         if(count == 1) begin
                             hbus_wrq <= 1'b0;
                         end
@@ -301,7 +305,7 @@ always @(posedge clk or posedge rst) begin
 
                     // Write the data to be written into the TX FIFO
                     tx_winc <= 1'b1;
-                    tx_wdata <= tx_dat_i;
+                    tx_wdata <= {tx_mask_i, tx_dat_i};
 
                     user_state <= STATE_WRITE;
                 end
