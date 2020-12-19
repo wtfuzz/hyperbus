@@ -191,6 +191,7 @@ always @(posedge clk or posedge rst) begin
                 rwds_oe <= 1'b0;
                 data_oe <= 1'b0;
                 if(count == {COUNTER_WIDTH{1'b0}}) begin
+                    count <= 0;
                     state <= STATE_IDLE;
                 end
             end

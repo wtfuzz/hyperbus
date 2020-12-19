@@ -92,8 +92,6 @@ reg [FIFO_DATA_WIDTH-1:0] tx_shift;
 assign hbus_dat_o = tx_shift[FIFO_DATA_WIDTH-1:FIFO_DATA_WIDTH-HBUS_DATA_WIDTH];
 assign rx_dat_o = rx_rdata;
 
-reg busy;
-
 /** Command FIFO carries R/W bit and address */
 async_fifo
 #(
@@ -269,57 +267,65 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
     end
 end
 
+reg [NSTATES-1:0] user_state;
+
 /** User clock domain */
 always @(posedge clk or posedge rst) begin
     if(rst) begin
         cmd_winc <= 1'b0;
         tx_winc <= 1'b0;
-        busy <= 1'b0;
+
+        user_state <= STATE_IDLE;
     end else begin
+
         cmd_winc <= 1'b0;
         tx_winc <= 1'b0;
+        tx_ready <= 1'b0;
+        rx_valid <= 1'b0;
+        rx_rinc <= 1'b0;
+        ack_rinc <= 1'b0;
 
-        if(~busy) begin
-            if(rrq) begin
-                // Write a read request to the command FIFO
-                cmd_winc <= 1'b1;
-                busy <= 1'b1;
-                cmd_wdata <= {CMD_READ, adr_i};
-            end else if(wrq) begin
-                // Write a write request to the command FIFO
-                cmd_winc <= 1'b1;
-                cmd_wdata <= {CMD_WRITE, adr_i};
+        case(user_state)
 
-                // Write the data to be written into the TX FIFO
-                tx_winc <= 1'b1;
-                busy <= 1'b1;
-                tx_wdata <= tx_dat_i;
+            STATE_IDLE: begin
+                if(rrq) begin
+                    // Write a read request to the command FIFO
+                    cmd_winc <= 1'b1;
+                    cmd_wdata <= {CMD_READ, adr_i};
+
+                    user_state <= STATE_READ;
+                end else if(wrq) begin
+                    // Write a write request to the command FIFO
+                    cmd_winc <= 1'b1;
+                    cmd_wdata <= {CMD_WRITE, adr_i};
+
+                    // Write the data to be written into the TX FIFO
+                    tx_winc <= 1'b1;
+                    tx_wdata <= tx_dat_i;
+
+                    user_state <= STATE_WRITE;
+                end
             end
-        end else begin
-            if(~ack_rempty | ~rx_rempty) begin
-                busy <= 1'b0;
+
+            STATE_READ: begin
+                if(~rx_rempty) begin
+                    rx_valid <= 1'b1;
+                    rx_rinc <= 1'b1;
+                    user_state <= STATE_IDLE;
+                end
             end
-        end
-    end
-end
 
-/** Data FIFO control */
-always @(posedge clk) begin
-    tx_ready <= 1'b0;
-    rx_valid <= 1'b0;
-    rx_rinc <= 1'b0;
-    ack_rinc <= 1'b0;
+            STATE_WRITE: begin
+                if(~ack_rempty) begin
+                    tx_ready <= 1'b1;
+                    ack_rinc <= 1'b1;
+                    user_state <= STATE_IDLE;
+                end          
+            end
 
-    if(busy) begin
-        if(~ack_rempty) begin
-            tx_ready <= 1'b1;
-            ack_rinc <= 1'b1;
-        end
+            default: user_state <= STATE_IDLE;
+        endcase
 
-        if(~rx_rempty) begin
-            rx_valid <= 1'b1;
-            rx_rinc <= 1'b1;
-        end
     end
 end
 

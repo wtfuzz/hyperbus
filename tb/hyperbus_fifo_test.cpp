@@ -4,7 +4,7 @@
 #include "verilated_vcd_c.h"
 
 
-#define STEPS 256
+#define STEPS 512
 
 int main(int argc, char **argv) {
   // Initialize Verilators variables
