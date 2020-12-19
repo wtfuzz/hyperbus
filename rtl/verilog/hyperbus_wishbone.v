@@ -69,7 +69,7 @@ hyperbus_fifo fifo_inst (
   .rrq(rrq),
   .wrq(wrq),
 
-  .adr_i(wb_adr_i),
+  .adr_i({wb_adr_i[31:2], 2'b00}),
   .tx_dat_i(wb_dat_i),
   .tx_mask_i(~wb_sel_i),
   .rx_dat_o(wb_dat_o),
