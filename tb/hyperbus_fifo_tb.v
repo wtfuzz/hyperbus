@@ -79,7 +79,7 @@ hyperbus_fifo fifo_inst (
   .rx_dat_o(rx_fifo_data),
 
   .tx_ready(tx_fifo_ready),
-  .rx_valid(rx_fifo_valid),
+  .rx_valid(rx_fifo_valid)
 );
 
 endmodule
