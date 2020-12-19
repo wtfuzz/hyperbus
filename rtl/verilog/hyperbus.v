@@ -160,8 +160,6 @@ always @(posedge clk) begin
             valid <= 1'b1;
             read_reg <= datar;
         end
-    end else begin
-        valid <= 1'b0;
     end
 end
 
@@ -233,16 +231,7 @@ always @(posedge clk or posedge rst) begin
                         rwds_oe <= 1'b0;
                     end else if(wrq) begin
 
-                        //count <= (rwdsr == 2'b11) ? (TACC_COUNT<<1) - 1 : (TACC_COUNT-1);
-
-                        if(rwdsr == 2'b11) begin
-                            $display("2x latency");
-                            count <= (TACC_COUNT<<1) - 1;
-                        end else begin
-                            $display("1x latency");
-                            count <= TACC_COUNT - 1;
-                        end
-
+                        count <= (rwdsr == 2'b11) ? (TACC_COUNT<<1) - 1 : (TACC_COUNT-1);
 
                         // The master must drive RWDS to a valid LOW
                         // before the end of the initial latency to

@@ -303,13 +303,13 @@ always @(posedge clk or posedge rst) begin
                 if(rrq) begin
                     // Write a read request to the command FIFO
                     cmd_winc <= 1'b1;
-                    cmd_wdata <= {CMD_READ, adr_i[31:0]};
+                    cmd_wdata <= {CMD_READ, adr_i};
 
                     user_state <= STATE_READ;
                 end else if(wrq) begin
                     // Write a write request to the command FIFO
                     cmd_winc <= 1'b1;
-                    cmd_wdata <= {CMD_WRITE, adr_i[31:0]};
+                    cmd_wdata <= {CMD_WRITE, adr_i};
 
                     // Write the data to be written into the TX FIFO
                     tx_winc <= 1'b1;
