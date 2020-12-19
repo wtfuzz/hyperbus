@@ -6,33 +6,33 @@ module hyperbus_wishbone
     parameter HBUS_DATA_WIDTH = 16
 )
 (
-    input                           hbus_clk,
-    input                           hbus_rst,
-    output [HBUS_ADDR_WIDTH-1:0]    hbus_adr_o,
-    input  [HBUS_DATA_WIDTH-1:0]    hbus_dat_i,
-    output [HBUS_DATA_WIDTH-1:0]    hbus_dat_o,
-    output [(HBUS_DATA_WIDTH/8)-1:0] hbus_mask_o,
-    output                          hbus_rrq,
-    output                          hbus_wrq,
-    input                           hbus_ready,
-    input                           hbus_valid,
-    input                           hbus_busy,
+  /** FIFO Interface */
+  input                           hbus_clk,
+  input                           hbus_rst,
+  output [HBUS_ADDR_WIDTH-1:0]    hbus_adr_o,
+  input  [HBUS_DATA_WIDTH-1:0]    hbus_dat_i,
+  output [HBUS_DATA_WIDTH-1:0]    hbus_dat_o,
+  output [(HBUS_DATA_WIDTH/8)-1:0] hbus_mask_o,
+  output                          hbus_rrq,
+  output                          hbus_wrq,
+  input                           hbus_ready,
+  input                           hbus_valid,
 
-    /* Wishbone Interface */
-    input                           wb_clk,
-    input                           wb_rst,
-    input [WB_ADDR_WIDTH-1:0]       wb_adr_i,
-    input [WB_DATA_WIDTH-1:0]       wb_dat_i,
-    input                           wb_we_i,
-    input [3:0]                     wb_sel_i,
-    input                           wb_cyc_i,
-    input                           wb_stb_i,
-    input         [2:0]             wb_cti_i,
-    input         [1:0]             wb_bte_i,
-    output [WB_DATA_WIDTH-1:0]      wb_dat_o,
-    output reg                      wb_ack_o,
-    output                          wb_err_o,
-    output                          wb_rty_o
+  /* Wishbone Interface */
+  input                           wb_clk,
+  input                           wb_rst,
+  input [WB_ADDR_WIDTH-1:0]       wb_adr_i,
+  input [WB_DATA_WIDTH-1:0]       wb_dat_i,
+  input                           wb_we_i,
+  input [3:0]                     wb_sel_i,
+  input                           wb_cyc_i,
+  input                           wb_stb_i,
+  input         [2:0]             wb_cti_i,
+  input         [1:0]             wb_bte_i,
+  output [WB_DATA_WIDTH-1:0]      wb_dat_o,
+  output reg                      wb_ack_o,
+  output                          wb_err_o,
+  output                          wb_rty_o
 );
 
 localparam NSTATES =        4;
@@ -60,8 +60,7 @@ hyperbus_fifo fifo_inst (
   .hbus_rrq(hbus_rrq),
   .hbus_wrq(hbus_wrq),
   .hbus_ready(hbus_ready),
-  .hbus_valid(hbus_valid),
-  .hbus_busy(hbus_busy),
+  .hbus_valid(hbus_valid)
 
   .clk(wb_clk),
   .rst(hbus_rst),

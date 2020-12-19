@@ -21,8 +21,6 @@ module hyperbus_fifo
     output reg                          hbus_wrq,
     input                               hbus_ready,
     input                               hbus_valid,
-    input                               hbus_busy,
-
 
     /** User FIFO clock and reset */
     input                               clk,
