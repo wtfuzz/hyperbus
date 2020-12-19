@@ -69,7 +69,7 @@ wire [(WIDTH<<1)-1:0]   dataw;
 wire [(WIDTH<<1)-1:0]   datar;
 wire [1:0]              rwdsr;
 
-wire [((WIDTH<<1)/8):0] rwdsw;
+wire [((WIDTH<<1)/8)-1:0] rwdsw;
 //reg [1:0]               rwdsw;
 
 reg [(WIDTH<<1)-1:0]    read_reg;

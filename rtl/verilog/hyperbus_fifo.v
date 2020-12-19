@@ -247,7 +247,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                 if(count == 0) begin
                     tx_rinc <= 1'b1;
 
-                    // Write an ack to the ACK FIFO, to sync to the user clock
+                    // Write an ack to the ACK FIFO to sync to the user clock
                     ack_wdata <= 1'b1;
                     ack_winc <= 1'b1;
 
