@@ -50,7 +50,8 @@ module hyperbus
 
 localparam COUNTER_WIDTH = $clog2(TACC_COUNT*2);
 
-localparam NSTATES = 6
+localparam NSTATES =        6;
+
 localparam STATE_IDLE =     6'b000001;
 localparam STATE_RESET =    6'b000010;
 localparam STATE_COMMAND =  6'b000100;
