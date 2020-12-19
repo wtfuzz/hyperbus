@@ -25,6 +25,7 @@ module hyperbus
 
     input   [ADDR_LENGTH-1:0]   adr_i,
     input   [(WIDTH<<1)-1:0]    dat_i,
+    input   [((WIDTH<<1)/8):0]  mask_i,
     output  [(WIDTH<<1)-1:0]    dat_o,
 
     // Ready to accept a new input word on dat_i

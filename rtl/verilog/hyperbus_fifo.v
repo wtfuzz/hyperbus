@@ -16,6 +16,7 @@ module hyperbus_fifo
     output reg [HBUS_ADDR_WIDTH-1:0]    hbus_adr_o,
     input  [HBUS_DATA_WIDTH-1:0]        hbus_dat_i,
     output [HBUS_DATA_WIDTH-1:0]        hbus_dat_o,
+    output [(HBUS_DATA_WIDTH/8)-1:0]    hbus_mask_o,
     output reg                          hbus_rrq,
     output reg                          hbus_wrq,
     input                               hbus_ready,
@@ -51,7 +52,8 @@ localparam CMD_READ =       1'b1;
 localparam CMD_WRITE =      1'b0;
 
 localparam FIFO_ASIZE = 2;
-localparam MASK_BITS = (FIFO_DATA_WIDTH / 8);
+localparam FIFO_MASK_BITS = (FIFO_DATA_WIDTH / 8);
+localparam HBUS_MASK_BITS = (HBUS_DATA_WIDTH / 8);
 
 // Number of hbus transfers per FIFO transfer
 localparam CYCLES = (FIFO_DATA_WIDTH / HBUS_DATA_WIDTH);
@@ -89,10 +91,11 @@ reg ack_winc;
 wire ack_wfull;
 wire ack_rempty;
 
+reg [FIFO_MASK_BITS-1:0] tx_mask;
 reg [FIFO_DATA_WIDTH-1:0] tx_shift;
 
 assign hbus_dat_o = tx_shift[FIFO_DATA_WIDTH-1:FIFO_DATA_WIDTH-HBUS_DATA_WIDTH];
-//assign rx_dat_o = rx_rdata;
+assign hbus_mask_o = tx_mask[FIFO_MASK_BITS-1:FIFO_MASK_BITS-HBUS_MASK_BITS];
 
 /** Command FIFO carries R/W bit and address */
 async_fifo
@@ -118,7 +121,7 @@ async_fifo
 /** TX FIFO carries TX data and mask */
 async_fifo
 #(
-  .DSIZE(FIFO_DATA_WIDTH + MASK_BITS),
+  .DSIZE(FIFO_DATA_WIDTH + FIFO_MASK_BITS),
   .ASIZE(FIFO_ASIZE)
 ) tx_fifo (
   .wclk(clk),
@@ -196,7 +199,6 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
 
         case(state)
             STATE_IDLE: begin
-                $display("FIFO Idle");
                 // Check if there is an available command in the Command FIFO
 
                 hbus_wrq <= 1'b0;
@@ -212,7 +214,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                     // Check the R/W bit
                     if(cmd_rdata[FIFO_DATA_WIDTH] == CMD_WRITE) begin
                         hbus_wrq <= 1'b1;
-                        //tx_mask <= tx_rdata[]
+                        tx_mask <= tx_rdata[FIFO_DATA_WIDTH+FIFO_MASK_BITS-1:FIFO_DATA_WIDTH];
                         tx_shift <= tx_rdata[FIFO_DATA_WIDTH-1:0];
                         state <= STATE_WRITE;
                     end else begin
@@ -262,6 +264,9 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
 
                         // Shift the TX register
                         tx_shift <= tx_shift << HBUS_DATA_WIDTH;
+
+                        // Shift the mask register
+                        tx_mask <= tx_mask << (HBUS_DATA_WIDTH/8);
                     end      
                 end
             end
