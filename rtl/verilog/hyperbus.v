@@ -165,8 +165,7 @@ end
 always @(posedge clk) begin
     valid <= 1'b0;
 
-    //if((state == STATE_READ) && rrq) begin
-    if(rrq) begin
+    if((state == STATE_READ) && rrq) begin
         // The RWDS DDR output will contain the
         // bit pattern 2'b01 on valid read strobes.
         // The RAM chip may hold RWDS low, and we will
@@ -249,10 +248,10 @@ always @(posedge clk or posedge rst) begin
 
                     if(rwdsr == 2'b11) begin
                         $display("2x latency");
-                        count <= (TACC_COUNT<<1) - 1;
+                        count <= (TACC_COUNT<<1) - 2;
                     end else begin
                         $display("1x latency");
-                        count <= TACC_COUNT - 1;
+                        count <= TACC_COUNT - 2;
                     end
 
                     data_oe <= 1'b0;
