@@ -52,9 +52,7 @@ hyperbus #(
     .dat_i       (hbus_dat_i),
     .dat_o       (hbus_dat_o),
     .wrq        (hbus_wrq),
-    .rrq        (hbus_rrq),
-
-    .dbg_rwds   ()
+    .rrq        (hbus_rrq)
 );
 
 hyperbus_fifo fifo_inst (
