@@ -44,8 +44,8 @@ hyperbus #(
 
     .ready      (hbus_ready),
     .valid      (hbus_valid),
-    .busy       (hbus_busy),
-    .error_o    (),
+
+    .mask_i     (4'b0000),
 
     .reg_space_i (1'b0),
     .adr_i       (hbus_adr_i),
