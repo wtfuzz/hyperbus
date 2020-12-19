@@ -328,11 +328,11 @@ always @(posedge clk or posedge rst) begin
             end
 
             STATE_WRITE: begin
-                if(~ack_rempty) begin
+                //if(~ack_rempty) begin
                     tx_done <= 1'b1;
                     ack_rinc <= 1'b1;
                     user_state <= STATE_IDLE;
-                end          
+                //end          
             end
 
             default: user_state <= STATE_IDLE;
