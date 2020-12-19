@@ -10,7 +10,7 @@ module hyperbus
     parameter TARGET = "ALTERA",
     parameter WIDTH = 8,
     parameter TACC_COUNT = 5,
-    parameter RESET_COUNT = 2,
+    parameter RESET_COUNT = 4,
     parameter ADDR_LENGTH = 32
 )
 (
@@ -48,7 +48,7 @@ module hyperbus
     inout                       hbus_rwds
 );
 
-localparam COUNTER_WIDTH = $clog2(TACC_COUNT*2);
+localparam COUNTER_WIDTH = $clog2((TACC_COUNT*2)+1);
 
 localparam NSTATES =        6;
 

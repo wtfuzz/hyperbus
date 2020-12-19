@@ -254,7 +254,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                     hbus_wrq <= 1'b0;
                     state <= STATE_IDLE;
                 end else begin
-                    if(hbus_ready) begin
+                    //if(hbus_ready) begin
                         if(count == 1) begin
                             hbus_wrq <= 1'b0;
                         end
@@ -265,7 +265,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
 
                         // Shift the mask register
                         tx_mask <= tx_mask << (HBUS_DATA_WIDTH/8);
-                    end      
+                    //end      
                 end
             end
 
