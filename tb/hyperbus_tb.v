@@ -14,9 +14,7 @@ module hyperbus_test_top(
     output [15:0] dataw,
 
     input wrq,
-    input rrq,
-
-    output busy
+    input rrq
 );
 
 hyperbus #(
@@ -32,15 +30,15 @@ hyperbus #(
     .hbus_dq    (hbus_dq),
     .hbus_rwds  (hbus_rwds),
 
+    .mask_i     (4'b0000),
+
     .ready     (),
     .valid     (),
-    .error_o    (),
 
     .reg_space_i (1'b0),
     .adr_i       (addr),
     .dat_i       (datar),
     .dat_o       (dataw),
-    .busy       (busy),
     .wrq        (wrq),
     .rrq        (rrq),
 
