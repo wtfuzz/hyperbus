@@ -62,7 +62,7 @@ hyperbus_fifo fifo_inst (
   .hbus_busy(hbus_busy),
 
   .clk(wb_clk),
-  .rst(wb_rst),
+  .rst(hbus_rst),
 
   .rrq(rrq),
   .wrq(wrq),
