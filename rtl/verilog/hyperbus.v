@@ -79,7 +79,9 @@ assign ready = (state == STATE_WRITE) ? 1'b1 : 1'b0;
 wire [(WIDTH<<1)-1:0]   dataw;
 wire [(WIDTH<<1)-1:0]   datar;
 wire [1:0]              rwdsr;
-reg [1:0]               rwdsw;
+
+wire [((WIDTH<<1)/8):0] rwdsw;
+//reg [1:0]               rwdsw;
 
 reg [(WIDTH<<1)-1:0]    read_reg;
 
@@ -145,6 +147,7 @@ assign error_o = state == STATE_ERROR ? 1'b1 : 1'b0;
 reg [COUNTER_WIDTH-1:0] count;
 
 assign dataw = (state == STATE_WRITE) ? dat_i : ca[47:32];
+assign rwdsw = (state == STATE_WRITE) ? mask_i : 0;
 
 
 // Cross clocks. This prevents the 90 degree clock from rising early for a half cycle.
@@ -273,7 +276,6 @@ always @(posedge clk or posedge rst) begin
 
                 if(count == {COUNTER_WIDTH{1'b0}}) begin
                     if(wrq) begin
-                        rwdsw <= 2'b00;
                         rwds_oe <= 1'b1;
                         data_oe <= 1'b1;
                         state <= STATE_WRITE;

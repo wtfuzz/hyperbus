@@ -62,23 +62,23 @@ reg [NSTATES-1:0] state;
 reg [7:0] count;
 
 /** FIFO Signals */
-reg [32:0] cmd_wdata;
-wire [32:0] cmd_rdata;
+reg [HBUS_ADDR_WIDTH:0] cmd_wdata;
+wire [HBUS_ADDR_WIDTH:0] cmd_rdata;
 reg cmd_rinc;
 reg cmd_winc;
 wire cmd_wfull;
 wire cmd_rempty;
 wire cmd_arempty;
 
-reg [31:0] tx_wdata;
-wire [31:0] tx_rdata;
+reg [FIFO_DATA_WIDTH + FIFO_MASK_BITS - 1:0] tx_wdata;
+wire [FIFO_DATA_WIDTH + FIFO_MASK_BITS - 1:0] tx_rdata;
 reg tx_rinc;
 reg tx_winc;
 wire tx_wfull;
 wire tx_rempty;
 
-reg [31:0] rx_wdata;
-wire [31:0] rx_rdata;
+reg [FIFO_DATA_WIDTH-1:0] rx_wdata;
+wire [FIFO_DATA_WIDTH-1:0] rx_rdata;
 reg rx_rinc;
 reg rx_winc;
 wire rx_wfull;
