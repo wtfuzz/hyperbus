@@ -202,8 +202,6 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                 hbus_wrq <= 1'b0;
                 hbus_rrq <= 1'b0;
 
-                ack_rinc <= 1'b1;
-
                 if(~cmd_rempty) begin
                     
                     cmd_rinc <= 1'b1;
@@ -257,7 +255,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                     hbus_wrq <= 1'b0;
                     state <= STATE_IDLE;
                 end else begin
-                    //if(hbus_ready) begin
+                    if(hbus_ready) begin
                         if(count == 1) begin
                             hbus_wrq <= 1'b0;
                         end
@@ -268,7 +266,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
 
                         // Shift the mask register
                         tx_mask <= tx_mask << (HBUS_DATA_WIDTH/8);
-                    //end      
+                    end      
                 end
             end
 
@@ -322,12 +320,12 @@ always @(posedge clk or posedge rst) begin
             end
 
             STATE_READ: begin
-                //if(~rx_rempty) begin
+                if(~rx_rempty) begin
                     rx_valid <= 1'b1;
                     rx_dat_o <= rx_rdata;
                     rx_rinc <= 1'b1;
                     user_state <= STATE_IDLE;
-                //end
+                end
             end
 
             STATE_WRITE: begin
