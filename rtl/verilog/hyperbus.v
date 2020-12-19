@@ -116,12 +116,16 @@ ioddr
     .oe(rwds_oe)
 );
 
+reg cs;
+
 assign hbus_rstn = (state == STATE_RESET) ? 1'b0 : 1'b1;
-assign hbus_csn = (
-    (state == STATE_IDLE) || (state == STATE_RESET) || (state == {NSTATES{1'b0}})) ? 1'b1 : 1'b0;
+//assign hbus_csn = (
+    //(state == STATE_IDLE) || (state == STATE_RESET) || (state == {NSTATES{1'b0}})) ? 1'b1 : 1'b0;
+assign hbus_csn = ~cs;
 
 // Clock gate
-assign hbus_clk = clk_oe90 ? clk90 : 1'b0;
+//assign hbus_clk = clk_oe90 ? clk90 : 1'b0;
+assign hbus_clk = clk90;
 
 // Command/Address register
 reg [47:0] ca;
@@ -168,6 +172,7 @@ always @(posedge clk or posedge rst) begin
         clk_oe <= 1'b0;
         rwds_oe <= 1'b0;
         data_oe <= 1'b0;
+        cs <= 1'b0;
         state <= STATE_RESET;
         count <= RESET_COUNT;
     end else begin
@@ -186,6 +191,8 @@ always @(posedge clk or posedge rst) begin
                 rwds_oe <= 1'b0;
                 data_oe <= 1'b0;
                 clk_oe <= 1'b0;
+
+                cs <= 1'b0;
 
                 if(count) begin
                     count <= count - 1;
@@ -209,6 +216,8 @@ always @(posedge clk or posedge rst) begin
 
                         // 3 cycles to write 48 bits
                         count <= 4'd3;
+
+                        cs <= 1'b1;
 
                         // Transition to command state
                         state <= STATE_COMMAND;
