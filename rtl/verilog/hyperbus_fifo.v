@@ -37,7 +37,7 @@ module hyperbus_fifo
     output reg                          tx_ready,
 
     /** RX FIFO interface */
-    output [FIFO_DATA_WIDTH-1:0]        rx_dat_o,
+    output reg [FIFO_DATA_WIDTH-1:0]    rx_dat_o,
     output reg                          rx_valid
 );
 
@@ -90,7 +90,7 @@ wire ack_rempty;
 reg [FIFO_DATA_WIDTH-1:0] tx_shift;
 
 assign hbus_dat_o = tx_shift[FIFO_DATA_WIDTH-1:FIFO_DATA_WIDTH-HBUS_DATA_WIDTH];
-assign rx_dat_o = rx_rdata;
+//assign rx_dat_o = rx_rdata;
 
 /** Command FIFO carries R/W bit and address */
 async_fifo
@@ -310,6 +310,7 @@ always @(posedge clk or posedge rst) begin
             STATE_READ: begin
                 if(~rx_rempty) begin
                     rx_valid <= 1'b1;
+                    rx_dat_o <= rx_rdata;
                     rx_rinc <= 1'b1;
                     user_state <= STATE_IDLE;
                 end
