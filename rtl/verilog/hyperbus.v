@@ -185,38 +185,34 @@ always @(posedge clk or posedge rst) begin
             STATE_IDLE: begin
                 rwds_oe <= 1'b0;
                 data_oe <= 1'b0;
+                clk_oe <= 1'b0;
 
                 if(count != {COUNTER_WIDTH{1'b0}}) begin
                     count <= count - 1;
-                end
-
-                if((count == {COUNTER_WIDTH{1'b0}}) && (rrq | wrq)) begin
-
-                    // Load the command/address register
-
-                    // R/W# = 1 for read, 0 for write
-                    ca[47] <= rrq ? 1'b1 : 1'b0;
-
-                    // Address Space = 0 for memory, 1 for registers
-                    ca[46] <= reg_space_i;
-
-                    // Burst Type = 0: wrapped, 1: linear
-                    ca[45] <= 1'b1;
-
-                    ca[44:16] <= adr_i[ADDR_LENGTH-1:3];
-                    ca[15:3] <= 13'd0;
-                    ca[2:0] <= adr_i[2:0];
-
-                    // 3 cycles to write 48 bits
-                    count <= 4'd3;
-
-                    // Transition to command state
-                    state <= STATE_COMMAND;
-
                 end else begin
-                    clk_oe <= 1'b0;
+                    if(rrq | wrq) begin
 
-                    state <= STATE_IDLE;
+                        // Load the command/address register
+
+                        // R/W# = 1 for read, 0 for write
+                        ca[47] <= rrq ? 1'b1 : 1'b0;
+
+                        // Address Space = 0 for memory, 1 for registers
+                        ca[46] <= reg_space_i;
+
+                        // Burst Type = 0: wrapped, 1: linear
+                        ca[45] <= 1'b1;
+
+                        ca[44:16] <= adr_i[ADDR_LENGTH-1:3];
+                        ca[15:3] <= 13'd0;
+                        ca[2:0] <= adr_i[2:0];
+
+                        // 3 cycles to write 48 bits
+                        count <= 4'd3;
+
+                        // Transition to command state
+                        state <= STATE_COMMAND;
+                    end
                 end
             end
             STATE_COMMAND: begin
