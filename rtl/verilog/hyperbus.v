@@ -10,7 +10,7 @@ module hyperbus
     parameter TARGET = "ALTERA",
     parameter WIDTH = 8,
     parameter TACC_COUNT = 5,
-    parameter RESET_COUNT = 4,
+    parameter RESET_COUNT = 2,
     parameter ADDR_LENGTH = 32
 )
 (
