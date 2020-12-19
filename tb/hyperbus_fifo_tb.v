@@ -21,13 +21,13 @@ wire        hbus_rwds;
 wire [31:0] hbus_adr_i;
 wire [15:0] hbus_dat_i;
 wire [15:0] hbus_dat_o;
+wire hbus_mask_o;
 
 wire        hbus_rrq;
 wire        hbus_wrq;
 
 wire        hbus_ready;
 wire        hbus_valid;
-wire        hbus_busy;
 
 hyperbus #(
     .TARGET("SIM"),
@@ -45,7 +45,7 @@ hyperbus #(
     .ready      (hbus_ready),
     .valid      (hbus_valid),
 
-    .mask_i     (4'b0000),
+    .mask_i     (hbus_mask_o),
 
     .reg_space_i (1'b0),
     .adr_i       (hbus_adr_i),
@@ -63,11 +63,11 @@ hyperbus_fifo fifo_inst (
   .hbus_adr_o(hbus_adr_i),
   .hbus_dat_i(hbus_dat_o),
   .hbus_dat_o(hbus_dat_i),
+  .hbus_mask_o(hbus_mask_o),
   .hbus_rrq(hbus_rrq),
   .hbus_wrq(hbus_wrq),
   .hbus_ready(hbus_ready),
   .hbus_valid(hbus_valid),
-  .hbus_busy(hbus_busy),
 
   .clk(clk),
   .rst(rst),
