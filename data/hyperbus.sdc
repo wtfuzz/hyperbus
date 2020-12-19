@@ -14,8 +14,8 @@ proc hyperbus_constrain_pins { name clk clk90 data_pins } {
 
     set_input_delay -add_delay -clock "${clk}" -max 0.25 [get_ports "$data_pins"]
     set_input_delay -add_delay -clock "${clk}" -min -0.25 [get_ports "$data_pins"]
-    set_input_delay -add_delay -clock "${clk}" -clock_fall -max 0.25 [get_ports "$data_pins"] -add
-    set_input_delay -add_delay -clock "${clk}" -clock_fall -min -0.25 [get_ports "$data_pins"] -add
+    set_input_delay -add_delay -clock "${clk}" -clock_fall -max 0.25 [get_ports "$data_pins"]
+    set_input_delay -add_delay -clock "${clk}" -clock_fall -min -0.25 [get_ports "$data_pins"]
     
     #set_output_delay -add_delay -clock "${clk90}" -max 1.00 [get_ports "$data_pins"]
     #set_output_delay -add_delay -clock "${clk90}" -min -1.00 [get_ports "$data_pins"]
