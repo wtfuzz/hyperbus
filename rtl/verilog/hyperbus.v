@@ -1,5 +1,5 @@
 /**
- * HyperBus Primary Controller
+ * HyperBus Leader Controller
  *
  * Copyright (C) 2020 Matt Thompson <mthompson@hexwave.com>
  *
@@ -59,20 +59,18 @@ module hyperbus
 
 localparam COUNTER_WIDTH = $clog2(TACC_COUNT*2);
 
-`define NSTATES 7
+`define NSTATES 6
 
-localparam STATE_IDLE =     `NSTATES'b0000001;
-localparam STATE_RESET =    `NSTATES'b0000010;
-localparam STATE_COMMAND =  `NSTATES'b0000100;
-localparam STATE_LATENCY =  `NSTATES'b0001000;
-localparam STATE_READ =     `NSTATES'b0010000;
-localparam STATE_WRITE =    `NSTATES'b0100000;
-localparam STATE_ERROR =    `NSTATES'b1000000;
+localparam STATE_IDLE =     `NSTATES'b000001;
+localparam STATE_RESET =    `NSTATES'b000010;
+localparam STATE_COMMAND =  `NSTATES'b000100;
+localparam STATE_LATENCY =  `NSTATES'b001000;
+localparam STATE_READ =     `NSTATES'b010000;
+localparam STATE_WRITE =    `NSTATES'b100000;
 
 reg [`NSTATES-1:0] state;
 
 assign ready = (state == STATE_WRITE) ? 1'b1 : 1'b0;
-//assign valid = (state == STATE_READ) ? 1'b1 : 1'b0;
 
 // Double width input, output, and rwds signals
 // at half the DDR clock rate.
@@ -130,7 +128,7 @@ ioddr
 
 assign hbus_rstn = (state == STATE_RESET) ? 1'b0 : 1'b1;
 assign hbus_csn = (
-    (state == STATE_IDLE) || (state == STATE_ERROR) || (state == STATE_RESET) || (state == {`NSTATES{1'b0}})) ? 1'b1 : 1'b0;
+    (state == STATE_IDLE) || (state == STATE_RESET) || (state == {`NSTATES{1'b0}})) ? 1'b1 : 1'b0;
 assign busy = state == STATE_IDLE ? 1'b0 : 1'b1;
 
 // Clock gate
@@ -200,8 +198,6 @@ always @(posedge clk or posedge rst) begin
                 end
             end
             STATE_IDLE: begin
-                $display("Idle");
-
                 rwds_oe <= 1'b0;
                 data_oe <= 1'b0;
 
@@ -239,13 +235,10 @@ always @(posedge clk or posedge rst) begin
                 end
             end
             STATE_COMMAND: begin
-                $display("Send command");
                 clk_oe <= 1'b1;
                 data_oe <= 1'b1;
 
                 if(count == 4'd0) begin
-                    $display("Command sent");
-
                     if(rrq) begin
                         // When reading, using a short latency and time reads from the RWDS strobe
                         count <= TACC_COUNT - 1;
@@ -253,16 +246,11 @@ always @(posedge clk or posedge rst) begin
                         rwds_oe <= 1'b0;
                     end else if(wrq) begin
 
-                        if(rwdsr == 2'b11) begin
-                            $display("2x latency");
-                            count <= (TACC_COUNT<<1) - 1;
-                        end else begin
-                            $display("1x latency");
-                            count <= TACC_COUNT - 1;
-                        end
+                        count <= (rwdsr == 2'b11) ? (TACC_COUNT<<1) - 1 : (TACC_COUNT-1);
 
                         // The master must drive RWDS to a valid LOW
-                        // before the end of the initial latency to provide a data mask preamble period to the slave
+                        // before the end of the initial latency to
+                        // provide a data mask preamble period to the slave
                         rwds_oe <= 1'b1;
                         data_oe <= 1'b1;
                     end
@@ -279,8 +267,6 @@ always @(posedge clk or posedge rst) begin
             end
 
             STATE_LATENCY: begin
-                $display("Latency state");
-
                 rwds_oe <= 1'b0;
                 data_oe <= 1'b0;
                 count <= count - 1;
@@ -299,7 +285,6 @@ always @(posedge clk or posedge rst) begin
             end
 
             STATE_READ: begin
-                $display("Read state");
                 data_oe <= 1'b0;
                 rwds_oe <= 1'b0;
 
@@ -310,7 +295,6 @@ always @(posedge clk or posedge rst) begin
             end
 
             STATE_WRITE: begin
-                $display("Write state");
                 data_oe <= 1'b1;
                 rwds_oe <= 1'b1;
 
@@ -322,13 +306,7 @@ always @(posedge clk or posedge rst) begin
                 end
             end
 
-            STATE_ERROR: begin
-                $display("Error state");
-                state <= STATE_ERROR;
-            end
-
             default: begin
-                $display("UNHANDLED STATE");
                 count <= RESET_COUNT;
                 state <= STATE_RESET;
             end
