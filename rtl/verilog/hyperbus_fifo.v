@@ -49,7 +49,7 @@ localparam STATE_WRITE =    3'b100;
 localparam CMD_READ =       1'b1;
 localparam CMD_WRITE =      1'b0;
 
-localparam FIFO_ASIZE = 8;
+localparam FIFO_ASIZE = 2;
 
 // Number of hbus transfers per FIFO transfer
 localparam CYCLES = (FIFO_DATA_WIDTH / HBUS_DATA_WIDTH);
