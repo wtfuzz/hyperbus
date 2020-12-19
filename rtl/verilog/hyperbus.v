@@ -48,7 +48,7 @@ module hyperbus
     inout                       hbus_rwds
 );
 
-localparam COUNTER_WIDTH = $clog2(TACC_COUNT<<1);
+localparam COUNTER_WIDTH = $clog2(TACC_COUNT*2);
 
 localparam NSTATES =        6;
 
