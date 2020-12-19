@@ -3,9 +3,6 @@
  *
  * Copyright (C) 2020 Matt Thompson <mthompson@hexwave.com>
  *
- * Input Clock = 200MHz
- * tACC = 35ns or 7 clocks
- * tVCS = 150us (reset initialization time)
  */
 
 module hyperbus
@@ -53,16 +50,15 @@ module hyperbus
 
 localparam COUNTER_WIDTH = $clog2(TACC_COUNT*2);
 
-`define NSTATES 6
+localparam NSTATES = 6
+localparam STATE_IDLE =     6'b000001;
+localparam STATE_RESET =    6'b000010;
+localparam STATE_COMMAND =  6'b000100;
+localparam STATE_LATENCY =  6'b001000;
+localparam STATE_READ =     6'b010000;
+localparam STATE_WRITE =    6'b100000;
 
-localparam STATE_IDLE =     `NSTATES'b000001;
-localparam STATE_RESET =    `NSTATES'b000010;
-localparam STATE_COMMAND =  `NSTATES'b000100;
-localparam STATE_LATENCY =  `NSTATES'b001000;
-localparam STATE_READ =     `NSTATES'b010000;
-localparam STATE_WRITE =    `NSTATES'b100000;
-
-reg [`NSTATES-1:0] state;
+reg [NSTATES-1:0] state;
 
 assign ready = (state == STATE_WRITE) ? 1'b1 : 1'b0;
 
@@ -121,7 +117,7 @@ ioddr
 
 assign hbus_rstn = (state == STATE_RESET) ? 1'b0 : 1'b1;
 assign hbus_csn = (
-    (state == STATE_IDLE) || (state == STATE_RESET) || (state == {`NSTATES{1'b0}})) ? 1'b1 : 1'b0;
+    (state == STATE_IDLE) || (state == STATE_RESET) || (state == {NSTATES{1'b0}})) ? 1'b1 : 1'b0;
 
 // Clock gate
 assign hbus_clk = clk_oe90 ? clk90 : 1'b0;

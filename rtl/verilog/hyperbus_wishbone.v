@@ -35,14 +35,13 @@ module hyperbus_wishbone
     output                          wb_rty_o
 );
 
-`define NSTATES 4
+localparam NSTATES = 4
+localparam STATE_IDLE =     4'b0001;
+localparam STATE_WRITE =    4'b0010;
+localparam STATE_READ =     4'b0100;
+localparam STATE_WAIT =     4'b1000;
 
-localparam STATE_IDLE =     `NSTATES'b0001;
-localparam STATE_WRITE =    `NSTATES'b0010;
-localparam STATE_READ =     `NSTATES'b0100;
-localparam STATE_WAIT =     `NSTATES'b1000;
-
-reg [`NSTATES-1:0] state;
+reg [NSTATES-1:0] state;
 
 reg rrq;
 reg wrq;
