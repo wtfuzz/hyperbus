@@ -17,10 +17,10 @@ proc hyperbus_constrain_pins { name clk clk90 data_pins } {
     #set_input_delay -add_delay -clock "${clk}" -clock_fall -max 1.00 [get_ports "$data_pins"]
     #set_input_delay -add_delay -clock "${clk}" -clock_fall -min -1.00 [get_ports "$data_pins"]
     #
-    #set_output_delay -add_delay -clock "${clk90}" -max 1.00 [get_ports "$data_pins"]
-    #set_output_delay -add_delay -clock "${clk90}" -min -1.00 [get_ports "$data_pins"]
-    #set_output_delay -add_delay -clock "${clk90}" -clock_fall -max 1.00 [get_ports "$data_pins"]
-    #set_output_delay -add_delay -clock "${clk90}" -clock_fall -min -1.00 [get_ports "$data_pins"]
+    set_output_delay -add_delay -clock "${clk90}" -max 1.00 [get_ports "$data_pins"]
+    set_output_delay -add_delay -clock "${clk90}" -min -1.00 [get_ports "$data_pins"]
+    set_output_delay -add_delay -clock "${clk90}" -clock_fall -max 1.00 [get_ports "$data_pins"]
+    set_output_delay -add_delay -clock "${clk90}" -clock_fall -min -1.00 [get_ports "$data_pins"]
 
     set_false_path -rise_from [get_clocks "${clk}"] -fall_to [get_clocks "${clk90}"] -setup
     set_false_path -fall_from [get_clocks "${clk}"] -rise_to [get_clocks "${clk90}"] -setup
