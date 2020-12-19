@@ -10,7 +10,7 @@ module hyperbus
     parameter TARGET = "ALTERA",
     parameter WIDTH = 8,
     parameter TACC_COUNT = 5,
-    parameter RESET_COUNT = 2,
+    parameter RESET_COUNT = 10,
     parameter ADDR_LENGTH = 32
 )
 (
@@ -48,7 +48,7 @@ module hyperbus
     inout                       hbus_rwds
 );
 
-localparam COUNTER_WIDTH = $clog2((TACC_COUNT*2)+1);
+localparam COUNTER_WIDTH = $clog2((TACC_COUNT<<1));
 
 localparam NSTATES =        6;
 
@@ -187,7 +187,7 @@ always @(posedge clk or posedge rst) begin
                 data_oe <= 1'b0;
                 clk_oe <= 1'b0;
 
-                if(count != {COUNTER_WIDTH{1'b0}}) begin
+                if(count) begin
                     count <= count - 1;
                 end else begin
                     if(rrq | wrq) begin
@@ -219,10 +219,10 @@ always @(posedge clk or posedge rst) begin
                 clk_oe <= 1'b1;
                 data_oe <= 1'b1;
 
-                if(count == 4'd0) begin
+                if(count == {COUNTER_WIDTH{1'b0}}) begin
                     if(rrq) begin
                         // When reading, using a short latency and time reads from the RWDS strobe
-                        count <= TACC_COUNT - 1;
+                        count <= TACC_COUNT - 2;
                         data_oe <= 1'b0;
                         rwds_oe <= 1'b0;
                     end else if(wrq) begin
