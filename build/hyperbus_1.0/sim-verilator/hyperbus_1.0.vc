@@ -1,9 +1,0 @@
---Mdir .
---cc
-../src/hyperbus_1.0/rtl/verilog/ioddr.v
-../src/hyperbus_1.0/rtl/verilog/iddr.v
-../src/hyperbus_1.0/rtl/verilog/hyperbus.v
-../src/hyperbus_1.0/tb/hyperbus_tb.v
---top-module hyperbus_test_top
---exe
-../src/hyperbus_1.0/tb/hyperbus_test.cpp
