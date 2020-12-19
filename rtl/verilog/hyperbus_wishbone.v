@@ -35,7 +35,8 @@ module hyperbus_wishbone
     output                          wb_rty_o
 );
 
-localparam NSTATES = 4
+localparam NSTATES =        4;
+
 localparam STATE_IDLE =     4'b0001;
 localparam STATE_WRITE =    4'b0010;
 localparam STATE_READ =     4'b0100;
