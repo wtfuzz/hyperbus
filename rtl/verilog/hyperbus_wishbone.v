@@ -71,6 +71,7 @@ hyperbus_fifo fifo_inst (
 
   .adr_i(wb_adr_i),
   .tx_dat_i(wb_dat_i),
+  .tx_mask_i(~wb_sel_i),
   .rx_dat_o(wb_dat_o),
 
   .tx_ready(tx_ready),
