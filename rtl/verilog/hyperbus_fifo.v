@@ -203,6 +203,8 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                 hbus_rrq <= 1'b0;
 
                 if(~cmd_rempty) begin
+                    ack_winc <= 1'b1;
+                    
                     cmd_rinc <= 1'b1;
                     hbus_adr_o <= cmd_rdata[31:0];
 
@@ -235,7 +237,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                         if(count == 1) begin
                             hbus_rrq <= 1'b0;
                         end
-                        count <= count - 1;
+                        count <= count - 8'd1;
 
                         // Shift the valid data into the RX shift register
                         rx_wdata <= (rx_wdata << HBUS_DATA_WIDTH) | {{HBUS_DATA_WIDTH{1'b0}}, hbus_dat_i};
@@ -258,7 +260,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                         if(count == 1) begin
                             hbus_wrq <= 1'b0;
                         end
-                        count <= count - 1;
+                        count <= count - 8'd1;
 
                         // Shift the TX register
                         tx_shift <= tx_shift << HBUS_DATA_WIDTH;
