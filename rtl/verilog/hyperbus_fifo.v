@@ -109,7 +109,7 @@ async_fifo
   .awfull(),
 
   .rclk(hbus_clk),
-  .rrst_n(~hbus_rst),
+  .rrst_n(~rst),
   .rinc(cmd_rinc),
   .rdata(cmd_rdata),
   .rempty(cmd_rempty),
@@ -130,7 +130,7 @@ async_fifo
   .awfull(),
 
   .rclk(hbus_clk),
-  .rrst_n(~hbus_rst),
+  .rrst_n(~rst),
   .rinc(tx_rinc),
   .rdata(tx_rdata),
   .rempty(tx_rempty),
@@ -143,7 +143,7 @@ async_fifo
   .ASIZE(FIFO_ASIZE)
 ) rx_fifo (
   .wclk(hbus_clk),
-  .wrst_n(~hbus_rst),
+  .wrst_n(~rst),
   .winc(rx_winc),
   .wdata(rx_wdata),
   .wfull(rx_wfull),
@@ -164,7 +164,7 @@ async_fifo
   .ASIZE(FIFO_ASIZE)
 ) ack_fifo (
   .wclk(hbus_clk),
-  .wrst_n(~hbus_rst),
+  .wrst_n(~rst),
   .winc(ack_winc),
   .wdata(ack_wdata),
   .wfull(ack_wfull),
@@ -328,11 +328,11 @@ always @(posedge clk or posedge rst) begin
             end
 
             STATE_WRITE: begin
-                //if(~ack_rempty) begin
+                if(~ack_rempty) begin
                     tx_done <= 1'b1;
                     ack_rinc <= 1'b1;
                     user_state <= STATE_IDLE;
-                //end          
+                end          
             end
 
             default: user_state <= STATE_IDLE;
