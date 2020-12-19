@@ -179,6 +179,7 @@ always @(posedge clk or posedge rst) begin
         case(state)
             STATE_RESET: begin
                 count <= count - 1;
+                cs <= 1'b0;
                 clk_oe <= 1'b0;
                 rwds_oe <= 1'b0;
                 data_oe <= 1'b0;
@@ -280,6 +281,7 @@ always @(posedge clk or posedge rst) begin
 
                 if(!rrq) begin
                     count <= 4'd3;
+                    cs <= 1'b0;
                     state <= STATE_IDLE;
                 end
             end
@@ -291,6 +293,7 @@ always @(posedge clk or posedge rst) begin
                 if(!wrq) begin
                     data_oe <= 1'b0;
                     rwds_oe <= 1'b0;
+                    cs <= 1'b0;
                     count <= 4'd3;
                     state <= STATE_IDLE;
                 end
