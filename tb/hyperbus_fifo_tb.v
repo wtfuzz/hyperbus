@@ -77,10 +77,11 @@ hyperbus_fifo fifo_inst (
 
   .adr_i(32'haaaaaaaa),
   .tx_dat_i(32'hdeadbeef),
+  .tx_mask_i(4'b0000),
   .rx_dat_o(rx_fifo_data),
 
   .tx_ready(tx_fifo_ready),
-  .rx_valid(rx_fifo_valid)
+  .rx_valid(rx_fifo_valid),
 );
 
 endmodule
