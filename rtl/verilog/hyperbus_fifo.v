@@ -281,6 +281,10 @@ always @(posedge clk or posedge rst) begin
     if(rst) begin
         cmd_winc <= 1'b0;
         tx_winc <= 1'b0;
+        tx_done <= 1'b0;
+        rx_valid <= 1'b0;
+        rx_rinc <= 1'b0;
+        ack_rinc <= 1'b0;
 
         user_state <= STATE_IDLE;
     end else begin
