@@ -319,12 +319,12 @@ always @(posedge clk or posedge rst) begin
             end
 
             STATE_READ: begin
-                if(~rx_rempty) begin
+                //if(~rx_rempty) begin
                     rx_valid <= 1'b1;
                     rx_dat_o <= rx_rdata;
                     rx_rinc <= 1'b1;
                     user_state <= STATE_IDLE;
-                end
+                //end
             end
 
             STATE_WRITE: begin
