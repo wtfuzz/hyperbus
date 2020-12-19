@@ -14,6 +14,10 @@ filesets:
         depend:
             - async_fifo
 
+    constraints:
+        files:
+            - data/hyberbus.sdc: {file_type: SDC}
+
     tb:
         files:
             - tb/hyperbus_tb.v
@@ -52,7 +56,7 @@ targets:
             verilator:
                 verilator_options : [--trace, -Wno-WIDTH]
     default: &base
-        filesets: [rtl]
+        filesets: [rtl, constraints]
 
 
 #provider:
