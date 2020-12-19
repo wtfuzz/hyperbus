@@ -247,6 +247,12 @@ always @(posedge clk or posedge rst) begin
                     $display("Command sent");
 
                     if(rrq) begin
+                        // When reading, using a short latency and time reads from the RWDS strobe
+                        count <= TACC_COUNT - 1;
+                        data_oe <= 1'b0;
+                        rwds_oe <= 1'b0;
+                    end else if(wrq) begin
+
                         if(rwdsr == 2'b11) begin
                             $display("2x latency");
                             count <= (TACC_COUNT<<1) - 1;
@@ -254,12 +260,6 @@ always @(posedge clk or posedge rst) begin
                             $display("1x latency");
                             count <= TACC_COUNT - 1;
                         end
-
-                        data_oe <= 1'b0;
-                    end else if(wrq) begin
-
-                        // When reading, using a short latency and time reads from the RWDS strobe
-                        count <= TACC_COUNT - 1;
 
                         // The master must drive RWDS to a valid LOW
                         // before the end of the initial latency to provide a data mask preamble period to the slave
