@@ -137,6 +137,7 @@ async_fifo
   .arempty()
 );
 
+/** RX FIFO carries RX data */
 async_fifo
 #(
   .DSIZE(FIFO_DATA_WIDTH),
@@ -157,7 +158,7 @@ async_fifo
   .arempty()
 );
 
-// TX ACK fifo
+/** TX ACK FIFO indicates when TX is complete */
 async_fifo
 #(
   .DSIZE(1),
