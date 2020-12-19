@@ -15,4 +15,10 @@ proc hyperbus_constrain_pins { name clk_pin data_pins } {
     set_input_delay -add_delay -clock "virt_${name}_clk" -min -0.25 [get_ports "$data_pins"]
     set_input_delay -add_delay -clock "virt_${name}_clk" -clock_fall -max 1.00 [get_ports "$data_pins"]
     set_input_delay -add_delay -clock "virt_${name}_clk" -clock_fall -min -0.25 [get_ports "$data_pins"]
+
+    set_false_path -rise_from [get_clocks "virt_${name}_clk"] -fall_to [get_clocks "${name}_clk"] -setup
+    set_false_path -fall_from [get_clocks "virt_${name}_clk"] -rise_to [get_clocks "${name}_clk"] -setup
+
+    set_false_path -rise_from [get_clocks "virt_${name}_clk"] -fall_to [get_clocks "${name}_clk"] -hold
+    set_false_path -fall_from [get_clocks "virt_${name}_clk"] -rise_to [get_clocks "${name}_clk"] -hold
 }
