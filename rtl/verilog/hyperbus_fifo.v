@@ -202,8 +202,9 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                 hbus_wrq <= 1'b0;
                 hbus_rrq <= 1'b0;
 
+                ack_rinc <= 1'b1;
+
                 if(~cmd_rempty) begin
-                    ack_winc <= 1'b1;
                     
                     cmd_rinc <= 1'b1;
                     hbus_adr_o <= cmd_rdata[31:0];
