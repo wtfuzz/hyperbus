@@ -16,7 +16,7 @@ filesets:
 
     constraints:
         files:
-            - data/hyberbus.sdc: {file_type: SDC}
+            - data/hyperbus.sdc: {file_type: SDC}
 
     tb:
         files:
