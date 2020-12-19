@@ -34,8 +34,6 @@ module hyperbus
     // Output word is valid on dat_o
     output reg                  valid,
 
-    output                      busy,
-
     // Read from HyperRAM register space
     input                       reg_space_i,
 
@@ -45,16 +43,12 @@ module hyperbus
     // Read request. Hold high until transaction complete.
     input                       rrq,
 
+    // Hyperbus Interface
     output                      hbus_clk,
     output                      hbus_rstn,
     output                      hbus_csn,
     inout   [WIDTH-1:0]         hbus_dq,
-    inout                       hbus_rwds,
-
-    output                      error_o,
-
-    // Debug outputs
-    output [1:0]                dbg_rwds
+    inout                       hbus_rwds
 );
 
 localparam COUNTER_WIDTH = $clog2(TACC_COUNT*2);
@@ -84,7 +78,6 @@ wire [((WIDTH<<1)/8):0] rwdsw;
 reg [(WIDTH<<1)-1:0]    read_reg;
 
 assign dat_o = read_reg;
-assign dbg_rwds = rwdsr;
 
 // Bidirectional DDR output enable
 reg data_oe;
@@ -129,7 +122,6 @@ ioddr
 assign hbus_rstn = (state == STATE_RESET) ? 1'b0 : 1'b1;
 assign hbus_csn = (
     (state == STATE_IDLE) || (state == STATE_RESET) || (state == {`NSTATES{1'b0}})) ? 1'b1 : 1'b0;
-assign busy = state == STATE_IDLE ? 1'b0 : 1'b1;
 
 // Clock gate
 assign hbus_clk = clk_oe90 ? clk90 : 1'b0;
@@ -138,8 +130,6 @@ assign hbus_clk = clk_oe90 ? clk90 : 1'b0;
 reg [47:0] ca;
 
 reg timeout_error;
-
-assign error_o = state == STATE_ERROR ? 1'b1 : 1'b0;
 
 // Clock counter
 reg [COUNTER_WIDTH-1:0] count;
