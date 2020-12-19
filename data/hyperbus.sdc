@@ -12,19 +12,19 @@ proc hyperbus_constrain_pins { name clk clk90 data_pins } {
     # 200MHz clock with 90 degree phase shift (1.250ns delay)
     #create_clock -name "${name}_clk90" -period 5.000 "$clk90_pin" -waveform {1.250 3.750}
 
-    set_input_delay -add_delay -clock "${clk}" -max 1.00 [get_ports "$data_pins"]
-    set_input_delay -add_delay -clock "${clk}" -min -1.00 [get_ports "$data_pins"]
-    set_input_delay -add_delay -clock "${clk}" -clock_fall -max 1.00 [get_ports "$data_pins"]
-    set_input_delay -add_delay -clock "${clk}" -clock_fall -min -1.00 [get_ports "$data_pins"]
+    set_input_delay -add_delay -clock "${clk}" -max 0.25 [get_ports "$data_pins"]
+    set_input_delay -add_delay -clock "${clk}" -min -0.25 [get_ports "$data_pins"]
+    set_input_delay -add_delay -clock "${clk}" -clock_fall -max 0.25 [get_ports "$data_pins"] -add
+    set_input_delay -add_delay -clock "${clk}" -clock_fall -min -0.25 [get_ports "$data_pins"] -add
     
-    set_output_delay -add_delay -clock "${clk90}" -max 1.00 [get_ports "$data_pins"]
-    set_output_delay -add_delay -clock "${clk90}" -min -1.00 [get_ports "$data_pins"]
-    set_output_delay -add_delay -clock "${clk90}" -clock_fall -max 1.00 [get_ports "$data_pins"]
-    set_output_delay -add_delay -clock "${clk90}" -clock_fall -min -1.00 [get_ports "$data_pins"]
+    #set_output_delay -add_delay -clock "${clk90}" -max 1.00 [get_ports "$data_pins"]
+    #set_output_delay -add_delay -clock "${clk90}" -min -1.00 [get_ports "$data_pins"]
+    #set_output_delay -add_delay -clock "${clk90}" -clock_fall -max 1.00 [get_ports "$data_pins"]
+    #set_output_delay -add_delay -clock "${clk90}" -clock_fall -min -1.00 [get_ports "$data_pins"]
 
-    set_false_path -rise_from [get_clocks "${clk}"] -fall_to [get_clocks "${clk90}"] -setup
-    set_false_path -fall_from [get_clocks "${clk}"] -rise_to [get_clocks "${clk90}"] -setup
+    set_false_path -setup -end -rise_from [get_clocks "${clk}"] -fall_to [get_clocks "${clk90}"]
+    set_false_path -setup -end -fall_from [get_clocks "${clk}"] -rise_to [get_clocks "${clk90}"]
 
-    set_false_path -rise_from [get_clocks "${clk}"] -fall_to [get_clocks "${clk90}"] -hold
-    set_false_path -fall_from [get_clocks "${clk}"] -rise_to [get_clocks "${clk90}"] -hold
+    set_false_path -hold -end -rise_from [get_clocks "${clk}"] -fall_to [get_clocks "${clk90}"]
+    set_false_path -hold -end -fall_from [get_clocks "${clk}"] -rise_to [get_clocks "${clk90}"]
 }
