@@ -121,17 +121,6 @@ always @(posedge wb_clk) begin
   end
 end
 
-/*
-always @(posedge wb_clk) begin
-  if (wb_rst)
-    wb_ack_o <= 0;
-  else if (wb_cyc_i & wb_stb_i)
-    wb_ack_o <= 1;
-  else
-    wb_ack_o <= 0;
-end
-*/
-
 assign wb_err_o = 0;
 assign wb_rty_o = 0;
 
