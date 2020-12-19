@@ -102,10 +102,10 @@ always @(posedge wb_clk) begin
       end
 
       STATE_READ: begin
-        //if(rx_valid) begin
+        if(rx_valid) begin
           state <= STATE_IDLE;
           wb_ack_o <= 1'b1;
-        //end
+        end
       end
 
       STATE_WRITE: begin
