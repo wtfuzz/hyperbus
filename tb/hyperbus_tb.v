@@ -40,9 +40,7 @@ hyperbus #(
     .dat_i       (datar),
     .dat_o       (dataw),
     .wrq        (wrq),
-    .rrq        (rrq),
-
-    .dbg_rwds   ()
+    .rrq        (rrq)
 );
 
 endmodule

@@ -62,7 +62,7 @@ int main(int argc, char **argv) {
 
   while(step <= STEPS)
   {
-    tb->wrq = 1;
+    tb->rrq = 1;
     tb->clk = 1;
     tb->eval();
     tfp->dump(10*(step++));

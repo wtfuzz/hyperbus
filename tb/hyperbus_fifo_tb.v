@@ -76,7 +76,7 @@ hyperbus_fifo fifo_inst (
   .rrq(rrq),
   .wrq(wrq),
 
-  .adr_i(32'haaaaaaaa),
+  .adr_i(32'h0),
   .tx_dat_i(32'hdeadbeef),
   .tx_mask_i(4'b0000),
   .rx_dat_o(rx_fifo_data),

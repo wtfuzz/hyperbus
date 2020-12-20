@@ -50,14 +50,15 @@ module hyperbus
 
 localparam COUNTER_WIDTH = $clog2((TACC_COUNT<<1));
 
-localparam NSTATES =        6;
+localparam NSTATES =        7;
 
-localparam STATE_IDLE =     6'b000001;
-localparam STATE_RESET =    6'b000010;
-localparam STATE_COMMAND =  6'b000100;
-localparam STATE_LATENCY =  6'b001000;
-localparam STATE_READ =     6'b010000;
-localparam STATE_WRITE =    6'b100000;
+localparam STATE_IDLE =     7'b0000001;
+localparam STATE_RESET =    7'b0000010;
+localparam STATE_COMMAND =  7'b0000100;
+localparam STATE_LATENCY =  7'b0001000;
+localparam STATE_READ =     7'b0010000;
+localparam STATE_WRITE =    7'b0100000;
+localparam STATE_CLKEN =    7'b1000000;
 
 reg [NSTATES-1:0] state;
 
@@ -81,6 +82,7 @@ reg data_oe;
 reg rwds_oe;
 
 reg clk_oe;
+reg clk_oe_tmp;
 reg clk_oe90;
 
 /**
@@ -145,7 +147,8 @@ always @(posedge clk90 or posedge rst) begin
     if(rst) begin
         clk_oe90 <= 1'b0;
     end else begin
-        clk_oe90 <= clk_oe;
+        clk_oe_tmp <= clk_oe;
+        clk_oe90 <= clk_oe_tmp;
     end
 end
 
@@ -217,12 +220,18 @@ always @(posedge clk or posedge rst) begin
                         // 3 cycles to write 48 bits
                         count <= 4'd3;
 
+                        clk_oe <= 1'b1;
                         cs <= 1'b1;
+                        data_oe <= 1'b1;
 
                         // Transition to command state
-                        state <= STATE_COMMAND;
+                        state <= STATE_CLKEN;
                     end
                 end
+            end
+            STATE_CLKEN: begin
+                // Wait one cycle for oe_clk90 and transition to send command
+                state <= STATE_COMMAND;
             end
             STATE_COMMAND: begin
                 clk_oe <= 1'b1;

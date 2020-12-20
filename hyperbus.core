@@ -43,7 +43,7 @@ targets:
         toplevel: [hyperbus_test_top]
         tools:
             verilator:
-                verilator_options : [--trace]
+                verilator_options : [--trace, -Wno-WIDTH, -DEXCLUDE_ALTDDIO]
     sim_fifo:
         default_tool: verilator
         filesets:
