@@ -29,7 +29,7 @@ module hyperbus
     output                      ready,
 
     // Output word is valid on dat_o
-    output                      valid,
+    output reg                  valid,
 
     // Read from HyperRAM register space
     input                       reg_space_i,
@@ -150,8 +150,7 @@ always @(posedge clk90 or posedge rst) begin
 end
 
 /** Read strobe logic */
-/*
-//assign dat_o = read_reg;
+assign dat_o = read_reg;
 always @(posedge clk) begin
     valid <= 1'b0;
 
@@ -167,10 +166,9 @@ always @(posedge clk) begin
         end
     end
 end
-*/
 
-assign dat_o = datar;
-assign valid = (state == STATE_READ && rrq && rwdsr == 2'b10);
+//assign dat_o = datar;
+//assign valid = (state == STATE_READ && rrq && rwdsr == 2'b10);
 
 always @(posedge clk or posedge rst) begin
     if(rst) begin
@@ -248,7 +246,7 @@ always @(posedge clk or posedge rst) begin
                         rwds_oe <= 1'b0;
                     end else if(wrq) begin
 
-                        count <= (rwdsr == 2'b11) ? (TACC_COUNT<<1) - 4 : (TACC_COUNT-4);
+                        count <= (rwdsr == 2'b11) ? (TACC_COUNT<<1) - 3 : (TACC_COUNT-3);
 
                     end
 
