@@ -248,13 +248,8 @@ always @(posedge clk or posedge rst) begin
                         rwds_oe <= 1'b0;
                     end else if(wrq) begin
 
-                        count <= (rwdsr == 2'b11) ? (TACC_COUNT<<1) - 3 : (TACC_COUNT-3);
+                        count <= (rwdsr == 2'b11) ? (TACC_COUNT<<1) - 4 : (TACC_COUNT-4);
 
-                        // The master must drive RWDS to a valid LOW
-                        // before the end of the initial latency to
-                        // provide a data mask preamble period to the slave
-                        rwds_oe <= 1'b1;
-                        data_oe <= 1'b1;
                     end
 
                     state <= STATE_LATENCY;
@@ -275,8 +270,12 @@ always @(posedge clk or posedge rst) begin
 
                 if(count == {COUNTER_WIDTH{1'b0}}) begin
                     if(wrq) begin
-                        //rwds_oe <= 1'b1;
-                        //data_oe <= 1'b1;
+                        // The master must drive RWDS to a valid LOW
+                        // before the end of the initial latency to
+                        // provide a data mask preamble period to the slave
+                        rwds_oe <= 1'b1;
+                        data_oe <= 1'b1;
+
                         state <= STATE_WRITE;
                     end else if(rrq) begin
                         state <= STATE_READ;
