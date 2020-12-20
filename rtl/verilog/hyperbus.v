@@ -245,9 +245,7 @@ always @(posedge clk or posedge rst) begin
                         data_oe <= 1'b0;
                         rwds_oe <= 1'b0;
                     end else if(wrq) begin
-
-                        count <= (rwdsr == 2'b11) ? (TACC_COUNT<<1) - 2 : (TACC_COUNT-2);
-
+                        count <= (rwdsr == 2'b11) ? (TACC_COUNT<<1) - 3 : (TACC_COUNT-3);
                     end
 
                     state <= STATE_LATENCY;
