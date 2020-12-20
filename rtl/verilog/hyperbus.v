@@ -170,7 +170,7 @@ end
 */
 
 assign dat_o = datar;
-assign valid = (state == STATE_READ && rrq && rwdsr == 2'b01);
+assign valid = (state == STATE_READ && rrq && rwdsr == 2'b10);
 
 always @(posedge clk or posedge rst) begin
     if(rst) begin
