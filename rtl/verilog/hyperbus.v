@@ -248,7 +248,7 @@ always @(posedge clk or posedge rst) begin
                         rwds_oe <= 1'b0;
                     end else if(wrq) begin
 
-                        count <= (rwdsr == 2'b11) ? (TACC_COUNT<<1) - 2 : (TACC_COUNT-2);
+                        count <= (rwdsr == 2'b11) ? (TACC_COUNT<<1) - 3 : (TACC_COUNT-3);
 
                         // The master must drive RWDS to a valid LOW
                         // before the end of the initial latency to
