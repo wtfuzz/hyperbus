@@ -29,7 +29,7 @@ module hyperbus
     output                      ready,
 
     // Output word is valid on dat_o
-    output reg                  valid,
+    output                      valid,
 
     // Read from HyperRAM register space
     input                       reg_space_i,
@@ -150,6 +150,7 @@ always @(posedge clk90 or posedge rst) begin
 end
 
 /** Read strobe logic */
+/*
 assign dat_o = read_reg;
 always @(posedge clk) begin
     valid <= 1'b0;
@@ -166,9 +167,10 @@ always @(posedge clk) begin
         end
     end
 end
+*/
 
-//assign dat_o = datar;
-//assign valid = (state == STATE_READ && rrq && rwdsr == 2'b10);
+assign dat_o = datar;
+assign valid = (state == STATE_READ && rrq && rwdsr == 2'b01);
 
 always @(posedge clk or posedge rst) begin
     if(rst) begin
@@ -239,14 +241,9 @@ always @(posedge clk or posedge rst) begin
                 data_oe <= 1'b1;
 
                 if(count == {COUNTER_WIDTH{1'b0}}) begin
-                    if(rrq) begin
-                        // When reading, using a short latency and time reads from the RWDS strobe
-                        count <= TACC_COUNT - 2;
-                        data_oe <= 1'b0;
-                        rwds_oe <= 1'b0;
-                    end else if(wrq) begin
-                        count <= (rwdsr == 2'b11) ? (TACC_COUNT<<1) - 3 : (TACC_COUNT-3);
-                    end
+
+                    // Setup the latency counter
+                    count <= (rwdsr == 2'b11) ? (TACC_COUNT<<1) - 3 : (TACC_COUNT-3);
 
                     state <= STATE_LATENCY;
                 end else begin
