@@ -85,11 +85,8 @@ reg clk_oe90;
 
 /**
  * Bidirectional DDR IO.
- * Provides 2*WIDTH signal on each rising edge of the clock
+ * Provides 16 bit data on each rising edge of the clock
  */
-
-// Output data is clocked from the 200MHz clock
-// Input data is clocked using the 200MHz clock, and valid on RWDS strobes
 ioddr
 #(
     .TARGET(TARGET),
@@ -127,8 +124,6 @@ assign hbus_clk = clk_oe90 ? clk90 : 1'b0;
 // Command/Address register
 reg [47:0] ca;
 
-reg timeout_error;
-
 // Clock counter
 reg [COUNTER_WIDTH-1:0] count;
 
@@ -147,26 +142,6 @@ always @(posedge clk90 or posedge rst) begin
         clk_oe90 <= clk_oe_tmp;
     end
 end
-
-/** Read strobe logic */
-/*
-assign dat_o = read_reg;
-always @(posedge clk) begin
-    valid <= 1'b0;
-
-    if((state == STATE_READ) && rrq) begin
-        // The RWDS DDR output will contain the
-        // bit pattern 2'b10 on valid read strobes.
-        // The RAM chip may hold RWDS low, and we will
-        // ignore the DQ signals until the next strobe
-
-        if(rwdsr == 2'b10) begin
-            valid <= 1'b1;
-            read_reg <= datar;
-        end
-    end
-end
-*/
 
 assign dat_o = datar;
 assign valid = (state == STATE_READ && rrq && rwdsr == 2'b10);
