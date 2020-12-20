@@ -9,7 +9,7 @@ module hyperbus
 #(
     parameter TARGET = "ALTERA",
     parameter WIDTH = 8,
-    parameter TACC_COUNT = 5,
+    parameter TACC_COUNT = 6,
     parameter RESET_COUNT = 5,
     parameter ADDR_LENGTH = 32
 )
@@ -157,7 +157,7 @@ always @(posedge clk) begin
 
     if((state == STATE_READ) && rrq) begin
         // The RWDS DDR output will contain the
-        // bit pattern 2'b01 on valid read strobes.
+        // bit pattern 2'b10 on valid read strobes.
         // The RAM chip may hold RWDS low, and we will
         // ignore the DQ signals until the next strobe
 
@@ -248,7 +248,7 @@ always @(posedge clk or posedge rst) begin
                         rwds_oe <= 1'b0;
                     end else if(wrq) begin
 
-                        count <= (rwdsr == 2'b11) ? (TACC_COUNT<<1) - 1 : (TACC_COUNT-1);
+                        count <= (rwdsr == 2'b11) ? (TACC_COUNT<<1) - 2 : (TACC_COUNT-2);
 
                         // The master must drive RWDS to a valid LOW
                         // before the end of the initial latency to
