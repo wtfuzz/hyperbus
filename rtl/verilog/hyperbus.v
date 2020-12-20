@@ -243,7 +243,7 @@ always @(posedge clk or posedge rst) begin
                 if(count == {COUNTER_WIDTH{1'b0}}) begin
 
                     // Setup the latency counter
-                    count <= (rwdsr == 2'b11) ? (TACC_COUNT<<1) - 4 : (TACC_COUNT-4);
+                    count <= (rwdsr == 2'b11) ? (TACC_COUNT<<1) - 5 : (TACC_COUNT-5);
 
                     state <= STATE_LATENCY;
                 end else begin
