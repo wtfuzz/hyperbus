@@ -53,7 +53,7 @@ targets:
         toplevel: [hyperbus_fifo_test_top]
         tools:
             verilator:
-                verilator_options : [--trace, -Wno-WIDTH]
+                verilator_options : [--trace, -Wno-WIDTH, -DEXCLUDE_ALTDDIO]
     default: &base
         filesets: [rtl, constraints]
 

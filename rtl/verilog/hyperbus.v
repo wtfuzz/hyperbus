@@ -10,7 +10,7 @@ module hyperbus
     parameter TARGET = "ALTERA",
     parameter WIDTH = 8,
     parameter TACC_COUNT = 5,
-    parameter RESET_COUNT = 10,
+    parameter RESET_COUNT = 5,
     parameter ADDR_LENGTH = 32
 )
 (
@@ -124,8 +124,7 @@ assign hbus_rstn = (state == STATE_RESET) ? 1'b0 : 1'b1;
 assign hbus_csn = ~cs;
 
 // Clock gate
-//assign hbus_clk = clk_oe90 ? clk90 : 1'b0;
-assign hbus_clk = clk90;
+assign hbus_clk = clk_oe90 ? clk90 : 1'b0;
 
 // Command/Address register
 reg [47:0] ca;

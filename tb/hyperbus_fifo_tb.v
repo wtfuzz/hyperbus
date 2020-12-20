@@ -1,10 +1,13 @@
 
+// Workaround verilator bug
+`define EXCLUDE_ALTDDIO
+
 module hyperbus_fifo_test_top(
     input       clk,
     input       clk90,
     input       rst,
 
-    output      tx_fifo_ready,
+    output      tx_fifo_done,
     output      rx_fifo_valid,
     output [31:0] rx_fifo_data,
 
@@ -78,7 +81,7 @@ hyperbus_fifo fifo_inst (
   .tx_mask_i(4'b0000),
   .rx_dat_o(rx_fifo_data),
 
-  .tx_ready(tx_fifo_ready),
+  .tx_done(tx_fifo_done),
   .rx_valid(rx_fifo_valid)
 );
 

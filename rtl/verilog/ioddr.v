@@ -1,3 +1,7 @@
+
+`timescale 1 ns / 1 ps
+`default_nettype none
+
 module ioddr
 #(
     parameter TARGET = "ALTERA",
@@ -19,6 +23,7 @@ generate
 if(TARGET == "ALTERA") begin : altera_ioddr_gen
     // https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_altddio.pdf
 
+`ifndef EXCLUDE_ALTDDIO
     altddio_bidir #(
         .WIDTH(WIDTH),
         .POWER_UP_HIGH("OFF"),
@@ -35,6 +40,7 @@ if(TARGET == "ALTERA") begin : altera_ioddr_gen
         .dataout_l(dat_o[(WIDTH<<1)-1 : (WIDTH)]),
         .padio(dq)
     );
+`endif
 
 end else begin
     // Fallback to pure verilog for simulation
