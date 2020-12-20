@@ -246,7 +246,7 @@ always @(posedge clk or posedge rst) begin
                         rwds_oe <= 1'b0;
                     end else if(wrq) begin
 
-                        count <= (rwdsr == 2'b11) ? (TACC_COUNT<<1) - 4 : (TACC_COUNT-4);
+                        count <= (rwdsr == 2'b11) ? (TACC_COUNT<<1) - 2 : (TACC_COUNT-2);
 
                     end
 
