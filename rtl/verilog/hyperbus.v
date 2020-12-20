@@ -29,7 +29,7 @@ module hyperbus
     output                      ready,
 
     // Output word is valid on dat_o
-    output reg                  valid,
+    output                      valid,
 
     // Read from HyperRAM register space
     input                       reg_space_i,
@@ -75,7 +75,6 @@ wire [((WIDTH<<1)/8)-1:0] rwdsw;
 
 reg [(WIDTH<<1)-1:0]    read_reg;
 
-assign dat_o = read_reg;
 
 // Bidirectional DDR output enable
 reg data_oe;
@@ -121,8 +120,6 @@ ioddr
 reg cs;
 
 assign hbus_rstn = (state == STATE_RESET) ? 1'b0 : 1'b1;
-//assign hbus_csn = (
-    //(state == STATE_IDLE) || (state == STATE_RESET) || (state == {NSTATES{1'b0}})) ? 1'b1 : 1'b0;
 assign hbus_csn = ~cs;
 
 // Clock gate
@@ -153,6 +150,8 @@ always @(posedge clk90 or posedge rst) begin
 end
 
 /** Read strobe logic */
+/*
+//assign dat_o = read_reg;
 always @(posedge clk) begin
     valid <= 1'b0;
 
@@ -168,6 +167,10 @@ always @(posedge clk) begin
         end
     end
 end
+*/
+
+assign dat_o = datar;
+assign valid = (state == STATE_READ && rrq && rwdsr == 2'b10);
 
 always @(posedge clk or posedge rst) begin
     if(rst) begin
