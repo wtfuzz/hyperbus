@@ -220,7 +220,6 @@ always @(posedge clk or posedge rst) begin
                         // 3 cycles to write 48 bits
                         count <= 4'd3;
 
-                        clk_oe <= 1'b1;
                         cs <= 1'b1;
                         data_oe <= 1'b1;
 
