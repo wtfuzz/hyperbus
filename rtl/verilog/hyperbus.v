@@ -80,6 +80,7 @@ reg data_oe;
 reg rwds_oe;
 
 reg clk_oe;
+reg clk_oe_tmp;
 reg clk_oe90;
 
 /**
@@ -142,7 +143,8 @@ always @(posedge clk90 or posedge rst) begin
     if(rst) begin
         clk_oe90 <= 1'b0;
     end else begin
-        clk_oe90 <= clk_oe;
+        clk_oe_tmp <= clk_oe;
+        clk_oe90 <= clk_oe_tmp;
     end
 end
 
@@ -220,6 +222,7 @@ always @(posedge clk or posedge rst) begin
                         // 3 cycles to write 48 bits
                         count <= 4'd3;
 
+                        clk_oe <= 1'b1;
                         cs <= 1'b1;
                         data_oe <= 1'b1;
 
