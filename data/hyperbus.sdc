@@ -6,12 +6,6 @@ proc hyperbus_constrain_pins { name clk clk90 data_pins } {
     puts "90 degree clock: $clk90"
     puts "Data pins: $data_pins"
 
-    # 200MHz clock with no phase shift
-    #create_clock -name "${name}_clk" -period 5.000 "$clk_pin"
-
-    # 200MHz clock with 90 degree phase shift (1.250ns delay)
-    #create_clock -name "${name}_clk90" -period 5.000 "$clk90_pin" -waveform {1.250 3.750}
-
     set_input_delay -add_delay -clock "${clk}" -max 1.00 [get_ports "$data_pins"]
     set_input_delay -add_delay -clock "${clk}" -min -1.00 [get_ports "$data_pins"]
     set_input_delay -add_delay -clock "${clk}" -clock_fall -max 1.00 [get_ports "$data_pins"]
