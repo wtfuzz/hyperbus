@@ -82,6 +82,7 @@ reg tx_rinc;
 reg tx_winc;
 wire tx_wfull;
 wire tx_rempty;
+wire tx_arempty;
 
 reg [FIFO_DATA_WIDTH-1:0] rx_wdata;
 wire [FIFO_DATA_WIDTH-1:0] rx_rdata;
@@ -89,13 +90,16 @@ reg rx_rinc;
 reg rx_winc;
 wire rx_wfull;
 wire rx_rempty;
+wire rx_arempty;
 
+/*
 reg ack_wdata;
 wire ack_rdata;
 reg ack_rinc;
 reg ack_winc;
 wire ack_wfull;
 wire ack_rempty;
+*/
 
 reg [FIFO_MASK_BITS-1:0] tx_mask;
 reg [FIFO_DATA_WIDTH-1:0] tx_shift;
@@ -142,7 +146,7 @@ async_fifo
   .rinc(tx_rinc),
   .rdata(tx_rdata),
   .rempty(tx_rempty),
-  .arempty()
+  .arempty(tx_arempty)
 );
 
 /** RX FIFO carries RX data */
@@ -163,10 +167,11 @@ async_fifo
   .rinc(rx_rinc),
   .rdata(rx_rdata),
   .rempty(rx_rempty),
-  .arempty()
+  .arempty(rx_arempty)
 );
 
 /** ACK FIFO indicates when TX is complete */
+/*
 async_fifo
 #(
   .DSIZE(1),
@@ -186,6 +191,7 @@ async_fifo
   .rempty(ack_rempty),
   .arempty()
 );
+*/
 
 /** Hyperbus clock domain state machine */
 always @(posedge hbus_clk or posedge hbus_rst) begin
@@ -202,7 +208,7 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
         cmd_rinc <= 1'b0;
         tx_rinc <= 1'b0;
         rx_winc <= 1'b0;
-        ack_winc <= 1'b0;
+        //ack_winc <= 1'b0;
 
         case(state)
             STATE_IDLE: begin
@@ -258,8 +264,8 @@ always @(posedge hbus_clk or posedge hbus_rst) begin
                     tx_rinc <= 1'b1;
 
                     // Write an ack to the ACK FIFO to sync to the user clock
-                    ack_wdata <= 1'b1;
-                    ack_winc <= 1'b1;
+                    //ack_wdata <= 1'b1;
+                    //ack_winc <= 1'b1;
 
                     hbus_wrq <= 1'b0;
                     state <= STATE_IDLE;
@@ -294,7 +300,7 @@ always @(posedge clk or posedge rst) begin
         tx_done <= 1'b0;
         rx_valid <= 1'b0;
         rx_rinc <= 1'b0;
-        ack_rinc <= 1'b0;
+        //ack_rinc <= 1'b0;
 
         user_state <= STATE_IDLE;
     end else begin
@@ -304,7 +310,7 @@ always @(posedge clk or posedge rst) begin
         tx_done <= 1'b0;
         rx_valid <= 1'b0;
         rx_rinc <= 1'b0;
-        ack_rinc <= 1'b0;
+        //ack_rinc <= 1'b0;
 
         case(user_state)
 
@@ -338,11 +344,19 @@ always @(posedge clk or posedge rst) begin
             end
 
             STATE_WRITE: begin
+
+                if(tx_rempty) begin
+                    tx_done <= 1'b1;
+                    user_state <= STATE_IDLE;
+                end
+
+                /*
                 if(~ack_rempty) begin
                     tx_done <= 1'b1;
                     ack_rinc <= 1'b1;
                     user_state <= STATE_IDLE;
-                end          
+                end
+                */
             end
 
             default: user_state <= STATE_IDLE;
